@@ -85,14 +85,15 @@
       <div class="lm-pdp__info-col">
         <div class="lm-pdp-card">
           {%- if rating != blank -%}
-            <a class="lm-pdp-card__rating" href="#LmReviews">
-              <span class="lm-pdp-card__stars" style="--lm-rating: {{ rating.rating | divided_by: rating.scale_max | times: 100 }}%;" aria-hidden="true">
-                <span class="lm-pdp-card__stars-base">{%- for i in (1..5) -%}{% render 'lemme-pdp-icon', icon: 'star-rating' %}{%- endfor -%}</span>
-                <span class="lm-pdp-card__stars-fill">{%- for i in (1..5) -%}{% render 'lemme-pdp-icon', icon: 'star-rating' %}{%- endfor -%}</span>
-              </span>
-              <span>({{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }})</span>
-              <span class="lm-visually-hidden">{{ rating_count }} reviews. Go to reviews</span>
-            </a>
+            <div class="lm-pdp-card__reviews">
+              <a class="lm-pdp-card__rating" href="#LmReviews" aria-label="Rated {{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }} stars{% if rating_count != blank %} based on {{ rating_count }} reviews{% endif %}">
+                <span class="lm-pdp-card__stars" style="--lm-rating: {{ rating.rating | times: 100.0 | divided_by: rating.scale_max }}%;" aria-hidden="true">
+                  <span class="lm-pdp-card__stars-base">{%- for i in (1..5) -%}{% render 'lemme-pdp-icon', icon: 'star-rating' %}{%- endfor -%}</span>
+                  <span class="lm-pdp-card__stars-fill">{%- for i in (1..5) -%}{% render 'lemme-pdp-icon', icon: 'star-rating' %}{%- endfor -%}</span>
+                </span>
+                <span class="lm-pdp-card__rating-text" aria-hidden="true">({{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }})</span>
+              </a>
+            </div>
           {%- endif -%}
 
           <div class="lm-pdp-card__heading">
@@ -135,12 +136,25 @@
 
             {%- if faqs.size > 0 -%}
               <div class="lm-pdp-tabs__panel" id="LmPanel-faqs-{{ section.id }}" role="tabpanel" aria-labelledby="LmTab-faqs-{{ section.id }}" data-lm-panel="faqs" hidden>
-                <ul class="lm-pdp-tabs__faqs">
-                  {%- for faq in faqs -%}
-                    <li><button class="lm-pdp-tabs__faq" type="button" data-lm-faq-jump="{{ forloop.index }}">{{ faq.question.value }}</button></li>
-                  {%- endfor -%}
-                </ul>
+                <div class="lm-pdp-faqs" data-lm-faq-track>
+                  <ul class="lm-pdp-faqs__track">
+                    {%- for faq in faqs -%}
+                      <li class="lm-pdp-faqs__slide">
+                        {%- unless forloop.first -%}<span class="lm-pdp-faqs__sep" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'sparkle' %}</span>{%- endunless -%}
+                        <button class="lm-pdp-faqs__pill" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="LmFaqPop-{{ section.id }}" data-lm-faq-pill="{{ forloop.index0 }}">{{ faq.question.value }}</button>
+                        <template data-lm-faq-answer="{{ forloop.index0 }}">{{ faq.answer.value | newline_to_br }}</template>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
               </div>
+              <dialog class="lm-pdp-faqpop" id="LmFaqPop-{{ section.id }}" aria-labelledby="LmFaqPopQ-{{ section.id }}" data-lm-faqpop>
+                <button class="lm-pdp-faqpop__close" type="button" aria-label="Close" data-lm-faqpop-close>{% render 'lemme-pdp-icon', icon: 'close' %}</button>
+                <div class="lm-pdp-faqpop__content">
+                  <h3 class="lm-pdp-faqpop__q" id="LmFaqPopQ-{{ section.id }}" data-lm-faqpop-q></h3>
+                  <div class="lm-pdp-faqpop__a" data-lm-faqpop-a></div>
+                </div>
+              </dialog>
             {%- endif -%}
           </div>
 
@@ -303,13 +317,16 @@
     </div>
   </div>
 
-  {%- comment -%} Mobile sticky add-to-bag {%- endcomment -%}
-  <div class="lm-pdp-sticky" data-lm-sticky hidden>
-    <span class="lm-pdp-sticky__title">{{ product.title }}</span>
-    <button class="lm-btn lm-btn--lime lm-btn--sm" type="button" data-lm-sticky-btn data-lm-button>
-      <span class="lm-btn__filler" aria-hidden="true"></span>
-      <span class="lm-btn__text"><span class="lm-btn__text-inner">{{ section.settings.sticky_label }}</span></span>
-    </button>
+  {%- comment -%} Sticky add-to-bag bar (always visible, like lemmelive.com) {%- endcomment -%}
+  <div class="lm-pdp-satc" data-lm-sticky>
+    <div class="lm-pdp-satc__media">
+      {%- if product.featured_media != blank -%}
+        {{ product.featured_media.preview_image | image_url: width: 160 | image_tag: class: 'lm-pdp-satc__img', alt: '', loading: 'lazy', width: 66, height: 66 }}
+      {%- endif -%}
+    </div>
+    <div class="lm-pdp-satc__action">
+      <button class="lm-pdp-satc__btn" type="button" data-lm-sticky-btn data-lm-sticky-btn-inner><span data-lm-sticky-label>{{ section.settings.sticky_label }}</span><span class="lm-visually-hidden">: {{ product.title }}</span></button>
+    </div>
   </div>
 
   {%- comment -%} Supplement facts drawer {%- endcomment -%}

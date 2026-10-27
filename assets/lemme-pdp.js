@@ -151,6 +151,73 @@
       d.addEventListener('close', function () { if (d.__opener) d.__opener.focus(); });
     });
 
+    // FAQs tab: draggable row of lime question pills; a pill opens its answer in a popover
+    // (desktop) or a bottom sheet (mobile), like lemmelive.com
+    var track = $(section, '[data-lm-faq-track]');
+    var pop = $(section, '[data-lm-faqpop]');
+    if (track && pop && !track.__lm) {
+      track.__lm = true;
+      var popQ = $(pop, '[data-lm-faqpop-q]');
+      var popA = $(pop, '[data-lm-faqpop-a]');
+      var opener = null;
+      var dragged = false;
+      var startX = 0, startScroll = 0, dragging = false;
+      track.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        dragging = true; dragged = false; startX = e.clientX; startScroll = track.scrollLeft;
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 4) { dragged = true; track.classList.add('is-dragging'); }
+        track.scrollLeft = startScroll - dx;
+      });
+      window.addEventListener('pointerup', function () { dragging = false; track.classList.remove('is-dragging'); });
+      function isOpen() { return pop.open; }
+      function closePop() {
+        if (!pop.open) return;
+        pop.close();
+      }
+      pop.addEventListener('close', function () {
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.classList.remove('is-active'); opener.focus({ preventScroll: true }); }
+        opener = null;
+      });
+      function openPop(btn) {
+        var i = btn.getAttribute('data-lm-faq-pill');
+        var tpl = $(track, '[data-lm-faq-answer="' + i + '"]');
+        if (opener && opener !== btn) { opener.setAttribute('aria-expanded', 'false'); opener.classList.remove('is-active'); }
+        var wasOpen = pop.open;
+        opener = btn;
+        popQ.textContent = btn.textContent.trim();
+        popA.innerHTML = tpl ? tpl.innerHTML : '';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('is-active');
+        if (!wasOpen) {
+          // Mobile: bottom sheet in the top layer; desktop: popover under the questions
+          if (window.matchMedia('(max-width: 749px)').matches && pop.showModal) pop.showModal(); else pop.show();
+        }
+        var closeBtn = $(pop, '[data-lm-faqpop-close]');
+        if (closeBtn) closeBtn.focus({ preventScroll: true });
+      }
+      $all(track, '[data-lm-faq-pill]').forEach(function (btn) {
+        // Stop the mouse focus from scrolling the row under the cursor
+        btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
+        btn.addEventListener('click', function (e) {
+          if (dragged) { e.preventDefault(); dragged = false; return; }
+          if (opener === btn && pop.open) closePop(); else openPop(btn);
+        });
+      });
+      $(pop, '[data-lm-faqpop-close]').addEventListener('click', closePop);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+      document.addEventListener('click', function (e) {
+        if (!pop.open) return;
+        if (e.target === pop) { closePop(); return; }
+        if (pop.contains(e.target) || (e.target.closest && e.target.closest('[data-lm-faq-pill]'))) return;
+        closePop();
+      });
+      tabs.forEach(function (t) { t.addEventListener('click', closePop); });
+    }
+
     $all(section, '[data-lm-faq-jump]').forEach(function (btn) {
       if (btn.__lm) return;
       btn.__lm = true;
@@ -188,6 +255,10 @@
     var status = $(form, '[data-lm-form-status]');
     var radios = $all(buy, 'input[type="radio"]');
     var buyOnce = false;
+    var sticky = $(section, '[data-lm-sticky]');
+    var stickyBtn = sticky && $(sticky, '[data-lm-sticky-btn]');
+    var stickyLabel = sticky && $(sticky, '[data-lm-sticky-label]');
+    var stickyFeedback = false;
 
     function current() { return radios.filter(function (r) { return r.checked; })[0] || radios[0]; }
     function render() {
@@ -206,6 +277,10 @@
         label.appendChild(document.createTextNode(label.getAttribute('data-add')));
       } else {
         label.textContent = label.getAttribute('data-sold-out');
+      }
+      if (stickyLabel) {
+        stickyLabel.textContent = available ? r.getAttribute('data-price') + ' \u2014 ' + label.getAttribute('data-add') : label.getAttribute('data-sold-out');
+        stickyBtn.disabled = !available;
       }
       if (oncePrice) oncePrice.textContent = r.getAttribute('data-once-price');
       if (onceBtn) onceBtn.parentNode.hidden = !available || !r.getAttribute('data-selling-plan');
@@ -236,27 +311,32 @@
           link.href = root + 'cart';
           link.textContent = 'View bag';
           status.appendChild(link);
+          if (stickyFeedback && stickyLabel) {
+            stickyLabel.textContent = label.getAttribute('data-added');
+            setTimeout(render, 2200);
+          }
           return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); }).then(function (cart) {
             updateCartCount(cart.item_count);
             document.dispatchEvent(new CustomEvent('cart:update', { bubbles: true, detail: { resource: cart, sourceId: 'lemme-pdp', data: { itemCount: cart.item_count, source: 'product-form' } } }));
           });
         })
-        .catch(function (err) { status.textContent = err.message; })
-        .finally(function () { btn.removeAttribute('aria-busy'); btn.disabled = false; buyOnce = false; render(); });
+        .catch(function (err) {
+          status.textContent = err.message;
+          if (stickyFeedback && stickyLabel) { stickyLabel.textContent = err.message; setTimeout(render, 3000); }
+        })
+        .finally(function () {
+          btn.removeAttribute('aria-busy'); btn.disabled = false; buyOnce = false;
+          var keep = stickyFeedback; stickyFeedback = false;
+          if (!keep) render(); else { idInput.value = current().value; }
+        });
     });
 
-    // Mobile sticky button
-    var sticky = $(section, '[data-lm-sticky]');
-    if (sticky && 'IntersectionObserver' in window) {
-      sticky.hidden = false;
-      new IntersectionObserver(function (entries) {
-        var e = entries[0];
-        sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0);
-      }).observe(buy);
-      $(sticky, '[data-lm-sticky-btn]').addEventListener('click', function () {
-        buy.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-        var r = current();
-        if (r) setTimeout(function () { r.focus({ preventScroll: true }); }, 500);
+    // Sticky add-to-bag bar: always visible, adds the selected option straight to the bag
+    if (sticky && stickyBtn) {
+      stickyBtn.addEventListener('click', function () {
+        if (stickyBtn.disabled) return;
+        stickyFeedback = true;
+        if (form.requestSubmit) form.requestSubmit(submit); else submit.click();
       });
     }
   }
