@@ -746,7 +746,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 /* ==========================================================================
    FAQ
    ========================================================================== */
-.lm-section.lp-faq { background: var(--lp-50); padding: 64px 20px; color: #000; }
+.lm-section.lp-faq { background: var(--lp-50); padding: var(--lp-faq-top, 0px) 20px 64px; color: #000; }
 .lp-faq__layout { display: grid; grid-template-areas: "heading" "list" "cta"; gap: 32px; width: 100%; max-width: 1512px; margin: 0 auto; }
 .lp-faq__copy { display: contents; }
 .lp-faq__heading { grid-area: heading; }
