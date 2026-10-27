@@ -159,7 +159,7 @@ details[open] > summary .lp-when-open { display: block; }
 .lp-head__description { font-size: 16px; line-height: 1.5; color: #000; }
 .lp-head__description p { margin: 0 0 8px; }
 .lp-head__description p:last-child { margin-bottom: 0; }
-.lp-rating { display: inline-flex; align-items: center; gap: 4px; align-self: flex-start; color: #000; text-decoration: none; }
+.lp-rating { display: inline-flex; align-items: center; min-height: 26px; gap: 4px; align-self: flex-start; color: #000; text-decoration: none; }
 .lp-rating__stars {
   position: relative; display: block; width: 68px; height: 12px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 1.5L7.117 5H10.5L7.8075 7.0625L8.9245 10.5L6 8.3755L3.0755 10.5L4.1925 7.0625L1.5 5H4.883L6 1.5Z' fill='none' stroke='%23000' stroke-width='0.8' stroke-miterlimit='10' stroke-linecap='square'/%3E%3C/svg%3E") 0 center / 14px 12px repeat-x;
@@ -407,7 +407,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 .lp-subnav__inner { position: relative; display: flex; align-items: center; width: 100%; max-width: 1512px; margin: 0 auto; padding: 0 20px; }
 .lp-subnav__scroller { position: relative; width: 100%; min-height: 52px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; }
 .lp-subnav__scroller::-webkit-scrollbar { display: none; }
-.lp-subnav__list { display: flex; flex-wrap: nowrap; align-items: center; gap: 20px; width: max-content; min-height: inherit; margin: 0; padding: 16px 0; list-style: none; }
+.lp-subnav__list { line-height: 1.2; display: flex; flex-wrap: nowrap; align-items: center; gap: 20px; width: max-content; min-height: inherit; margin: 0; padding: 16px 0; list-style: none; }
 .lp-subnav__link { display: inline-flex; align-items: center; white-space: nowrap; font-size: 14px; font-weight: 700; line-height: 1.2; text-transform: uppercase; color: inherit; text-decoration: underline 2px transparent; text-underline-offset: 6px; }
 .lp-subnav__link:hover, .lp-subnav__link.is-active { text-decoration-color: currentColor; }
 .lp-subnav__link:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
@@ -436,7 +436,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 .lp-benefits__media { grid-area: media; min-width: 0; }
 .lp-benefits__list { grid-area: list; display: flex; flex-direction: column; gap: 16px; min-width: 0; margin-top: -16px; }
 @media (min-width: 1024px) {
-  .lm-section.lp-benefits { padding: 80px 40px 64px; }
+  .lm-section.lp-benefits { padding: 80px 40px; }
   .lp-benefits__layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "copy media"; align-items: start; gap: 40px; max-width: 1190px; }
   .lp-benefits__layout--no-media { grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy"; }
   .lp-benefits__copy { grid-area: copy; display: flex; flex-direction: column; gap: 40px; min-width: 0; padding-right: 40px; }

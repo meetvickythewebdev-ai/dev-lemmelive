@@ -14,7 +14,7 @@
     </div>
     <div class="lp-faq__list">
       {%- for faq in faqs -%}
-        <details class="lp-acc" data-lp-accordion>
+        <details class="lp-acc" data-lp-accordion{% if forloop.first and section.settings.open_first %} open{% endif %}>
           <summary class="lp-acc__summary"><span class="lp-acc__title">{{ faq.question.value }}</span><span class="lp-acc__icons">{% render 'lemme-pdp-icon', icon: 'plus-big', class: 'lp-when-closed' %}{% render 'lemme-pdp-icon', icon: 'minus-big', class: 'lp-when-open' %}</span></summary>
           <div class="lp-acc__content" data-lp-accordion-content>{{ faq.answer.value | newline_to_br }}</div>
         </details>
@@ -33,6 +33,7 @@
     { "type": "textarea", "id": "heading", "label": "Heading", "default": "your questions,\nanswered" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Read all FAQs" },
     { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true },
     { "type": "range", "id": "padding_top", "label": "Space above (desktop)", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
     { "type": "paragraph", "content": "Questions come from the product's \"lemme.faqs\" metafield (a list of FAQ entries). Hidden when a product has none." }
   ],
