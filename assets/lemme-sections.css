@@ -227,3 +227,6 @@
 .lm-quicklinks .lm-quicklinks__item { flex: 1 1 0; min-width: 0; gap: 8px; color: #000; font-size: 12px; font-weight: 700; line-height: 1.2; }
 .lm-quicklinks .lm-quicklinks__icon { width: 40px; height: 40px; background: #dfc8e7; overflow: hidden; }
 .lm-quicklinks .lm-quicklinks__icon img, .lm-quicklinks .lm-quicklinks__icon svg { width: 70%; height: 70%; object-fit: contain; }
+
+/* The live theme gives list items a 5px bottom margin; keep it so heights match. */
+.ls-cred__item, .ls-logos__item, .ls-tiles__item, .ls-bwf__feature { margin-bottom: 5px; }
