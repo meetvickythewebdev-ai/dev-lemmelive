@@ -26,8 +26,10 @@
     {%- for block in best_blocks -%}
       <li {{ block.shopify_attributes }}>
         <a class="lm-mega__pill" href="{{ block.settings.url | default: '#' }}">
-          {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '64px', fw: 224, fh: 224 -%}
-          <span>{{ block.settings.title }}</span>
+          <span class="lm-mega__pill-img">
+            {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '112px', fw: 224, fh: 224 -%}
+          </span>
+          <span class="lm-mega__pill-text">{{ block.settings.title }}</span>
         </a>
       </li>
     {%- endfor -%}
@@ -119,31 +121,33 @@
         <h3 class="lm-mega__title">{{ section.settings.benefits_title }}</h3>
         {{ benefits }}
         {%- if section.settings.subscribe_heading != blank -%}
-          <div class="lm-mega__subscribe">
-            <strong>{{ section.settings.subscribe_heading }}</strong>
-            {%- assign perks = section.settings.subscribe_points | newline_to_br | split: '<br />' -%}
-            <ul>{%- for perk in perks -%}{%- assign p = perk | strip -%}{%- if p != blank -%}<li>{{ p }}</li>{%- endif -%}{%- endfor -%}</ul>
-          </div>
+          <a class="lm-mega__subscribe" href="{{ section.settings.subscribe_url | default: '/pages/save-subscribe' }}">
+            <span class="lm-mega__subscribe-body">
+              <strong>{{ section.settings.subscribe_heading }}</strong>
+              {%- assign perks = section.settings.subscribe_points | newline_to_br | split: '<br />' -%}
+              <span class="lm-mega__subscribe-list">{%- for perk in perks -%}{%- assign p = perk | strip -%}{%- if p != blank -%}<span>{{ p }}</span>{%- endif -%}{%- endfor -%}</span>
+            </span>
+            <span class="lm-mega__subscribe-arrow" aria-hidden="true">&rsaquo;</span>
+          </a>
         {%- endif -%}
-      </div>
-      <div class="lm-mega__col">
         {%- if featured_blocks.size > 0 -%}
-          <h3 class="lm-mega__title">{{ section.settings.featured_title }}</h3>
-          <div class="lm-mega__featured">
-            {%- for block in featured_blocks -%}
-              <a class="lm-mega__feature" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
-                {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: block.settings.label, sizes: '280px', fw: 800, fh: 800 -%}
-                {%- render 'lemme-button', label: block.settings.label, style: 'light' -%}
-              </a>
-            {%- endfor -%}
+          <div class="lm-mega__featured-wrap">
+            <h3 class="lm-mega__title">{{ section.settings.featured_title }}</h3>
+            <div class="lm-mega__featured">
+              {%- for block in featured_blocks -%}
+                <a class="lm-mega__feature" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+                  {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: block.settings.label, sizes: '200px', fw: 800, fh: 800 -%}
+                  <span class="lm-mega__feature-blur" aria-hidden="true">{%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '200px', fw: 800, fh: 800 -%}</span>
+                  {%- render 'lemme-button', label: block.settings.label, style: 'light' -%}
+                </a>
+              {%- endfor -%}
+            </div>
           </div>
-        {%- endif -%}
-        {%- if section.settings.shipping_text != blank -%}
-          <p class="lm-mega__shipping">{% render 'lemme-icon', icon: 'truck' %}{{ section.settings.shipping_text }}</p>
         {%- endif -%}
       </div>
     </div>
   </div>
+  <div class="lm-mega-overlay" data-lm-mega-overlay aria-hidden="true"></div>
 
   {%- comment -%} Mobile drawer {%- endcomment -%}
   <nav class="lm-drawer" id="LmDrawer-{{ section.id }}" data-lm-drawer aria-label="Main menu">
@@ -207,6 +211,7 @@
     { "type": "text", "id": "bestsellers_title", "label": "Best sellers title", "default": "Shop best sellers" },
     { "type": "text", "id": "benefits_title", "label": "Benefits title", "default": "Shop by benefit" },
     { "type": "text", "id": "subscribe_heading", "label": "Subscribe box heading", "default": "Subscribe & save up to 35% on every order" },
+    { "type": "url", "id": "subscribe_url", "label": "Subscribe box link", "info": "Leave empty to link to /pages/save-subscribe." },
     { "type": "textarea", "id": "subscribe_points", "label": "Subscribe box points (one per line)", "default": "Free shipping on all US subscriptions\nPause, update frequency, or cancel anytime\nEarn loyalty points for free products" },
     { "type": "text", "id": "featured_title", "label": "Featured title", "default": "Featured" },
     { "type": "text", "id": "shipping_text", "label": "Shipping note", "default": "Free shipping on orders $50+" }

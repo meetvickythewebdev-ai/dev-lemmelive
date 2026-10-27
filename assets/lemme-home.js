@@ -305,6 +305,8 @@
         });
         toggle.addEventListener('mouseleave', function () { if (DESKTOP.matches) closeMega(250); });
         mega.addEventListener('mouseenter', function () { clearTimeout(closeTimer); });
+        var overlay = header.querySelector('[data-lm-mega-overlay]');
+        if (overlay) overlay.addEventListener('click', function () { closeMega(); });
         mega.addEventListener('mouseleave', function () { if (DESKTOP.matches) closeMega(150); });
         header.querySelectorAll('.lm-header__bar a, .lm-header__bar button').forEach(function (a) {
           if (a !== toggle) a.addEventListener('mouseenter', function () { if (DESKTOP.matches) closeMega(120); });
