@@ -353,7 +353,7 @@
               {%- for rp in routine -%}
                 {%- assign rv = rp.selected_or_first_available_variant -%}
                 <div class="lp-upsell__addon">
-                  <input class="lp-upsell__checkbox" type="checkbox" id="LpAddon-{{ section.id }}-{{ rv.id }}" value="{{ rv.id }}" data-price="{{ rv.price }}" data-compare="{{ rv.price }}"{% if rv.available %} checked{% else %} disabled{% endif %}>
+                  <input class="lp-upsell__checkbox" type="checkbox" id="LpAddon-{{ section.id }}-{{ rv.id }}" value="{{ rv.id }}" data-price="{{ rv.price }}" data-compare="{{ rv.compare_at_price | default: rv.price }}"{% if rv.available %} checked{% else %} disabled{% endif %}>
                   <label class="lp-upsell__addon-label" for="LpAddon-{{ section.id }}-{{ rv.id }}">
                     <span class="lp-upsell__box" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'tick' %}</span>
                     <span class="lp-upsell__addon-title">{{ rp.title }}</span>
