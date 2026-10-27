@@ -1,0 +1,71 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign diff_text = section.settings.text
+  if product.metafields.lemme.difference_text.value != blank
+    assign diff_text = product.metafields.lemme.difference_text.value | newline_to_br
+  endif
+-%}
+
+<section class="lm-section lm-section--clear lm-diff" aria-labelledby="LmDiffHeading-{{ section.id }}">
+  <div class="lm-container">
+    <div class="lm-diff__content">
+      <h2 class="lm-diff__heading" id="LmDiffHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- if diff_text != blank -%}<div class="lm-diff__text">{{ diff_text }}</div>{%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <ul class="lm-diff__icons">
+        {%- for block in section.blocks -%}
+          <li class="lm-diff__icon" {{ block.shopify_attributes }}>
+            {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '96px', fw: 192, fh: 192 -%}
+            <span>{{ block.settings.label }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme difference",
+  "class": "lm-diff-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "the lemme difference" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Lemme is third-party tested and made in NSF and GMP-certified facilities. Plus, the bottle and cap are made from 100% post-consumer recycled material.", "info": "Products with a \"lemme.difference_text\" metafield show that text instead." }
+  ],
+  "blocks": [
+    {
+      "type": "icon",
+      "name": "Icon",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Vegetarian" },
+        { "type": "image_picker", "id": "image", "label": "Icon (square, transparent)" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in icon", "default": "lemme-diff-vegetarian.png", "options": [
+          { "value": "lemme-diff-vegetarian.png", "label": "Vegetarian (heart)" },
+          { "value": "lemme-diff-gluten-free.png", "label": "Gluten-free (wheat)" },
+          { "value": "lemme-diff-gelatin-free.png", "label": "Gelatin-free (citrus)" },
+          { "value": "lemme-diff-no-dyes.png", "label": "No dyes (dropper)" },
+          { "value": "lemme-diff-no-sugar-alcohols.png", "label": "No sugar alcohols (heart leaf)" },
+          { "value": "lemme-diff-clinically-studied.png", "label": "Clinically studied (flask)" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme difference",
+      "blocks": [
+        { "type": "icon", "settings": { "label": "Vegetarian", "bundled_image": "lemme-diff-vegetarian.png" } },
+        { "type": "icon", "settings": { "label": "Gluten-free", "bundled_image": "lemme-diff-gluten-free.png" } },
+        { "type": "icon", "settings": { "label": "Gelatin-free", "bundled_image": "lemme-diff-gelatin-free.png" } },
+        { "type": "icon", "settings": { "label": "No synthetic dyes or flavors", "bundled_image": "lemme-diff-no-dyes.png" } },
+        { "type": "icon", "settings": { "label": "No sugar alcohols", "bundled_image": "lemme-diff-no-sugar-alcohols.png" } },
+        { "type": "icon", "settings": { "label": "Clinically-studied ingredients", "bundled_image": "lemme-diff-clinically-studied.png" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

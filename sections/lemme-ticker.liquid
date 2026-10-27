@@ -1,7 +1,7 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 
-<section class="lm-section lm-ticker" style="--lm-marquee-speed: {{ section.settings.speed }}s;" aria-label="{{ section.settings.text | escape }}">
+<section class="lm-section lm-ticker{% unless section.settings.bottom_space %} lm-ticker--flush{% endunless %}" style="--lm-marquee-speed: {{ section.settings.speed }}s;" aria-label="{{ section.settings.text | escape }}">
   <div class="lm-ticker__band" style="position:relative;">
     <div class="lm-marquee" data-lm-marquee tabindex="0">
       <div class="lm-marquee__track">
@@ -22,6 +22,7 @@
   "class": "lm-ticker-section",
   "settings": [
     { "type": "text", "id": "text", "label": "Text", "default": "OHMYGOSHWAGANDHA" },
+    { "type": "checkbox", "id": "bottom_space", "label": "Space below the band", "default": true },
     { "type": "range", "id": "speed", "label": "Scroll speed (seconds per item)", "min": 4, "max": 30, "step": 1, "unit": "s", "default": 10 }
   ],
   "presets": [ { "name": "Lemme scrolling text" } ]

@@ -52,8 +52,14 @@
                     assign bg_fallback = block.settings.bundled_hover_bg
                   endif
                 -%}
-                {%- if block.settings.hover_bg != blank or bg_fallback != blank -%}
-                  {%- render 'lemme-image', image: block.settings.hover_bg, fallback: bg_fallback, alt: '', class: 'lm-card__bg', sizes: '(min-width: 1025px) 25vw, (min-width: 750px) 50vw, 100vw', fw: 624, fh: 672 -%}
+                {%- liquid
+                  assign bg_image = block.settings.hover_bg
+                  if bg_image == blank and p != blank
+                    assign bg_image = p.metafields.lemme.card_background.value
+                  endif
+                -%}
+                {%- if bg_image != blank or bg_fallback != blank -%}
+                  {%- render 'lemme-image', image: bg_image, fallback: bg_fallback, alt: '', class: 'lm-card__bg', sizes: '(min-width: 1025px) 25vw, (min-width: 750px) 50vw, 100vw', fw: 624, fh: 672 -%}
                 {%- endif -%}
                 {%- render 'lemme-image', image: card_image, fallback: block.settings.bundled_image, alt: card_title, class: 'lm-card__img', sizes: '(min-width: 1025px) 25vw, (min-width: 750px) 50vw, 100vw', fw: 832, fh: 832 -%}
                 {%- if block.settings.hover_image != blank -%}
@@ -62,8 +68,14 @@
               </div>
               <div class="lm-card__body">
                 <h3 class="lm-card__title">{{ card_title }}</h3>
-                {%- if block.settings.subtitle != blank -%}
-                  <div class="lm-card__subtitle">{{ block.settings.subtitle }}</div>
+                {%- liquid
+                  assign card_subtitle = block.settings.subtitle
+                  if p != blank and p.metafields.lemme.subtitle.value != blank
+                    assign card_subtitle = p.metafields.lemme.subtitle.value
+                  endif
+                -%}
+                {%- if card_subtitle != blank -%}
+                  <div class="lm-card__subtitle">{{ card_subtitle }}</div>
                 {%- endif -%}
                 {%- if card_price != blank -%}
                   <div class="lm-card__price">{%- if card_compare != blank -%}<s>{{ card_compare }}</s>{%- endif -%}{{ card_price }}</div>

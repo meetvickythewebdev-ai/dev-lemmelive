@@ -1,0 +1,29 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+
+{%- if section.blocks.size > 0 -%}
+<section class="lm-section lm-reviews" id="LmReviews">
+  <div class="lm-container">
+    {%- if section.settings.heading != blank -%}<h2 class="lm-reviews__heading">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when '@app' -%}
+          {% render block %}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme reviews",
+  "class": "lm-reviews-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "believe the hype" },
+    { "type": "paragraph", "content": "Add your reviews app's widget block here (for example Okendo). The live site uses Okendo." }
+  ],
+  "blocks": [ { "type": "@app" } ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

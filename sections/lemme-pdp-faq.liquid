@@ -1,0 +1,47 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-pdp.js' | asset_url }}" defer></script>
+
+{%- assign faqs = product.metafields.lemme.faqs.value -%}
+{%- if faqs.size > 0 -%}
+<section class="lm-section lm-faq" id="LmFaq" aria-labelledby="LmFaqHeading-{{ section.id }}">
+  <div class="lm-container">
+    <div class="lm-faq__grid">
+      <div class="lm-faq__intro">
+        <h2 class="lm-faq__heading" id="LmFaqHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
+        {%- if section.settings.button_label != blank -%}
+          <div class="lm-hide-mobile">{%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'light', magnetic: true -%}</div>
+        {%- endif -%}
+      </div>
+      <div class="lm-faq__list">
+        {%- for faq in faqs -%}
+          <details class="lm-faq__item" id="LmFaq-{{ forloop.index }}"{% if forloop.first %} open{% endif %} data-lm-faq>
+            <summary class="lm-faq__q">
+              <span>{{ faq.question.value }}</span>
+              <span class="lm-faq__icon" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'plus' %}{% render 'lemme-pdp-icon', icon: 'minus' %}</span>
+            </summary>
+            <div class="lm-faq__a">{{ faq.answer.value | newline_to_br }}</div>
+          </details>
+        {%- endfor -%}
+        {%- if section.settings.button_label != blank -%}
+          <div class="lm-hide-desktop lm-faq__mobile-btn">{%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'light' -%}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme product FAQs",
+  "class": "lm-faq-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "answers to all your questions" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Read all FAQs" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "paragraph", "content": "Questions come from the product's \"lemme.faqs\" metafield (a list of FAQ entries). The section hides itself when a product has none." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}
