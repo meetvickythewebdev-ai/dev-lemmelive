@@ -1,9 +1,9 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 
-{%- capture default_learn -%}Blog|/blogs/news,Subscribe|/pages/save-subscribe,Loyalty & Rewards|/pages/the-wellness-circle-loyalty,Influencer|/pages/influencer{%- endcapture -%}
-{%- capture default_help -%}Help/FAQ|/pages/faq,Contact Us|/pages/contact,Find Us|/pages/find-us,Shop iHerb|https://www.iherb.com{%- endcapture -%}
-{%- capture default_legal -%}Privacy Policy|/policies/privacy-policy,Accessibility|/pages/accessibility,Terms and Conditions of Service and Sale|/policies/terms-of-service,Consumer Health Data|/pages/consumer-health-data,Your Privacy Choices|/pages/your-privacy-choices,Submit a Privacy Request|/pages/privacy-request{%- endcapture -%}
+{%- capture default_learn -%}Blog|/blogs/news,Subscribe|/pages/save-subscribe,Loyalty & Rewards|/pages/the-wellness-circle-loyalty,Influencer|/pages/ambassador{%- endcapture -%}
+{%- capture default_help -%}Help/FAQ|/pages/faq,Contact Us|/pages/contact,Find Us|/pages/find-us,Shop iHerb|https://www.iherb.com/c/lemme{%- endcapture -%}
+{%- capture default_legal -%}Privacy Policy|/policies/privacy-policy,Accessibility|/pages/accessibility,Terms and Conditions of Service and Sale|/pages/terms-of-conditions-of-service-and-sale,Consumer Health Data|/pages/consumer-health-data-privacy-policy,Your Privacy Choices|#,Submit a Privacy Request|#{%- endcapture -%}
 
 <div class="lm-footer">
   <div class="lm-footer__sparkles" aria-hidden="true">
@@ -108,10 +108,10 @@
     { "type": "link_list", "id": "menu_2", "label": "Menu 2" },
     { "type": "link_list", "id": "legal_menu", "label": "Legal links" },
     { "type": "header", "content": "Social" },
-    { "type": "url", "id": "instagram", "label": "Instagram", "default": "https://www.instagram.com/lemmelive" },
-    { "type": "url", "id": "tiktok", "label": "TikTok", "default": "https://www.tiktok.com/@lemmelive" },
-    { "type": "url", "id": "twitter", "label": "X (Twitter)", "default": "https://twitter.com/lemmelive" },
-    { "type": "url", "id": "facebook", "label": "Facebook", "default": "https://www.facebook.com/lemmelive" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "tiktok", "label": "TikTok" },
+    { "type": "url", "id": "twitter", "label": "X (Twitter)" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
     { "type": "header", "content": "Legal" },
     { "type": "text", "id": "copyright", "label": "Copyright line", "default": "© [year] Lemme is a registered trademark of KK Nutrition, Inc.", "info": "[year] is replaced with the current year." },
     { "type": "richtext", "id": "fda_text", "label": "FDA disclaimer", "default": "<p>* These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.</p>" }

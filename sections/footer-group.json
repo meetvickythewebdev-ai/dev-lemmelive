@@ -13,7 +13,12 @@
   "sections": {
     "lemme_footer": {
       "type": "lemme-footer",
-      "settings": {}
+      "settings": {
+        "instagram": "https://www.instagram.com/lemme/",
+        "tiktok": "https://www.tiktok.com/@lemme",
+        "twitter": "https://twitter.com/lemme",
+        "facebook": "https://www.facebook.com/lemmebykourtneykardashian"
+      }
     }
   },
   "order": [
