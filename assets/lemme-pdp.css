@@ -12,7 +12,7 @@
   --lp-badge: #cdaed8;
   --lp-ink: #232323;
   --lp-line: 2px solid #000;
-  --lp-sticky-top: calc(var(--lm-header-h, 80px) + var(--lm-promo-h, 32px) - 1px);
+  --lp-sticky-top: var(--lm-header-bottom, 104px);
 }
 
 .lp-icon { display: block; flex-shrink: 0; }
@@ -665,6 +665,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 .lm-section.lp-cards:not(:has(.lp-cards__slide)) { display: none; }
 .lp-cards__inner { width: 100%; max-width: 1512px; margin: 0 auto; padding: 0 20px; }
 .lp-cards__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.lp-cards__shop-all { flex-shrink: 0; margin-bottom: 4px; font-size: 16px; font-weight: 700; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; text-decoration: underline !important; text-underline-offset: .2em; }
 .lp-cards__carousel { position: relative; }
 .lp-cards__track { display: flex; gap: 16px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .lp-cards__track::-webkit-scrollbar { display: none; }

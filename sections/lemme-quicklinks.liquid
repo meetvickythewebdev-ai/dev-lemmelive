@@ -1,4 +1,5 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-sections.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 
 <section class="lm-section lm-quicklinks{% if section.settings.mobile_only %} lm-quicklinks--mobile-only{% endif %}" aria-label="{{ section.settings.aria_label | escape }}">

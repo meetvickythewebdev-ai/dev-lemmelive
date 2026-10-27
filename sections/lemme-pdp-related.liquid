@@ -10,12 +10,13 @@
   endif
 -%}
 
-<section class="lm-section lp-cards" id="featured-products" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpCards-{{ section.id }}" data-lp-cards
-  {% if section.settings.collection == blank %}data-lp-recs-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}&intent=related"{% endif %}>
+<section class="lm-section lp-cards" id="featured-products-{{ section.id }}"{% if product %} data-lp-nav="{{ section.settings.nav_label | escape }}"{% endif %} aria-labelledby="LpCards-{{ section.id }}" data-lp-cards
+  {% if section.settings.collection == blank and product %}data-lp-recs-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}&intent=related"{% endif %}>
   {%- if source != blank -%}
     <div class="lp-cards__inner">
       <div class="lp-cards__header">
         <h2 class="lp-h2" id="LpCards-{{ section.id }}">{{ section.settings.heading }}</h2>
+        {%- if section.settings.shop_all_label != blank -%}<a class="lp-cards__shop-all" href="{{ section.settings.shop_all_url | default: routes.all_products_collection_url }}">{{ section.settings.shop_all_label }}</a>{%- endif -%}
       </div>
       <div class="lp-cards__carousel">
         <ul class="lp-cards__track" data-lp-cards-track>
@@ -41,11 +42,13 @@
   "settings": [
     { "type": "text", "id": "nav_label", "label": "Link label", "default": "Products" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "most-loved formulas" },
-    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to use Shopify's related product recommendations." },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "On product pages, leave empty to use Shopify's related product recommendations." },
+    { "type": "text", "id": "shop_all_label", "label": "Shop all link" },
+    { "type": "url", "id": "shop_all_url", "label": "Shop all link URL" },
     { "type": "range", "id": "limit", "label": "Products to show", "min": 3, "max": 12, "step": 1, "default": 8 },
     { "type": "text", "id": "add_label", "label": "Add button", "default": "Add +" },
     { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold out" }
   ],
-  "enabled_on": { "templates": ["product"] }
+  "presets": [ { "name": "Lemme product cards" } ]
 }
 {% endschema %}

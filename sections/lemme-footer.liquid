@@ -1,96 +1,122 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 
+{%- capture default_shop -%}Gummies|/collections/gummies,Capsules|/collections/capsules,Chews|/collections/chews,Build Your Bundle|/products/byob-4-pack{%- endcapture -%}
 {%- capture default_learn -%}Blog|/blogs/news,Subscribe|/pages/save-subscribe,Loyalty & Rewards|/pages/the-wellness-circle-loyalty,Influencer|/pages/ambassador{%- endcapture -%}
 {%- capture default_help -%}Help/FAQ|/pages/faq,Contact Us|/pages/contact,Find Us|/pages/find-us,Shop iHerb|https://www.iherb.com/c/lemme{%- endcapture -%}
 {%- capture default_legal -%}Privacy Policy|/policies/privacy-policy,Accessibility|/pages/accessibility,Terms and Conditions of Service and Sale|/pages/terms-of-conditions-of-service-and-sale,Consumer Health Data|/pages/consumer-health-data-privacy-policy,Your Privacy Choices|#,Submit a Privacy Request|#{%- endcapture -%}
 
-<div class="lm-footer">
-  <div class="lm-footer__sparkles" aria-hidden="true">
-    <span class="lm-sparkle lm-sparkle--1">{% render 'lemme-icon', icon: 'star' %}</span>
-    <span class="lm-sparkle lm-sparkle--2">{% render 'lemme-icon', icon: 'star' %}</span>
+<footer class="lm-footer lm-ft">
+  <div class="lm-ft__marquee" aria-hidden="true">
+    <div class="lm-ft__marquee-track">
+      {%- for g in (1..2) -%}
+        <div class="lm-ft__marquee-group">
+          {%- for i in (1..20) -%}
+            {% render 'lemme-icon', icon: 'logo' %}{% render 'lemme-pdp-icon', icon: 'sparkle-big', class: 'lm-ft__marquee-star' %}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
   </div>
-  <div class="lm-container">
-    <div class="lm-footer__grid">
-      <div class="lm-footer__newsletter">
-        <h2 class="lm-footer__heading">{{ section.settings.heading }}</h2>
+
+  <div class="lm-ft__inner">
+    <div class="lm-ft__signup">
+      <div class="lm-ft__copy">
+        <h2 class="lm-ft__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.disclaimer != blank -%}<div class="lm-ft__disclaimer">{{ section.settings.disclaimer }}</div>{%- endif -%}
+      </div>
+      <div class="lm-ft__form-col">
         {%- assign newsletter_form_id = 'LmNewsletter-' | append: section.id -%}
-        {%- form 'customer', id: newsletter_form_id, class: 'lm-footer__form' -%}
+        {%- form 'customer', id: newsletter_form_id, class: 'lm-ft__form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
-          <label class="lm-visually-hidden" for="LmNewsletterEmail-{{ section.id }}">Email</label>
-          <div class="lm-footer__field">
-            <input id="LmNewsletterEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" placeholder="Email" required aria-required="true"{% if form.errors %} aria-invalid="true" aria-describedby="LmNewsletterMsg-{{ section.id }}"{% endif %}>
-            <button type="submit" aria-label="{{ section.settings.submit_label | escape }}">{% render 'lemme-icon', icon: 'arrow-right' %}</button>
-          </div>
           {%- if form.posted_successfully? -%}
-            <p class="lm-footer__msg" id="LmNewsletterMsg-{{ section.id }}" role="status">{{ section.settings.success_text }}</p>
-          {%- elsif form.errors -%}
-            <p class="lm-footer__msg" id="LmNewsletterMsg-{{ section.id }}" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+            <p class="lm-ft__msg" role="status">{{ section.settings.success_text }}</p>
+          {%- else -%}
+            <div class="lm-ft__field">
+              <label class="lm-visually-hidden" for="LmNewsletterEmail-{{ section.id }}">{{ section.settings.placeholder }}</label>
+              <input class="lm-ft__input" id="LmNewsletterEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" placeholder="{{ section.settings.placeholder | escape }}" required{% if form.errors %} aria-invalid="true" aria-describedby="LmNewsletterMsg-{{ section.id }}"{% endif %}>
+              <button class="lm-ft__submit" type="submit" aria-label="{{ section.settings.submit_label | escape }}">{% render 'lemme-pdp-icon', icon: 'arrow-right-20' %}</button>
+            </div>
+            {%- if form.errors -%}<p class="lm-ft__msg lm-ft__msg--error" id="LmNewsletterMsg-{{ section.id }}" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
           {%- endif -%}
         {%- endform -%}
-        {%- if section.settings.disclaimer != blank -%}
-          <div class="lm-footer__disclaimer">{{ section.settings.disclaimer }}</div>
-        {%- endif -%}
+        {%- if section.settings.sms_label != blank -%}<a class="lm-ft__sms" href="{{ section.settings.sms_url | default: '#' }}">{{ section.settings.sms_label }}</a>{%- endif -%}
+      </div>
+    </div>
 
-        <ul class="lm-footer__social" aria-label="Social media">
+    <div class="lm-ft__columns">
+      {%- for n in (1..3) -%}
+        {%- liquid
+          case n
+            when 1
+              assign menu = section.settings.menu_1
+              assign menu_title = section.settings.menu_1_title
+              assign fallback = default_shop
+            when 2
+              assign menu = section.settings.menu_2
+              assign menu_title = section.settings.menu_2_title
+              assign fallback = default_learn
+            else
+              assign menu = section.settings.menu_3
+              assign menu_title = section.settings.menu_3_title
+              assign fallback = default_help
+          endcase
+        -%}
+        <div class="lm-ft__column" data-lm-ft-column>
+          <h3 class="lm-ft__column-heading">
+            <button class="lm-ft__trigger" type="button" aria-expanded="false" aria-controls="LmFtMenu-{{ section.id }}-{{ n }}" data-lm-ft-trigger>
+              <span class="lm-ft__column-title">{{ menu_title }}</span>
+              <span class="lm-ft__column-icon" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'plus' , class: 'lm-ft__icon-open' %}{% render 'lemme-pdp-icon', icon: 'minus', class: 'lm-ft__icon-close' %}</span>
+            </button>
+          </h3>
+          <div class="lm-ft__panel" id="LmFtMenu-{{ section.id }}-{{ n }}">
+            <div class="lm-ft__panel-inner">
+              <nav class="lm-ft__nav" aria-label="{{ menu_title | escape }}">
+                <ul class="lm-ft__menu">
+                  {%- if menu != blank -%}
+                    {%- for link in menu.links -%}<li><a class="lm-ft__menu-item" href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+                  {%- else -%}
+                    {%- assign items = fallback | split: ',' -%}
+                    {%- for item in items -%}{%- assign parts = item | split: '|' -%}<li><a class="lm-ft__menu-item" href="{{ parts[1] }}">{{ parts[0] }}</a></li>{%- endfor -%}
+                  {%- endif -%}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+      <div class="lm-ft__aside">
+        <ul class="lm-ft__social" aria-label="Social media">
           {%- if section.settings.instagram != blank -%}<li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'lemme-icon', icon: 'instagram' %}</a></li>{%- endif -%}
           {%- if section.settings.tiktok != blank -%}<li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'lemme-icon', icon: 'tiktok' %}</a></li>{%- endif -%}
           {%- if section.settings.twitter != blank -%}<li><a href="{{ section.settings.twitter }}" target="_blank" rel="noopener" aria-label="X (Twitter)">{% render 'lemme-icon', icon: 'twitter' %}</a></li>{%- endif -%}
           {%- if section.settings.facebook != blank -%}<li><a href="{{ section.settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'lemme-icon', icon: 'facebook' %}</a></li>{%- endif -%}
         </ul>
-
-        <div class="lm-footer__legal">
-          {%- assign current_year = 'now' | date: '%Y' -%}
-          <p>{{ section.settings.copyright | replace: '[year]', current_year }}</p>
-          <div class="lm-footer__legal-links">
-            {%- if section.settings.legal_menu != blank -%}
-              {%- for link in section.settings.legal_menu.links -%}
-                <a href="{{ link.url }}">{%- if link.title contains 'Privacy Choices' -%}{% render 'lemme-icon', icon: 'privacy' %}{%- endif -%}{{ link.title }}</a>
-              {%- endfor -%}
-            {%- else -%}
-              {%- assign items = default_legal | split: ',' -%}
-              {%- for item in items -%}
-                {%- assign parts = item | split: '|' -%}
-                <a href="{{ parts[1] }}">{%- if parts[0] contains 'Privacy Choices' -%}{% render 'lemme-icon', icon: 'privacy' %}{%- endif -%}{{ parts[0] }}</a>
-              {%- endfor -%}
-            {%- endif -%}
-          </div>
-        </div>
+        {%- if section.settings.fda_text != blank -%}<div class="lm-ft__fda">{{ section.settings.fda_text }}</div>{%- endif -%}
       </div>
+    </div>
 
-      <div class="lm-footer__menus">
-        {%- for n in (1..2) -%}
-          {%- liquid
-            if n == 1
-              assign menu = section.settings.menu_1
-              assign menu_title = section.settings.menu_1_title
-              assign fallback = default_learn
-            else
-              assign menu = section.settings.menu_2
-              assign menu_title = section.settings.menu_2_title
-              assign fallback = default_help
-            endif
-          -%}
-          <nav class="lm-footer__menu" aria-label="{{ menu_title | escape }}">
-            <h3 class="lm-footer__menu-title">{{ menu_title }}</h3>
-            <ul>
-              {%- if menu != blank -%}
-                {%- for link in menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
-              {%- else -%}
-                {%- assign items = fallback | split: ',' -%}
-                {%- for item in items -%}{%- assign parts = item | split: '|' -%}<li><a href="{{ parts[1] }}">{{ parts[0] }}</a></li>{%- endfor -%}
-              {%- endif -%}
-            </ul>
-          </nav>
-        {%- endfor -%}
-      </div>
-
-      {%- if section.settings.fda_text != blank -%}
-        <div class="lm-footer__fda">{{ section.settings.fda_text }}</div>
-      {%- endif -%}
+    <div class="lm-ft__bottom">
+      {%- assign current_year = 'now' | date: '%Y' -%}
+      <p class="lm-ft__copyright"><small>{{ section.settings.copyright | replace: '[year]', current_year }}</small></p>
+      <nav class="lm-ft__legal-nav" aria-label="Legal">
+        <ul class="lm-ft__legal">
+          {%- if section.settings.legal_menu != blank -%}
+            {%- for link in section.settings.legal_menu.links -%}
+              <li><a class="lm-ft__legal-item" href="{{ link.url }}">{%- if link.title contains 'Privacy Choices' -%}{% render 'lemme-icon', icon: 'privacy' %}{%- endif -%}{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- assign items = default_legal | split: ',' -%}
+            {%- for item in items -%}
+              {%- assign parts = item | split: '|' -%}
+              <li><a class="lm-ft__legal-item" href="{{ parts[1] }}">{%- if parts[0] contains 'Privacy Choices' -%}{% render 'lemme-icon', icon: 'privacy' %}{%- endif -%}{{ parts[0] }}</a></li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </nav>
     </div>
   </div>
-</div>
+</footer>
 
 {% schema %}
 {
@@ -98,14 +124,19 @@
   "class": "lm-footer-section",
   "settings": [
     { "type": "text", "id": "heading", "label": "Newsletter heading", "default": "be first to get the goods" },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Your email address" },
     { "type": "text", "id": "submit_label", "label": "Submit button accessible label", "default": "Subscribe" },
     { "type": "text", "id": "success_text", "label": "Success message", "default": "Thanks for subscribing!" },
-    { "type": "richtext", "id": "disclaimer", "label": "Newsletter disclaimer", "default": "<p>By entering your email and clicking the submit button you agree to receive marketing email messages from Lemme at the email address provided. Unsubscribe at any time. View our <a href=\"/policies/privacy-policy\" title=\"Privacy Policy\">Privacy Policy</a> and <a href=\"/policies/terms-of-service\" title=\"Terms\">Terms</a>.</p>" },
+    { "type": "richtext", "id": "disclaimer", "label": "Newsletter disclaimer", "default": "<p>By entering your email and clicking the submit button you agree to receive marketing email messages from lemme at the email address provided. Unsubscribe at any time. View our <a href=\"/policies/privacy-policy\" title=\"Privacy Policy\">Privacy Policy</a> and <a href=\"/policies/terms-of-service\" title=\"Terms\">Terms</a>.</p>" },
+    { "type": "text", "id": "sms_label", "label": "SMS link label", "default": "Text me instead" },
+    { "type": "url", "id": "sms_url", "label": "SMS link" },
     { "type": "header", "content": "Menus", "info": "Leave a menu empty to show the built-in Lemme links." },
-    { "type": "text", "id": "menu_1_title", "label": "Menu 1 title", "default": "Learn" },
+    { "type": "text", "id": "menu_1_title", "label": "Menu 1 title", "default": "Shop" },
     { "type": "link_list", "id": "menu_1", "label": "Menu 1" },
-    { "type": "text", "id": "menu_2_title", "label": "Menu 2 title", "default": "Get help" },
+    { "type": "text", "id": "menu_2_title", "label": "Menu 2 title", "default": "Learn" },
     { "type": "link_list", "id": "menu_2", "label": "Menu 2" },
+    { "type": "text", "id": "menu_3_title", "label": "Menu 3 title", "default": "Help" },
+    { "type": "link_list", "id": "menu_3", "label": "Menu 3" },
     { "type": "link_list", "id": "legal_menu", "label": "Legal links" },
     { "type": "header", "content": "Social" },
     { "type": "url", "id": "instagram", "label": "Instagram" },
@@ -113,7 +144,7 @@
     { "type": "url", "id": "twitter", "label": "X (Twitter)" },
     { "type": "url", "id": "facebook", "label": "Facebook" },
     { "type": "header", "content": "Legal" },
-    { "type": "text", "id": "copyright", "label": "Copyright line", "default": "© [year] Lemme is a registered trademark of KK Nutrition, Inc.", "info": "[year] is replaced with the current year." },
+    { "type": "text", "id": "copyright", "label": "Copyright line", "default": "© [year] Lemme is a registered trademark of Lemme Inc.", "info": "[year] is replaced with the current year." },
     { "type": "richtext", "id": "fda_text", "label": "FDA disclaimer", "default": "<p>* These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.</p>" }
   ],
   "enabled_on": { "groups": ["footer"] },

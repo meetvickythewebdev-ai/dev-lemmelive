@@ -16,7 +16,9 @@
       "settings": {
         "link_1_url": "/products/byob-4-pack",
         "link_2_url": "/pages/the-wellness-circle-loyalty",
-        "promo_url": "/pages/save-subscribe"
+        "promo_url": "/pages/save-subscribe",
+        "drawer_link_1_url": "/blogs/news",
+        "drawer_link_2_url": "/pages/faq"
       },
       "blocks": {
         "collection_1": {

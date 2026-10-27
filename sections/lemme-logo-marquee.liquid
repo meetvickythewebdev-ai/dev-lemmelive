@@ -1,0 +1,45 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-sections.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-sections.js' | asset_url }}" defer></script>
+
+{%- capture group -%}
+  {%- for i in (1..2) -%}
+    {%- for block in section.blocks -%}
+      <li class="ls-logos__item{% if block.settings.caption != blank %} ls-logos__item--captioned{% endif %}"{% if forloop.parentloop.index == 1 %} {{ block.shopify_attributes }}{% endif %}>
+        {%- if block.settings.logo != blank -%}{{ block.settings.logo | image_url: width: 400 | image_tag: alt: block.settings.alt, loading: 'lazy', class: 'ls-logos__logo' }}{%- endif -%}
+        {%- if block.settings.caption != blank -%}<p class="ls-logos__caption">{{ block.settings.caption }}</p>{%- endif -%}
+      </li>
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<section class="lm-section ls-logos" style="--ls-logos-duration: {{ section.settings.duration }}s;" aria-label="{{ section.settings.label | escape }}" data-ls-logos>
+  <div class="ls-logos__track">
+    <ul class="ls-logos__group">{{ group }}</ul>
+    <ul class="ls-logos__group" aria-hidden="true">{{ group }}</ul>
+  </div>
+  <div class="ls-logos__control">
+    <button class="ls-logos__toggle" type="button" aria-label="Pause logos" data-ls-logos-toggle>
+      {% render 'lemme-pdp-icon', icon: 'pause', class: 'ls-logos__pause' %}{% render 'lemme-pdp-icon', icon: 'play', class: 'ls-logos__play' %}
+    </button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme logo marquee",
+  "class": "ls-logos-section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label (screen readers)", "default": "As seen in" },
+    { "type": "range", "id": "duration", "label": "Loop duration", "min": 10, "max": 90, "step": 5, "unit": "s", "default": 40 }
+  ],
+  "blocks": [
+    { "type": "logo", "name": "Logo", "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo (white on transparent)" },
+      { "type": "text", "id": "alt", "label": "Name (screen readers)" },
+      { "type": "text", "id": "caption", "label": "Caption" }
+    ] }
+  ],
+  "presets": [ { "name": "Lemme logo marquee" } ]
+}
+{% endschema %}

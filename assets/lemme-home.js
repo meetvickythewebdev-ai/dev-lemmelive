@@ -355,6 +355,62 @@
   }
   window.addEventListener('resize', measureScrollbar);
 
+  /* ---------------------------------------------------------------- Promo bar scroll-away
+   * The promo bar sits above the header and scrolls out of view; the lilac bar then sticks to the top.
+   * --lm-promo-shift (0 → promo height) moves the fixed header, mega menu and drawer up together. */
+  var promoTicking = false;
+  function updatePromoShift() {
+    promoTicking = false;
+    var promo = document.querySelector('.lm-header .lm-promo');
+    var h = promo ? promo.offsetHeight : 0;
+    var pw = document.querySelector('.page-wrapper');
+    var y = Math.max(window.pageYOffset || document.documentElement.scrollTop || 0, pw ? pw.scrollTop : 0);
+    var shift = Math.max(0, Math.min(h, y));
+    document.documentElement.style.setProperty('--lm-promo-h', h + 'px');
+    document.documentElement.style.setProperty('--lm-promo-shift', shift + 'px');
+  }
+  function onPromoScroll() { if (!promoTicking) { promoTicking = true; requestAnimationFrame(updatePromoShift); } }
+  window.addEventListener('scroll', onPromoScroll, { passive: true });
+  window.addEventListener('resize', onPromoScroll);
+  document.addEventListener('DOMContentLoaded', function () {
+    var pw = document.querySelector('.page-wrapper');
+    if (pw) pw.addEventListener('scroll', onPromoScroll, { passive: true });
+    onPromoScroll();
+  });
+
+  /* ---------------------------------------------------------------- Footer menus (accordions on mobile) */
+  function initFooter(root) {
+    $all(root, '[data-lm-ft-trigger]').forEach(function (btn) {
+      if (btn.__lm) return;
+      btn.__lm = true;
+      btn.addEventListener('click', function () {
+        if (window.matchMedia('(min-width: 1024px)').matches) return;
+        btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------- Language selector */
+  function initLocale(root) {
+    $all(root, '[data-lm-locale-toggle]').forEach(function (btn) {
+      if (btn.__lm) return;
+      btn.__lm = true;
+      var menu = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!menu) return;
+      function set(open) { menu.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+      btn.addEventListener('click', function () { set(menu.hidden); });
+      document.addEventListener('click', function (e) { if (!menu.hidden && !btn.parentNode.contains(e.target)) set(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
+    });
+  }
+
+  /* ---------------------------------------------------------------- Cart count (keeps the badge in sync) */
+  document.addEventListener('cart:update', function (e) {
+    var n = e.detail && e.detail.resource && e.detail.resource.item_count;
+    if (n == null) return;
+    $all(document, '[data-lm-cart-count]').forEach(function (el) { el.textContent = n; el.setAttribute('data-count', n); });
+  });
+
   /* ---------------------------------------------------------------- Boot */
   function init(root) {
     root = root || document;
@@ -366,6 +422,9 @@
     initHero(root);
     initNoList(root);
     initHeader(root);
+    initLocale(root);
+    initFooter(root);
+    onPromoScroll();
   }
 
   function teardown(root) {

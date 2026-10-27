@@ -1,0 +1,18 @@
+{{ 'lemme-sections.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.text != blank -%}
+<div class="ls-note{% if section.settings.mobile_only %} ls-note--mobile-only{% endif %}" style="--ls-note-bg: {{ section.settings.background }};">{{ section.settings.text }}</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme small note",
+  "class": "ls-note-section",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Text", "default": "*Free travel-size MAËLYS GET-DREAMY Overnight Toning Body Whip with new subscription orders of $55+. While supplies last, US orders only." },
+    { "type": "checkbox", "id": "mobile_only", "label": "Mobile only", "default": true },
+    { "type": "color", "id": "background", "label": "Background", "default": "#f7f1f9" }
+  ],
+  "presets": [ { "name": "Lemme small note" } ]
+}
+{% endschema %}

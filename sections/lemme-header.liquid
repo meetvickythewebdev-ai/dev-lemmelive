@@ -51,42 +51,6 @@
 
 <div class="lm-header-spacer" aria-hidden="true"></div>
 <header class="lm-header" data-lm-header>
-  <div class="lm-header__bar">
-    <div class="lm-header__left">
-      <button class="lm-header__icon-btn lm-header__menu-btn lm-header__mobile-only" type="button" aria-label="Menu" aria-expanded="false" aria-controls="LmDrawer-{{ section.id }}" data-lm-drawer-toggle>
-        {% render 'lemme-icon', icon: 'menu' %}{% render 'lemme-icon', icon: 'close' %}
-      </button>
-      <a class="lm-header__icon-btn lm-header__mobile-only" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}">{% render 'lemme-icon', icon: 'search' %}</a>
-
-      <a class="lm-header__toggle lm-header__desktop-only" href="{{ section.settings.shop_url | default: routes.all_products_collection_url }}" aria-expanded="false" aria-controls="LmMega-{{ section.id }}" data-lm-mega-toggle>
-        {{ section.settings.shop_label }} {% render 'lemme-icon', icon: 'plus' %}
-      </a>
-      {%- if section.settings.link_1_label != blank -%}
-        <a class="lm-header__link lm-header__desktop-only" href="{{ section.settings.link_1_url | default: '#' }}">{{ section.settings.link_1_label }}</a>
-      {%- endif -%}
-      {%- if section.settings.link_2_label != blank -%}
-        <a class="lm-header__link lm-header__desktop-only" href="{{ section.settings.link_2_url | default: '#' }}">{{ section.settings.link_2_label }}</a>
-      {%- endif -%}
-    </div>
-
-    <a class="lm-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-      {%- if section.settings.logo != blank -%}
-        {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, width: 118 }}
-      {%- else -%}
-        {% render 'lemme-icon', icon: 'logo' %}
-      {%- endif -%}
-    </a>
-
-    <div class="lm-header__right">
-      <a class="lm-header__link lm-header__desktop-only" href="{{ routes.account_url }}">{{ section.settings.account_label }}</a>
-      <a class="lm-header__link lm-header__desktop-only" href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>
-      <a class="lm-header__link lm-header__cart" href="{{ routes.cart_url }}" aria-label="{{ section.settings.bag_label | escape }} ({{ cart.item_count }})">
-        <span class="lm-header__desktop-only">{{ section.settings.bag_label }}</span>
-        <span class="lm-header__count" data-lm-cart-count>{{ cart.item_count }}</span>
-      </a>
-    </div>
-  </div>
-
   {%- if section.settings.promo_text != blank -%}
     <div class="lm-promo" style="--lm-marquee-speed: {{ section.settings.promo_speed }}s;">
       {%- if section.settings.promo_url != blank -%}<a href="{{ section.settings.promo_url }}" class="lm-promo__link">{%- endif -%}
@@ -100,6 +64,56 @@
       {%- if section.settings.promo_url != blank -%}</a>{%- endif -%}
     </div>
   {%- endif -%}
+
+  <div class="lm-header__bar">
+    <nav class="lm-header__left lm-header__desktop-only" aria-label="Main">
+      <a class="lm-header__toggle" href="{{ section.settings.shop_url | default: routes.all_products_collection_url }}" aria-expanded="false" aria-controls="LmMega-{{ section.id }}" data-lm-mega-toggle>
+        {{ section.settings.shop_label }}{% render 'lemme-pdp-icon', icon: 'plus', class: 'lm-header__plus' %}
+      </a>
+      {%- if section.settings.link_1_label != blank -%}
+        <a class="lm-header__link" href="{{ section.settings.link_1_url | default: '#' }}">{{ section.settings.link_1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.link_2_label != blank -%}
+        <a class="lm-header__link" href="{{ section.settings.link_2_url | default: '#' }}">{{ section.settings.link_2_label }}</a>
+      {%- endif -%}
+    </nav>
+
+    <a class="lm-header__logo" href="{{ routes.root_url }}">
+      <span class="lm-visually-hidden">{{ shop.name }}</span>
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 240 | image_tag: alt: '', width: 110 }}
+      {%- else -%}
+        {% render 'lemme-icon', icon: 'logo' %}
+      {%- endif -%}
+    </a>
+
+    <div class="lm-header__right">
+      {%- if localization.available_languages.size > 1 -%}
+        <div class="lm-header__locale lm-header__desktop-only">
+          {%- form 'localization', id: 'LmLocale-{{ section.id }}', class: 'lm-locale' -%}
+            <input type="hidden" name="language_code" value="{{ localization.language.iso_code }}" data-lm-locale-input>
+            <button class="lm-locale__control" type="button" aria-expanded="false" aria-controls="LmLocaleList-{{ section.id }}" aria-label="Language" data-lm-locale-toggle>
+              <span class="lm-locale__value">{{ localization.language.iso_code | upcase }}</span>{% render 'lemme-pdp-icon', icon: 'chevron-down', class: 'lm-locale__chevron' %}
+            </button>
+            <ul class="lm-locale__menu" id="LmLocaleList-{{ section.id }}" role="listbox" hidden data-lm-locale-menu>
+              {%- for language in localization.available_languages -%}
+                <li><button class="lm-locale__option" type="submit" role="option" name="language_code" value="{{ language.iso_code }}" aria-selected="{% if language.iso_code == localization.language.iso_code %}true{% else %}false{% endif %}">{{ language.iso_code | upcase }}</button></li>
+              {%- endfor -%}
+            </ul>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+      <a class="lm-header__icon" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}">{% render 'lemme-pdp-icon', icon: 'zoom' %}</a>
+      <a class="lm-header__icon lm-header__desktop-only" href="{{ routes.account_url }}" aria-label="{{ section.settings.account_label | escape }}">{% render 'lemme-pdp-icon', icon: 'account' %}</a>
+      <a class="lm-header__icon lm-header__cart" href="{{ routes.cart_url }}" aria-label="{{ section.settings.bag_label | escape }} ({{ cart.item_count }})">
+        {% render 'lemme-pdp-icon', icon: 'bag' %}
+        <span class="lm-header__count" data-lm-cart-count data-count="{{ cart.item_count }}" aria-hidden="true">{{ cart.item_count }}</span>
+      </a>
+      <button class="lm-header__icon lm-header__menu-btn lm-header__mobile-only" type="button" aria-label="Menu" aria-expanded="false" aria-controls="LmDrawer-{{ section.id }}" data-lm-drawer-toggle>
+        {% render 'lemme-pdp-icon', icon: 'menu', class: 'lm-header__menu-open' %}{% render 'lemme-pdp-icon', icon: 'close', class: 'lm-header__menu-close' %}
+      </button>
+    </div>
+  </div>
 
   {%- comment -%} Desktop mega menu {%- endcomment -%}
   <div class="lm-mega" id="LmMega-{{ section.id }}" data-lm-mega>
@@ -166,19 +180,18 @@
         </button>
         <div class="lm-accordion__panel"><div>{{ benefits }}</div></div>
       </div>
-      {%- if section.settings.link_1_label != blank or section.settings.link_2_label != blank -%}
-        <ul class="lm-mega__benefits" style="margin-top:16px;">
-          {%- if section.settings.link_1_label != blank -%}<li><a class="lm-mega__benefit" href="{{ section.settings.link_1_url | default: '#' }}"><span>{{ section.settings.link_1_label }}</span></a></li>{%- endif -%}
-          {%- if section.settings.link_2_label != blank -%}<li><a class="lm-mega__benefit" href="{{ section.settings.link_2_url | default: '#' }}"><span>{{ section.settings.link_2_label }}</span></a></li>{%- endif -%}
-          <li><a class="lm-mega__benefit" href="{{ routes.account_url }}"><span>{{ section.settings.account_label }}</span></a></li>
-        </ul>
-      {%- endif -%}
       {%- if section.settings.shop_all_label != blank -%}
         <div class="lm-drawer__cta">{%- render 'lemme-button', label: section.settings.shop_all_label, url: section.settings.shop_all_url, style: 'dark', full: true -%}</div>
       {%- endif -%}
       {%- if section.settings.shipping_text != blank -%}
         <p class="lm-drawer__shipping">{% render 'lemme-icon', icon: 'truck' %}{{ section.settings.shipping_text }}</p>
       {%- endif -%}
+      <ul class="lm-drawer__links">
+        <li><a href="{{ routes.account_url }}">{{ section.settings.account_label }}</a></li>
+        {%- if section.settings.drawer_link_1_label != blank -%}<li><a href="{{ section.settings.drawer_link_1_url | default: '#' }}">{{ section.settings.drawer_link_1_label }}</a></li>{%- endif -%}
+        {%- if section.settings.link_2_label != blank -%}<li><a href="{{ section.settings.link_2_url | default: '#' }}">{{ section.settings.link_2_label }}</a></li>{%- endif -%}
+        {%- if section.settings.drawer_link_2_label != blank -%}<li><a href="{{ section.settings.drawer_link_2_url | default: '#' }}">{{ section.settings.drawer_link_2_label }}</a></li>{%- endif -%}
+      </ul>
     </div>
   </nav>
 </header>
@@ -189,7 +202,7 @@
   "class": "lm-header-section",
   "max_blocks": 30,
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the built-in white Lemme logo." },
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the built-in Lemme logo." },
     { "type": "header", "content": "Navigation" },
     { "type": "text", "id": "shop_label", "label": "Mega menu trigger label", "default": "Shop" },
     { "type": "url", "id": "shop_url", "label": "Mega menu trigger link" },
@@ -200,6 +213,10 @@
     { "type": "text", "id": "account_label", "label": "Account label", "default": "Account" },
     { "type": "text", "id": "search_label", "label": "Search label", "default": "Search" },
     { "type": "text", "id": "bag_label", "label": "Cart label", "default": "Bag" },
+    { "type": "text", "id": "drawer_link_1_label", "label": "Mobile menu extra link 1", "default": "Blog" },
+    { "type": "url", "id": "drawer_link_1_url", "label": "Mobile menu extra link 1 URL" },
+    { "type": "text", "id": "drawer_link_2_label", "label": "Mobile menu extra link 2", "default": "Help/FAQ" },
+    { "type": "url", "id": "drawer_link_2_url", "label": "Mobile menu extra link 2 URL" },
     { "type": "header", "content": "Promo bar" },
     { "type": "text", "id": "promo_text", "label": "Promo text", "default": "Take 20% off sitewide and an extra 25% off subscriptions & first renewals" },
     { "type": "url", "id": "promo_url", "label": "Promo link" },

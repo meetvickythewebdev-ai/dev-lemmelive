@@ -1,0 +1,33 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-sections.css' | asset_url | stylesheet_tag }}
+
+<section class="lm-section ls-cred" aria-label="{{ section.settings.label | escape }}">
+  <div class="ls-cred__inner">
+    <ul class="ls-cred__list">
+      {%- for block in section.blocks -%}
+        <li class="ls-cred__item" {{ block.shopify_attributes }}>
+          <span class="ls-cred__icon">{%- if block.settings.icon != blank -%}{{ block.settings.icon | image_url: width: 128 | image_tag: alt: '', loading: 'lazy', width: 64, height: 64 }}{%- endif -%}</span>
+          <p class="ls-cred__label">{{ block.settings.label }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme credibility row",
+  "class": "ls-cred-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label (screen readers)", "default": "Why Lemme" }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Item", "settings": [
+      { "type": "image_picker", "id": "icon", "label": "Icon" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Clinically Studied Ingredients" }
+    ] }
+  ],
+  "presets": [ { "name": "Lemme credibility row", "blocks": [ { "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" } ] } ]
+}
+{% endschema %}

@@ -11,116 +11,160 @@
   "sections": {
     "quicklinks": {
       "type": "lemme-quicklinks",
-      "settings": {},
       "blocks": {
-        "link_1": {
-          "type": "link",
-          "settings": {
-            "title": "Mood, Sleep, Energy",
-            "url": "/collections/mood-sleep-energy",
-            "builtin_icon": "mood"
-          }
-        },
-        "link_2": {
-          "type": "link",
-          "settings": {
-            "title": "Weight Management",
-            "url": "/collections/metabolism-weight-management",
-            "builtin_icon": "weight"
-          }
-        },
-        "link_3": {
+        "ql_1": {
           "type": "link",
           "settings": {
             "title": "Women's Health",
             "url": "/collections/womens-health",
-            "builtin_icon": "womens"
+            "icon": "shopify://shop_images/star-icon.svg"
           }
         },
-        "link_4": {
+        "ql_2": {
+          "type": "link",
+          "settings": {
+            "title": "Mood, Sleep & Energy",
+            "url": "/collections/mood-sleep-energy",
+            "icon": "shopify://shop_images/Group.svg"
+          }
+        },
+        "ql_3": {
+          "type": "link",
+          "settings": {
+            "title": "Weight Mgmt.",
+            "url": "/collections/metabolism-weight-management",
+            "icon": "shopify://shop_images/lighting-icon.svg"
+          }
+        },
+        "ql_4": {
           "type": "link",
           "settings": {
             "title": "Beauty & Digestion",
             "url": "/collections/beauty-digestion",
-            "builtin_icon": "beauty"
-          }
-        },
-        "link_5": {
-          "type": "link",
-          "settings": {
-            "title": "Build a Bundle",
-            "url": "/products/byob-4-pack",
-            "builtin_icon": "heart"
+            "icon": "shopify://shop_images/beauty-digestion_2eb7d756-4dce-4faf-b809-f5e485bf3070.svg"
           }
         }
       },
       "block_order": [
-        "link_1",
-        "link_2",
-        "link_3",
-        "link_4",
-        "link_5"
-      ]
+        "ql_1",
+        "ql_2",
+        "ql_3",
+        "ql_4"
+      ],
+      "settings": {
+        "mobile_only": true
+      }
     },
     "hero": {
-      "type": "lemme-hero",
-      "settings": {},
+      "type": "lemme-hero-banner",
+      "settings": {
+        "image": "shopify://shop_images/d-maelys-gift-hero_1.png",
+        "image_mobile": "shopify://shop_images/m-maelys-gift-hero-v2.png",
+        "heading": "wellness made right",
+        "heading_mobile": "wellness\nmade right",
+        "text": "<p>Science-backed results <strong>you can feel.</strong></p>",
+        "button_1_label": "Shop all",
+        "button_1_url": "/collections/all",
+        "button_2_label": "Build Your Bundle",
+        "button_2_url": "/products/byob-4-pack"
+      }
+    },
+    "note": {
+      "type": "lemme-note",
+      "settings": {}
+    },
+    "credibility": {
+      "type": "lemme-credibility",
       "blocks": {
-        "slide_1": {
-          "type": "slide",
+        "cred_1": {
+          "type": "item",
           "settings": {
-            "button_2_url": "/products/byob-4-pack"
+            "icon": "shopify://shop_images/Isolation_Mode.svg",
+            "label": "Clinically Studied Ingredients"
+          }
+        },
+        "cred_2": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_48098058.svg",
+            "label": "Validated by 3rd Party Testing"
+          }
+        },
+        "cred_3": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/icon_purr_Vaginal_Taste_976aade5-266b-44a0-9d86-4d1c93c55bf2.svg",
+            "label": "Results You Can Feel"
+          }
+        },
+        "cred_4": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/icon_glp-levels.svg",
+            "label": "Science-Backed Innovation"
           }
         }
       },
       "block_order": [
-        "slide_1"
-      ]
+        "cred_1",
+        "cred_2",
+        "cred_3",
+        "cred_4"
+      ],
+      "settings": {}
     },
-    "press": {
-      "type": "lemme-press",
-      "settings": {},
+    "faves": {
+      "type": "lemme-pdp-related",
+      "settings": {
+        "heading": "current faves",
+        "collection": "current-faves",
+        "shop_all_label": "Shop All",
+        "shop_all_url": "/collections/all"
+      }
+    },
+    "logos": {
+      "type": "lemme-logo-marquee",
       "blocks": {
         "logo_1": {
           "type": "logo",
           "settings": {
-            "name": "Vanity Fair",
-            "bundled_logo": "lemme-logo-vanity-fair.png"
+            "logo": "shopify://shop_images/Frame_1538239979.png"
           }
         },
         "logo_2": {
           "type": "logo",
           "settings": {
-            "name": "Vogue",
-            "bundled_logo": "lemme-logo-vogue.png"
+            "logo": "shopify://shop_images/image_689.png"
           }
         },
         "logo_3": {
           "type": "logo",
           "settings": {
-            "name": "WSJ",
-            "bundled_logo": "lemme-logo-wsj.png"
+            "logo": "shopify://shop_images/Frame_1538239978.png"
           }
         },
         "logo_4": {
           "type": "logo",
           "settings": {
-            "name": "Marie Claire",
-            "bundled_logo": "lemme-logo-marie-claire.png"
+            "logo": "shopify://shop_images/image_690.png"
           }
         },
         "logo_5": {
           "type": "logo",
           "settings": {
-            "name": "Harper's Bazaar",
-            "bundled_logo": "lemme-logo-bazaar.png"
+            "logo": "shopify://shop_images/image_693.png"
           }
         },
         "logo_6": {
           "type": "logo",
           "settings": {
-            "name": "Forbes",
-            "bundled_logo": "lemme-logo-forbes.png"
+            "logo": "shopify://shop_images/image_691.png"
+          }
+        },
+        "logo_7": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/image_694.png"
           }
         }
       },
@@ -130,217 +174,171 @@
         "logo_3",
         "logo_4",
         "logo_5",
-        "logo_6"
-      ]
-    },
-    "faves": {
-      "type": "lemme-products",
-      "settings": {},
-      "blocks": {
-        "product_1": {
-          "type": "product",
-          "settings": {
-            "title": "Lemme Reset™ GLP-1 Production Support Capsules",
-            "subtitle": "Support Cravings & GLP-1 Production<sup>†</sup>*",
-            "price": "$80",
-            "url": "/products/lemme-glp-1",
-            "bundled_image": "lemme-product-glp1.webp",
-            "bundled_hover_bg": "lemme-cardbg-glp1.webp"
-          }
-        },
-        "product_2": {
-          "type": "product",
-          "settings": {
-            "title": "Lemme Purr Gummies",
-            "subtitle": "Vaginal Health & Wellness*",
-            "price": "$30",
-            "url": "/products/purr",
-            "bundled_image": "lemme-product-purr.webp",
-            "bundled_hover_bg": "lemme-cardbg-purr.webp"
-          }
-        },
-        "product_3": {
-          "type": "product",
-          "settings": {
-            "title": "Lemme Debloat Gummies",
-            "subtitle": "Gut Health & Digestion*",
-            "price": "$30",
-            "url": "/products/debloat",
-            "bundled_image": "lemme-product-debloat.webp",
-            "bundled_hover_bg": "lemme-cardbg-debloat.webp"
-          }
-        },
-        "product_4": {
-          "type": "product",
-          "settings": {
-            "title": "Lemme Burn Capsules",
-            "subtitle": "Metabolism & AMPK Activator Capsules*<sup>†</sup>",
-            "price": "$40",
-            "url": "/products/lemme-burn",
-            "bundled_image": "lemme-product-burn.webp",
-            "bundled_hover_bg": "lemme-cardbg-burn.webp"
-          }
-        }
-      },
-      "block_order": [
-        "product_1",
-        "product_2",
-        "product_3",
-        "product_4"
-      ]
-    },
-    "benefits": {
-      "type": "lemme-benefits",
-      "settings": {},
-      "blocks": {
-        "benefit_1": {
-          "type": "benefit",
-          "settings": {
-            "title": "Expert formulated",
-            "bundled_image": "lemme-benefit-expert-formulated.webp"
-          }
-        },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "title": "Validated by 3rd party testing",
-            "bundled_image": "lemme-benefit-third-party-tested.webp"
-          }
-        },
-        "benefit_3": {
-          "type": "benefit",
-          "settings": {
-            "title": "Science-backed innovation",
-            "bundled_image": "lemme-benefit-tastes-like-heaven.webp"
-          }
-        },
-        "benefit_4": {
-          "type": "benefit",
-          "settings": {
-            "title": "Thousands of 5-star testimonials ⭐⭐⭐⭐⭐",
-            "bundled_image": "lemme-benefit-bioavailable.webp"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_1",
-        "benefit_2",
-        "benefit_3",
-        "benefit_4"
-      ]
-    },
-    "no_list": {
-      "type": "lemme-no-list",
-      "settings": {
-        "button_url": "/pages/faq"
-      },
-      "blocks": {
-        "item_1": {
-          "type": "item",
-          "settings": {
-            "text": "Parabens"
-          }
-        },
-        "item_2": {
-          "type": "item",
-          "settings": {
-            "text": "Silicon dioxide"
-          }
-        },
-        "item_3": {
-          "type": "item",
-          "settings": {
-            "text": "Gluten"
-          }
-        },
-        "item_4": {
-          "type": "item",
-          "settings": {
-            "text": "Talc"
-          }
-        },
-        "item_5": {
-          "type": "item",
-          "settings": {
-            "text": "Synthetic colors"
-          }
-        },
-        "item_6": {
-          "type": "item",
-          "settings": {
-            "text": "FD&C dyes"
-          }
-        }
-      },
-      "block_order": [
-        "item_1",
-        "item_2",
-        "item_3",
-        "item_4",
-        "item_5",
-        "item_6"
-      ]
-    },
-    "subscribe": {
-      "type": "lemme-subscribe",
-      "settings": {
-        "button_url": "/pages/save-subscribe"
-      },
-      "blocks": {
-        "perk_1": {
-          "type": "perk",
-          "settings": {
-            "text": "VIP access to exclusive drops",
-            "builtin_icon": "sparkle"
-          }
-        },
-        "perk_2": {
-          "type": "perk",
-          "settings": {
-            "text": "Pause, update frequency or cancel anytime",
-            "builtin_icon": "calendar"
-          }
-        },
-        "perk_3": {
-          "type": "perk",
-          "settings": {
-            "text": "Earn loyalty points for free products & discounts",
-            "builtin_icon": "box"
-          }
-        },
-        "perk_4": {
-          "type": "perk",
-          "settings": {
-            "text": "Guaranteed delivery during sell-outs",
-            "builtin_icon": "truck"
-          }
-        }
-      },
-      "block_order": [
-        "perk_1",
-        "perk_2",
-        "perk_3",
-        "perk_4"
-      ]
-    },
-    "real_science": {
-      "type": "lemme-banner",
+        "logo_6",
+        "logo_7"
+      ],
       "settings": {}
     },
-    "ticker": {
-      "type": "lemme-ticker",
+    "tiles": {
+      "type": "lemme-linked-tiles",
+      "blocks": {
+        "tile_1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/Women_s_Health.png",
+            "label": "WOMEN'S HEALTH",
+            "url": "/collections/womens-health"
+          }
+        },
+        "tile_2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/Mood_Sleep_Energy.png",
+            "label": "MOOD, SLEEP & ENERGY",
+            "url": "/collections/mood-sleep-energy"
+          }
+        },
+        "tile_3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/Weight_Management.png",
+            "label": "WEIGHT MANAGEMENT",
+            "url": "/collections/metabolism-weight-management"
+          }
+        },
+        "tile_4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/Beauty_Digestion.png",
+            "label": "BEAUTY & DIGESTION",
+            "url": "/collections/beauty-digestion"
+          }
+        }
+      },
+      "block_order": [
+        "tile_1",
+        "tile_2",
+        "tile_3",
+        "tile_4"
+      ],
+      "settings": {}
+    },
+    "subscribe": {
+      "type": "lemme-banner-features",
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/icon_matcha_Antioxidant_Support.svg",
+            "text": "VIP access to exclusive drops"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/redeemable.svg",
+            "text": "save up to 35% off on your favorites"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/pause.svg",
+            "text": "Pause, skip or cancel anytime"
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/icon_purr_Vaginal_Taste.svg",
+            "text": "free shipping on all US orders"
+          }
+        }
+      },
+      "block_order": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/d-subs-banner-v2.png",
+        "image_mobile": "shopify://shop_images/m-subs-banner_1.png",
+        "button_url": "/collections/all"
+      }
+    },
+    "why": {
+      "type": "lemme-tabbed-carousel",
+      "blocks": {
+        "tab_formulas": {
+          "type": "tab",
+          "settings": {
+            "pill": "Formulas",
+            "heading": "real science. real results.*",
+            "text": "<p>Built by doctors and experts around science-backed ingredients and purposeful formulations.*</p>",
+            "image_1": "shopify://shop_images/2_years.jpg",
+            "title_1": "Clinically studied ingredients:",
+            "text_1": "We start with ingredients backed by human clinical research, at the doses studied.*",
+            "image_2": "shopify://shop_images/SHOT_042_0065.jpg",
+            "title_2": "Expert formulated:",
+            "text_2": "Developed with our Chief Medical Officer, Dr. Kathleen Valenton. Each formula spends years in development and testing.*",
+            "image_3": "shopify://shop_images/26-08-04_Lemme55141_FS.jpg",
+            "title_3": "Rigor in every ingredient:",
+            "text_3": "Patented ingredients like KSM-66® Ashwagandha, SkinGlo® and more, each with its own published research.*"
+          }
+        },
+        "tab_quality": {
+          "type": "tab",
+          "settings": {
+            "pill": "Quality",
+            "heading": "wellness made right.",
+            "text": "<p>Top-tier standards with rigorous testing at every step, from raw ingredient to finished bottle.*</p>",
+            "image_1": "shopify://shop_images/26-02-12_Lemme27907_2.jpg",
+            "title_1": "Certified quality:",
+            "text_1": "cGMP certified for manufacturing excellence, select Clean Label Project Purity Awards and non-GMO tested.",
+            "image_2": "shopify://shop_images/26-06-09_Lemme48129.jpg",
+            "title_2": "Third-party tested:",
+            "text_2": "Independently verified, so what’s on the label is what’s in the bottle.",
+            "image_3": "shopify://shop_images/26-07-07_Lemme50309_FS_1.jpg",
+            "title_3": "What we leave out:",
+            "text_3": "No parabens, talc, gluten, synthetic colors, FD&C dyes or artificial flavors."
+          }
+        },
+        "tab_trust": {
+          "type": "tab",
+          "settings": {
+            "pill": "trust",
+            "heading": "trusted by millions.",
+            "text": "<p>Real people, real routines, real results.*</p>",
+            "image_1": "shopify://shop_images/20260223_LEMME_PURR0966.png",
+            "title_1": "Results you can feel:",
+            "text_1": "Backed by thousands of 5-star reviews.",
+            "image_2": "shopify://shop_images/26-04-23_Lemme38417_1.jpg",
+            "title_2": "Award-winning wellness:",
+            "text_2": "Recognized by Vogue, WWD, Vanity Fair, and more.",
+            "image_3": "shopify://shop_images/SHOT_040_0265.jpg",
+            "title_3": "Made to love:",
+            "text_3": "So delicious you’ll forget they’re supplements."
+          }
+        }
+      },
+      "block_order": [
+        "tab_formulas",
+        "tab_quality",
+        "tab_trust"
+      ],
       "settings": {}
     }
   },
   "order": [
     "quicklinks",
     "hero",
-    "press",
+    "note",
+    "credibility",
     "faves",
-    "benefits",
-    "no_list",
+    "logos",
+    "tiles",
     "subscribe",
-    "real_science",
-    "ticker"
+    "why"
   ]
 }
