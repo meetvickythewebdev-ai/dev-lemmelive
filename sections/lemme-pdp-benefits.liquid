@@ -1,0 +1,60 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-pdp.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign m = product.metafields.lemme
+  assign items = m.benefit_items.value
+  assign media = m.benefits_media.value
+-%}
+{%- if items.size > 0 -%}
+<section class="lm-section lp-benefits" id="benefits" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpBenefits-{{ section.id }}">
+  <div class="lp-benefits__layout{% if media == blank %} lp-benefits__layout--no-media{% endif %}">
+    <div class="lp-benefits__copy">
+      <div class="lp-benefits__intro">
+        {%- if m.benefits_eyebrow != blank -%}
+          <p class="lp-eyebrow">{% render 'lemme-pdp-icon', icon: 'sparkle-big' %}<span>{{ m.benefits_eyebrow.value }}</span>{% render 'lemme-pdp-icon', icon: 'sparkle-big' %}</p>
+        {%- endif -%}
+        <h2 class="lp-h2" id="LpBenefits-{{ section.id }}">{{ m.benefits_heading.value | default: section.settings.heading }}</h2>
+        <hr class="lp-benefits__rule">
+      </div>
+      <div class="lp-benefits__list">
+        {%- for item in items -%}
+          <details class="lp-acc" data-lp-accordion>
+            <summary class="lp-acc__summary"><span class="lp-acc__title">{{ item.title.value }}</span><span class="lp-acc__icons">{% render 'lemme-pdp-icon', icon: 'plus-big', class: 'lp-when-closed' %}{% render 'lemme-pdp-icon', icon: 'minus-big', class: 'lp-when-open' %}</span></summary>
+            <div class="lp-acc__content" data-lp-accordion-content>{{ item.body.value | newline_to_br }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- if media != blank -%}
+      <div class="lp-benefits__media">
+        <div class="lp-media-frame" data-lp-video-frame>
+          {%- if media.media_type == 'video' -%}
+            {{ media | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', class: 'lp-media-frame__video', image_size: '1200x' }}
+            <div class="lp-video-controls">
+              <button type="button" aria-label="Pause video" data-lp-video-play>{% render 'lemme-pdp-icon', icon: 'pause', class: 'lp-when-playing' %}{% render 'lemme-pdp-icon', icon: 'play', class: 'lp-when-paused' %}</button>
+              <button type="button" aria-label="Unmute video" data-lp-video-mute>{% render 'lemme-pdp-icon', icon: 'sound-off', class: 'lp-when-muted' %}{% render 'lemme-pdp-icon', icon: 'sound-on', class: 'lp-when-unmuted' %}</button>
+            </div>
+          {%- else -%}
+            {{ media | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'lp-media-frame__img', sizes: '(min-width: 1024px) 45vw, 100vw', widths: '400, 600, 800, 1200' }}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme product benefits",
+  "class": "lp-benefits-section",
+  "settings": [
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "Benefits" },
+    { "type": "text", "id": "heading", "label": "Fallback heading", "default": "the benefits" },
+    { "type": "paragraph", "content": "Uses lemme.benefits_eyebrow, lemme.benefits_heading, lemme.benefit_items (Accordion entries) and lemme.benefits_media (video or image). Hidden when the product has no benefit items." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

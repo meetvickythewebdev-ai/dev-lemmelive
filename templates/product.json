@@ -3,14 +3,76 @@
     "main": {
       "type": "lemme-pdp-main",
       "blocks": {
+        "tab_benefits": {
+          "type": "tab",
+          "settings": {
+            "title": "Product benefits",
+            "content": "benefits"
+          }
+        },
+        "tab_leave_out": {
+          "type": "tab",
+          "settings": {
+            "title": "What We Leave Out",
+            "content": "leave_out"
+          }
+        },
+        "tab_supplement": {
+          "type": "tab",
+          "settings": {
+            "title": "Supplement Facts",
+            "content": "supplement"
+          }
+        },
+        "tab_faqs": {
+          "type": "tab",
+          "settings": {
+            "title": "FAQs",
+            "content": "faqs"
+          }
+        },
+        "tab_awards": {
+          "type": "tab",
+          "settings": {
+            "title": "Awards",
+            "content": "awards"
+          }
+        },
         "gift": {
           "type": "gift",
           "settings": {}
         }
       },
       "block_order": [
+        "tab_benefits",
+        "tab_leave_out",
+        "tab_supplement",
+        "tab_faqs",
+        "tab_awards",
         "gift"
       ],
+      "settings": {}
+    },
+    "subnav": {
+      "type": "lemme-pdp-subnav",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "lemme-pdp-benefits",
+      "settings": {}
+    },
+    "data": {
+      "type": "lemme-pdp-data",
+      "settings": {}
+    },
+    "compare": {
+      "type": "lemme-pdp-compare",
+      "settings": {
+        "other_image": "shopify://shop_images/Generic_Bottle.jpg"
+      }
+    },
+    "ingredients": {
+      "type": "lemme-pdp-ingredients",
       "settings": {}
     },
     "difference": {
@@ -67,66 +129,22 @@
         "icon_5",
         "icon_6"
       ],
-      "settings": {}
-    },
-    "ingredients": {
-      "type": "lemme-pdp-ingredients",
-      "settings": {}
-    },
-    "no_list": {
-      "type": "lemme-no-list",
       "settings": {
-        "button_url": "/pages/faq"
-      },
-      "blocks": {
-        "item_1": {
-          "type": "item",
-          "settings": {
-            "text": "Parabens"
-          }
-        },
-        "item_2": {
-          "type": "item",
-          "settings": {
-            "text": "Silicon dioxide"
-          }
-        },
-        "item_3": {
-          "type": "item",
-          "settings": {
-            "text": "Gluten"
-          }
-        },
-        "item_4": {
-          "type": "item",
-          "settings": {
-            "text": "Talc"
-          }
-        },
-        "item_5": {
-          "type": "item",
-          "settings": {
-            "text": "Synthetic colors"
-          }
-        },
-        "item_6": {
-          "type": "item",
-          "settings": {
-            "text": "FD&C dyes"
-          }
-        }
-      },
-      "block_order": [
-        "item_1",
-        "item_2",
-        "item_3",
-        "item_4",
-        "item_5",
-        "item_6"
-      ]
+        "nav_label": "Difference"
+      }
+    },
+    "expert": {
+      "type": "lemme-pdp-expert",
+      "settings": {}
     },
     "related": {
       "type": "lemme-pdp-related",
+      "settings": {
+        "collection": "most-loved-formulas"
+      }
+    },
+    "reviews": {
+      "type": "lemme-pdp-reviews",
       "settings": {}
     },
     "faq": {
@@ -134,26 +152,19 @@
       "settings": {
         "button_url": "/pages/faq"
       }
-    },
-    "ticker": {
-      "type": "lemme-ticker",
-      "settings": {
-        "bottom_space": false
-      }
-    },
-    "reviews": {
-      "type": "lemme-pdp-reviews",
-      "settings": {}
     }
   },
   "order": [
     "main",
-    "difference",
+    "subnav",
+    "benefits",
+    "data",
+    "compare",
     "ingredients",
-    "no_list",
+    "difference",
+    "expert",
     "related",
-    "faq",
-    "ticker",
-    "reviews"
+    "reviews",
+    "faq"
   ]
 }

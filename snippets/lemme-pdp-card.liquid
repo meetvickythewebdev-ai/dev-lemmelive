@@ -1,0 +1,49 @@
+{%- comment -%}
+  Product card for the product page "most-loved formulas" row (lemmelive.com style).
+  Params: product, add_label, sold_out_label
+  Reads: lemme.subtitle, lemme.card_badge (text badge), lemme.card_image (main card image),
+         lemme.card_hover_image (hover image; falls back to the product's second image)
+{%- endcomment -%}
+{%- liquid
+  assign pm = product.metafields.lemme
+  assign card_image = pm.card_image.value | default: product.featured_media.preview_image
+  assign hover_image = pm.card_hover_image.value
+  if hover_image == blank and product.media.size > 1
+    assign hover_image = product.media[1].preview_image
+  endif
+  assign variant = product.selected_or_first_available_variant
+-%}
+<article class="lp-card{% if hover_image != blank %} lp-card--hover{% endif %}">
+  <a class="lp-card__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+    <span class="lp-card__image lp-card__image--primary">
+      {%- if card_image != blank -%}
+        {{ card_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: '', widths: '300, 450, 600, 900', sizes: '(min-width: 1024px) 33vw, 100vw' }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </span>
+    {%- if hover_image != blank -%}
+      <span class="lp-card__image lp-card__image--hover">{{ hover_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: '', widths: '300, 450, 600, 900', sizes: '(min-width: 1024px) 33vw, 100vw' }}</span>
+    {%- endif -%}
+    {%- if pm.card_badge != blank -%}
+      <span class="lp-card__badges"><span class="lp-text-badge">{% render 'lemme-pdp-icon', icon: 'badge-shape' %}<span>{{ pm.card_badge.value }}</span></span></span>
+    {%- endif -%}
+  </a>
+  <div class="lp-card__body">
+    <div class="lp-card__copy">
+      <h3 class="lp-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+      {%- if pm.subtitle != blank -%}<p class="lp-card__subtitle">{{ pm.subtitle.value }}</p>{%- endif -%}
+      <p class="lp-card__price">
+        {%- if variant.compare_at_price > variant.price -%}
+          <span class="lm-visually-hidden">Was {{ variant.compare_at_price | money_without_trailing_zeros }} now {{ variant.price | money_without_trailing_zeros }}</span>
+          <span class="lp-card__sale" aria-hidden="true">{{ variant.price | money_without_trailing_zeros }}<s>{{ variant.compare_at_price | money_without_trailing_zeros }}</s></span>
+        {%- else -%}
+          {{ variant.price | money_without_trailing_zeros }}
+        {%- endif -%}
+      </p>
+    </div>
+    <button class="lp-card__add" type="button" data-lp-card-add="{{ variant.id }}" aria-label="{{ add_label | escape }}: {{ product.title | escape }}"{% unless product.available %} disabled{% endunless %}>
+      <span class="lp-card__add-label">{%- if product.available -%}{{ add_label }}{%- else -%}{{ sold_out_label }}{%- endif -%}</span>
+    </button>
+  </div>
+</article>

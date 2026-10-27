@@ -1,0 +1,45 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign m = product.metafields.lemme
+  assign expert = m.expert.value
+  assign quote = m.expert_quote.value
+-%}
+{%- if expert != blank and quote != blank -%}
+<section class="lm-section lp-expert" id="experts" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpExpert-{{ section.id }}">
+  <div class="lp-expert__inner">
+    <div class="lp-expert__layout{% if expert.image.value == blank %} lp-expert__layout--no-media{% endif %}">
+      <h2 class="lp-expert__heading" id="LpExpert-{{ section.id }}"><span>{{ section.settings.heading }}</span></h2>
+      {%- if expert.image.value != blank -%}
+        <div class="lp-expert__media">
+          {%- if expert.url.value != blank -%}<a class="lp-expert__link" href="{{ expert.url.value }}" aria-label="Read more about {{ expert.name.value | escape }}">{%- endif -%}
+            {{ expert.image.value | image_url: width: 800 | image_tag: loading: 'lazy', alt: '', width: 320, height: 320, sizes: '(min-width: 1024px) 320px, 400px' }}
+            {%- if expert.url.value != blank -%}<span class="lp-expert__cta" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'arrow-up-right' %}</span>{%- endif -%}
+          {%- if expert.url.value != blank -%}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="lp-expert__body">
+        <blockquote class="lp-expert__quote">{{ quote | newline_to_br }}</blockquote>
+        <div class="lp-expert__meta">
+          <p class="lp-expert__name">{{ expert.name.value }}</p>
+          {%- if expert.title != blank -%}<p class="lp-expert__label">{{ expert.title.value }}</p>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme expert quote",
+  "class": "lp-expert-section",
+  "settings": [
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "Experts" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "doctor recommended" },
+    { "type": "paragraph", "content": "Uses lemme.expert (an Expert entry: name, title, photo, link) and lemme.expert_quote. Hidden when either is empty." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

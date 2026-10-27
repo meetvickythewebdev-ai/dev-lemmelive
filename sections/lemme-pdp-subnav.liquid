@@ -1,0 +1,24 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-pdp.js' | asset_url }}" defer></script>
+
+<nav class="lm-section lp-subnav" aria-label="{{ section.settings.label | escape }}" data-lp-subnav>
+  <div class="lp-subnav__inner">
+    <div class="lp-subnav__scroller" data-lp-subnav-scroller>
+      <ul class="lp-subnav__list" data-lp-subnav-list></ul>
+    </div>
+    <button class="lp-subnav__next" type="button" aria-label="Scroll page links" tabindex="-1" hidden data-lp-subnav-next>{% render 'lemme-pdp-icon', icon: 'arrow-right-small' %}</button>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Lemme page links",
+  "class": "lp-subnav-section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label (screen readers)", "default": "On this page" },
+    { "type": "paragraph", "content": "Links are built from the product page sections below that have a \"Link label\". Sections that are hidden on a product are skipped." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

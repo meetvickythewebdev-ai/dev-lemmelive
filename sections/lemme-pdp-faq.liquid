@@ -4,29 +4,21 @@
 
 {%- assign faqs = product.metafields.lemme.faqs.value -%}
 {%- if faqs.size > 0 -%}
-<section class="lm-section lm-faq" id="LmFaq" aria-labelledby="LmFaqHeading-{{ section.id }}">
-  <div class="lm-container">
-    <div class="lm-faq__grid">
-      <div class="lm-faq__intro">
-        <h2 class="lm-faq__heading" id="LmFaqHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
-        {%- if section.settings.button_label != blank -%}
-          <div class="lm-hide-mobile">{%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'light', magnetic: true -%}</div>
-        {%- endif -%}
-      </div>
-      <div class="lm-faq__list">
-        {%- for faq in faqs -%}
-          <details class="lm-faq__item" id="LmFaq-{{ forloop.index }}"{% if forloop.first %} open{% endif %} data-lm-faq>
-            <summary class="lm-faq__q">
-              <span>{{ faq.question.value }}</span>
-              <span class="lm-faq__icon" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'plus' %}{% render 'lemme-pdp-icon', icon: 'minus' %}</span>
-            </summary>
-            <div class="lm-faq__a">{{ faq.answer.value | newline_to_br }}</div>
-          </details>
-        {%- endfor -%}
-        {%- if section.settings.button_label != blank -%}
-          <div class="lm-hide-desktop lm-faq__mobile-btn">{%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'light' -%}</div>
-        {%- endif -%}
-      </div>
+<section class="lm-section lp-faq" id="faq" data-lp-nav="{{ section.settings.nav_label | escape }}" style="--lp-faq-top: {{ section.settings.padding_top }}px;" aria-labelledby="LpFaq-{{ section.id }}">
+  <div class="lp-faq__layout">
+    <div class="lp-faq__copy">
+      <h2 class="lp-h2 lp-faq__heading" id="LpFaq-{{ section.id }}">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- if section.settings.button_label != blank -%}
+        <div class="lp-faq__cta"><a class="lp-pill-btn" href="{{ section.settings.button_url | default: '/pages/faq' }}"><span>{{ section.settings.button_label }}</span></a></div>
+      {%- endif -%}
+    </div>
+    <div class="lp-faq__list">
+      {%- for faq in faqs -%}
+        <details class="lp-acc" data-lp-accordion>
+          <summary class="lp-acc__summary"><span class="lp-acc__title">{{ faq.question.value }}</span><span class="lp-acc__icons">{% render 'lemme-pdp-icon', icon: 'plus-big', class: 'lp-when-closed' %}{% render 'lemme-pdp-icon', icon: 'minus-big', class: 'lp-when-open' %}</span></summary>
+          <div class="lp-acc__content" data-lp-accordion-content>{{ faq.answer.value | newline_to_br }}</div>
+        </details>
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -35,12 +27,14 @@
 {% schema %}
 {
   "name": "Lemme product FAQs",
-  "class": "lm-faq-section",
+  "class": "lp-faq-section",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "answers to all your questions" },
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "FAQ" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "your questions,\nanswered" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Read all FAQs" },
     { "type": "url", "id": "button_url", "label": "Button link" },
-    { "type": "paragraph", "content": "Questions come from the product's \"lemme.faqs\" metafield (a list of FAQ entries). The section hides itself when a product has none." }
+    { "type": "range", "id": "padding_top", "label": "Space above (desktop)", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "paragraph", "content": "Questions come from the product's \"lemme.faqs\" metafield (a list of FAQ entries). Hidden when a product has none." }
   ],
   "enabled_on": { "templates": ["product"] }
 }

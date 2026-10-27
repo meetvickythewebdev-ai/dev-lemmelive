@@ -1,0 +1,24 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+
+{%- assign m = product.metafields.lemme -%}
+{%- if m.data_heading != blank -%}
+<section class="lm-section lp-data" id="how-it-works" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpData-{{ section.id }}">
+  <div class="lp-data__inner">
+    <h2 class="lp-h2 lp-data__heading" id="LpData-{{ section.id }}">{{ m.data_heading.value }}</h2>
+    {%- if m.data_text != blank -%}<div class="lp-data__text">{{ m.data_text.value | newline_to_br }}</div>{%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme how it works",
+  "class": "lp-data-section",
+  "settings": [
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "How it works" },
+    { "type": "paragraph", "content": "Uses lemme.data_heading and lemme.data_text. Hidden when the heading is empty." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

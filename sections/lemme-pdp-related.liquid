@@ -1,60 +1,50 @@
-{{ 'lemme-swiper.min.css' | asset_url | stylesheet_tag }}
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 {{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 <script src="{{ 'lemme-pdp.js' | asset_url }}" defer></script>
 
 {%- liquid
-  assign source = 'none'
-  if recommendations.performed? and recommendations.products_count > 0
-    assign source = 'recs'
-  elsif section.settings.collection != blank
-    assign source = 'collection'
-  endif
   assign shown = 0
+  assign source = section.settings.collection.products
+  if source == blank and recommendations.performed? and recommendations.products_count > 0
+    assign source = recommendations.products
+  endif
 -%}
 
-<section class="lm-section lm-products lm-related" aria-labelledby="LmRelatedHeading-{{ section.id }}"
-  data-lm-related
-  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}&intent=related"
-  {% if recommendations.performed? %}data-loaded{% endif %}>
-  {%- if source != 'none' -%}
-    <div class="lm-container">
-      <h2 class="lm-products__heading" id="LmRelatedHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
-    </div>
-    <div class="lm-products__viewport" data-lm-products data-swiper-src="{{ 'lemme-swiper.min.js' | asset_url }}">
-      <div class="swiper">
-        <div class="swiper-wrapper">
-          {%- if source == 'recs' -%}
-            {%- for rec in recommendations.products -%}
-              <div class="swiper-slide">{%- render 'lemme-product-card', product: rec, button_label: section.settings.button_label -%}</div>
-            {%- endfor -%}
-          {%- else -%}
-            {%- for rec in section.settings.collection.products -%}
-              {%- if rec.id != product.id and shown < section.settings.limit -%}
-                {%- assign shown = shown | plus: 1 -%}
-                <div class="swiper-slide">{%- render 'lemme-product-card', product: rec, button_label: section.settings.button_label -%}</div>
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-        </div>
+<section class="lm-section lp-cards" id="featured-products" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpCards-{{ section.id }}" data-lp-cards
+  {% if section.settings.collection == blank %}data-lp-recs-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}&intent=related"{% endif %}>
+  {%- if source != blank -%}
+    <div class="lp-cards__inner">
+      <div class="lp-cards__header">
+        <h2 class="lp-h2" id="LpCards-{{ section.id }}">{{ section.settings.heading }}</h2>
       </div>
-      <button class="lm-products__nav lm-products__nav--prev" type="button" aria-label="Previous product">{% render 'lemme-icon', icon: 'chevron-left' %}</button>
-      <button class="lm-products__nav lm-products__nav--next" type="button" aria-label="Next product">{% render 'lemme-icon', icon: 'chevron-right' %}</button>
-      <div class="lm-products__pagination"></div>
+      <div class="lp-cards__carousel">
+        <ul class="lp-cards__track" data-lp-cards-track>
+          {%- for card_product in source -%}
+            {%- if card_product.id != product.id and shown < section.settings.limit -%}
+              {%- assign shown = shown | plus: 1 -%}
+              <li class="lp-cards__slide">{%- render 'lemme-pdp-card', product: card_product, add_label: section.settings.add_label, sold_out_label: section.settings.sold_out_label -%}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <div class="lp-cards__nav lp-cards__nav--prev"><button class="lp-cards__arrow lp-cards__arrow--prev" type="button" aria-label="Previous products" data-lp-cards-prev hidden>{% render 'lemme-pdp-icon', icon: 'arrow-left-small' %}</button></div>
+        <div class="lp-cards__nav lp-cards__nav--next"><button class="lp-cards__arrow lp-cards__arrow--next" type="button" aria-label="Next products" data-lp-cards-next>{% render 'lemme-pdp-icon', icon: 'arrow-right-small' %}</button></div>
+        <div class="lp-dots" data-lp-dots aria-hidden="true"></div>
+      </div>
     </div>
   {%- endif -%}
 </section>
 
 {% schema %}
 {
-  "name": "Lemme related products",
-  "class": "lm-related-section",
+  "name": "Lemme product cards",
+  "class": "lp-cards-section",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "you're gonna love these" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
-    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 4 },
-    { "type": "collection", "id": "collection", "label": "Fallback collection", "info": "Used until Shopify has enough sales data to recommend related products." }
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "Products" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "most-loved formulas" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to use Shopify's related product recommendations." },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 3, "max": 12, "step": 1, "default": 8 },
+    { "type": "text", "id": "add_label", "label": "Add button", "default": "Add +" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold out" }
   ],
   "enabled_on": { "templates": ["product"] }
 }

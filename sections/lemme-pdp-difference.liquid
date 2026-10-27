@@ -2,39 +2,55 @@
 {{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
+  assign m = product.metafields.lemme
   assign diff_text = section.settings.text
-  if product.metafields.lemme.difference_text.value != blank
-    assign diff_text = product.metafields.lemme.difference_text.value | newline_to_br
+  if m.difference_text.value != blank
+    assign diff_text = m.difference_text.value | newline_to_br
   endif
+  assign diff_image = m.difference_image.value | default: section.settings.image
+  assign items = m.difference_items.value
 -%}
 
-<section class="lm-section lm-section--clear lm-diff" aria-labelledby="LmDiffHeading-{{ section.id }}">
-  <div class="lm-container">
-    <div class="lm-diff__content">
-      <h2 class="lm-diff__heading" id="LmDiffHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
-      {%- if diff_text != blank -%}<div class="lm-diff__text">{{ diff_text }}</div>{%- endif -%}
-    </div>
-    {%- if section.blocks.size > 0 -%}
-      <ul class="lm-diff__icons">
-        {%- for block in section.blocks -%}
-          <li class="lm-diff__icon" {{ block.shopify_attributes }}>
-            {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '96px', fw: 192, fh: 192 -%}
-            <span>{{ block.settings.label }}</span>
-          </li>
-        {%- endfor -%}
-      </ul>
+<section class="lm-section lp-diff" id="difference" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpDiff-{{ section.id }}">
+  <div class="lp-diff__layout{% if diff_image == blank %} lp-diff__layout--no-media{% endif %}">
+    {%- if diff_image != blank -%}
+      <div class="lp-diff__media">{{ diff_image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: '', sizes: '(min-width: 1024px) 50vw, 100vw', widths: '400, 600, 800, 1200, 1600' }}</div>
     {%- endif -%}
+    <div class="lp-diff__copy">
+      <h2 class="lp-diff__heading" id="LpDiff-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- if diff_text != blank -%}<div class="lp-diff__text">{{ diff_text }}</div>{%- endif -%}
+      <ul class="lp-diff__items">
+        {%- if items.size > 0 -%}
+          {%- for item in items -%}
+            <li class="lp-diff__item">
+              <span class="lp-diff__icon">{%- if item.icon.value != blank -%}{{ item.icon.value | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 64, height: 64 }}{%- endif -%}</span>
+              <p class="lp-diff__label">{{ item.label.value }}</p>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in section.blocks -%}
+            <li class="lp-diff__item" {{ block.shopify_attributes }}>
+              <span class="lp-diff__icon">{%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '64px', fw: 192, fh: 192 -%}</span>
+              <p class="lp-diff__label">{{ block.settings.label }}</p>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Lemme difference",
-  "class": "lm-diff-section",
+  "class": "lp-diff-section",
   "max_blocks": 8,
   "settings": [
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "Difference" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "the lemme difference" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Lemme is third-party tested and made in NSF and GMP-certified facilities. Plus, the bottle and cap are made from 100% post-consumer recycled material.", "info": "Products with a \"lemme.difference_text\" metafield show that text instead." }
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Lemme is third-party tested and made in NSF and GMP-certified facilities. Plus, the bottle and cap are made from 100% post-consumer recycled material.", "info": "Products with a \"lemme.difference_text\" metafield show that text instead." },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Products with a \"lemme.difference_image\" metafield show that image instead." },
+    { "type": "paragraph", "content": "Icons: products with a \"lemme.difference_items\" metafield (Icon item entries) show those; otherwise the icon blocks below are used." }
   ],
   "blocks": [
     {

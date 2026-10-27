@@ -1,16 +1,32 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 {{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-reviews.css' | asset_url | stylesheet_tag }}
 
 {%- if section.blocks.size > 0 -%}
-<section class="lm-section lm-reviews" id="LmReviews">
-  <div class="lm-container">
-    {%- if section.settings.heading != blank -%}<h2 class="lm-reviews__heading">{{ section.settings.heading }}</h2>{%- endif -%}
-    {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when '@app' -%}
-          {% render block %}
-      {%- endcase -%}
-    {%- endfor -%}
+<section class="lm-section lp-reviews" id="reviews" data-lp-nav="{{ section.settings.nav_label | escape }}">
+  <div class="lp-reviews__container">
+    <div class="lp-reviews__col">
+      {%- if section.settings.heading != blank -%}
+        <div class="lp-reviews__heading"><h2 class="lp-reviews__title">{{ section.settings.heading }}</h2></div>
+      {%- endif -%}
+      <div class="lp-reviews__widget">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- elsif request.design_mode -%}
+<section class="lm-section lp-reviews" id="reviews">
+  <div class="lp-reviews__container">
+    <div class="lp-reviews__col">
+      <div class="lp-reviews__heading"><h2 class="lp-reviews__title">{{ section.settings.heading }}</h2></div>
+      <p class="lp-reviews__empty">Add the Okendo "Reviews Widget" app block to this section (shown only in the theme editor).</p>
+    </div>
   </div>
 </section>
 {%- endif -%}
@@ -18,10 +34,11 @@
 {% schema %}
 {
   "name": "Lemme reviews",
-  "class": "lm-reviews-section",
+  "class": "lp-reviews-section",
   "settings": [
+    { "type": "text", "id": "nav_label", "label": "Link label", "default": "Reviews" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "believe the hype" },
-    { "type": "paragraph", "content": "Add your reviews app's widget block here (for example Okendo). The live site uses Okendo." }
+    { "type": "paragraph", "content": "Add Okendo's \"Reviews Widget\" app block here. The styling that matches lemmelive.com is in assets/lemme-reviews.css." }
   ],
   "blocks": [ { "type": "@app" } ],
   "enabled_on": { "templates": ["product"] }
