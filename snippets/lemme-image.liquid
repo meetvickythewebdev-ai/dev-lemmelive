@@ -1,0 +1,22 @@
+{%- comment -%}
+  Renders a responsive image from an image_picker setting, or falls back to an image
+  bundled in the theme's assets folder so the page looks right before any images are chosen.
+  Params:
+    image    – image object (from an image_picker setting or product), may be blank
+    fallback – asset filename used when image is blank (e.g. 'lemme-product-purr.webp')
+    alt      – alt text
+    class    – classes for the <img>
+    sizes    – sizes attribute (default 100vw)
+    loading  – 'lazy' (default) or 'eager'
+    fw / fh  – intrinsic width/height of the fallback asset (prevents layout shift)
+{%- endcomment -%}
+{%- liquid
+  assign img_loading = loading | default: 'lazy'
+  assign img_sizes = sizes | default: '100vw'
+-%}
+{%- if image != blank -%}
+  {%- assign img_alt = alt | default: image.alt -%}
+  {{ image | image_url: width: 2880 | image_tag: widths: '375, 550, 750, 1100, 1500, 1920, 2400, 2880', sizes: img_sizes, loading: img_loading, class: class, alt: img_alt }}
+{%- elsif fallback != blank -%}
+  <img src="{{ fallback | asset_url }}" alt="{{ alt | escape }}" class="{{ class }}" loading="{{ img_loading }}" width="{{ fw | default: 800 }}" height="{{ fh | default: 800 }}"{% if img_loading == 'eager' %} fetchpriority="high"{% endif %}>
+{%- endif -%}

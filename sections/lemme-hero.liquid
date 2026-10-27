@@ -1,0 +1,142 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+{%- assign slides = section.blocks | where: 'type', 'slide' -%}
+<section class="lm-section lm-hero" data-lm-hero data-autoplay="{% if section.settings.autoplay %}{{ section.settings.autoplay_speed | times: 1000 }}{% else %}0{% endif %}" aria-roledescription="carousel" aria-label="{{ section.settings.aria_label | escape }}">
+  <div class="lm-hero__slides">
+    {%- for block in slides -%}
+      {%- liquid
+        assign heading_before = block.settings.heading_before
+        assign heading_squiggle = block.settings.heading_squiggle
+        assign heading_after = block.settings.heading_after
+        assign eager = false
+        if forloop.first
+          assign eager = true
+        endif
+        assign img_loading = 'lazy'
+        if eager
+          assign img_loading = 'eager'
+        endif
+      -%}
+      <div class="lm-hero__slide{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }} aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ slides.size }}">
+        <div class="lm-hero__bg lm-hero__bg--desktop">
+          {%- render 'lemme-image', image: block.settings.bg_desktop, fallback: 'lemme-hero-desktop-bg.webp', alt: '', loading: img_loading, fw: 2880, fh: 1196 -%}
+        </div>
+        <div class="lm-hero__bg lm-hero__bg--mobile">
+          {%- render 'lemme-image', image: block.settings.bg_mobile, fallback: 'lemme-hero-mobile-bg.webp', alt: '', loading: img_loading, fw: 1000, fh: 1641 -%}
+        </div>
+
+        <div class="lm-hero__content">
+          {%- if forloop.first -%}<h1 class="lm-hero__heading">{%- else -%}<h2 class="lm-hero__heading">{%- endif -%}
+            {%- if heading_before != blank -%}{{ heading_before }} {% endif -%}
+            {%- if heading_squiggle != blank -%}{%- render 'lemme-squiggle', text: heading_squiggle -%}{%- endif -%}
+            {%- if heading_after != blank %} {{ heading_after }}{%- endif -%}
+          {%- if forloop.first -%}</h1>{%- else -%}</h2>{%- endif -%}
+
+          {%- if block.settings.subheading != blank -%}
+            <p class="lm-hero__sub">{{ block.settings.subheading }}</p>
+          {%- endif -%}
+
+          <div class="lm-hero__ctas">
+            {%- if block.settings.button_1_label != blank -%}
+              {%- render 'lemme-button', label: block.settings.button_1_label, url: block.settings.button_1_url, style: 'light', size: 'lg', magnetic: true -%}
+            {%- endif -%}
+            {%- if block.settings.button_2_label != blank -%}
+              {%- render 'lemme-button', label: block.settings.button_2_label, url: block.settings.button_2_url, style: 'light', size: 'lg', magnetic: true -%}
+            {%- endif -%}
+          </div>
+
+          <ul class="lm-hero__usps">
+            {%- for i in (1..3) -%}
+              {%- liquid
+                assign usp_key = 'usp_' | append: i
+                assign usp_img_key = 'usp_' | append: i | append: '_icon'
+                assign usp_text = block.settings[usp_key]
+                assign usp_img = block.settings[usp_img_key]
+                case i
+                  when 1
+                    assign usp_fallback = 'lemme-usp-clinically-studied.webp'
+                  when 2
+                    assign usp_fallback = 'lemme-usp-results.webp'
+                  else
+                    assign usp_fallback = 'lemme-usp-third-party.webp'
+                endcase
+              -%}
+              {%- if usp_text != blank -%}
+                <li class="lm-hero__usp">
+                  {%- render 'lemme-image', image: usp_img, fallback: usp_fallback, alt: '', sizes: '70px', fw: 140, fh: 140 -%}
+                  <span>{{ usp_text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="lm-hero__media lm-hero__media--desktop">
+          {%- render 'lemme-image', image: block.settings.product_desktop, fallback: 'lemme-hero-desktop-product.webp', alt: block.settings.product_alt, loading: img_loading, sizes: '(min-width: 1025px) 45vw, 100vw', fw: 800, fh: 624 -%}
+        </div>
+        <div class="lm-hero__media lm-hero__media--mobile">
+          {%- render 'lemme-image', image: block.settings.product_mobile, fallback: 'lemme-hero-mobile-product.webp', alt: block.settings.product_alt, loading: img_loading, sizes: '100vw', fw: 800, fh: 706 -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if slides.size > 1 -%}
+    <div class="lm-hero__dots" role="tablist">
+      {%- for block in slides -%}
+        <button type="button" aria-label="Go to slide {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Lemme hero",
+  "class": "lm-hero-section",
+  "max_blocks": 5,
+  "settings": [
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": false },
+    { "type": "range", "id": "autoplay_speed", "label": "Seconds per slide", "min": 3, "max": 12, "step": 1, "unit": "s", "default": 6 },
+    { "type": "text", "id": "aria_label", "label": "Accessible label", "default": "Featured" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "header", "content": "Heading" },
+        { "type": "text", "id": "heading_before", "label": "Text before squiggle word" },
+        { "type": "text", "id": "heading_squiggle", "label": "Word with animated squiggle", "default": "wellness" },
+        { "type": "text", "id": "heading_after", "label": "Text after squiggle word", "default": "made right" },
+        { "type": "text", "id": "subheading", "label": "Subheading", "default": "science-backed results you can feel" },
+        { "type": "header", "content": "Buttons" },
+        { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "Shop all" },
+        { "type": "url", "id": "button_1_url", "label": "Button 1 link", "default": "/collections/all" },
+        { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "Build your bundle" },
+        { "type": "url", "id": "button_2_url", "label": "Button 2 link" },
+        { "type": "header", "content": "Benefits row" },
+        { "type": "text", "id": "usp_1", "label": "Benefit 1", "default": "Clinically-studied ingredients" },
+        { "type": "image_picker", "id": "usp_1_icon", "label": "Benefit 1 icon" },
+        { "type": "text", "id": "usp_2", "label": "Benefit 2", "default": "Results you can feel" },
+        { "type": "image_picker", "id": "usp_2_icon", "label": "Benefit 2 icon" },
+        { "type": "text", "id": "usp_3", "label": "Benefit 3", "default": "Validated by 3rd party testing" },
+        { "type": "image_picker", "id": "usp_3_icon", "label": "Benefit 3 icon" },
+        { "type": "header", "content": "Images", "info": "Leave empty to use the built-in Lemme images." },
+        { "type": "image_picker", "id": "bg_desktop", "label": "Background (desktop)", "info": "2880 × 1196 px recommended" },
+        { "type": "image_picker", "id": "bg_mobile", "label": "Background (mobile)", "info": "1000 × 1640 px recommended" },
+        { "type": "image_picker", "id": "product_desktop", "label": "Product image (desktop)" },
+        { "type": "image_picker", "id": "product_mobile", "label": "Product image (mobile)" },
+        { "type": "text", "id": "product_alt", "label": "Product image alt text", "default": "Lemme supplement bottles with a free Maëlys gift" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme hero",
+      "blocks": [ { "type": "slide" } ]
+    }
+  ]
+}
+{% endschema %}

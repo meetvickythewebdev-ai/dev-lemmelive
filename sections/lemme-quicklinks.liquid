@@ -1,0 +1,74 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-quicklinks{% if section.settings.mobile_only %} lm-quicklinks--mobile-only{% endif %}" aria-label="{{ section.settings.aria_label | escape }}">
+  <ul class="lm-quicklinks__list">
+    {%- for block in section.blocks -%}
+      <li {{ block.shopify_attributes }} style="display:contents;">
+        <a class="lm-quicklinks__item" href="{{ block.settings.url | default: '#' }}">
+          <span class="lm-quicklinks__icon">
+            {%- if block.settings.icon != blank -%}
+              {{ block.settings.icon | image_url: width: 96 | image_tag: alt: '', loading: 'lazy' }}
+            {%- else -%}
+              {%- case block.settings.builtin_icon -%}
+                {%- when 'mood' -%}
+                  <svg viewBox="0 0 31 34" fill="none" aria-hidden="true" focusable="false"><path fill="#010101" d="M15.1152 9.75999C17.8104 9.75999 19.9953 7.57515 19.9953 4.88C19.9953 2.18485 17.8104 0 15.1152 0C12.4201 0 10.2352 2.18485 10.2352 4.88C10.2352 7.57515 12.4201 9.75999 15.1152 9.75999Z"></path><path fill="#010101" d="M29.0452 20.37L25.9552 18.59L21.8753 11.53C21.5253 10.93 20.8953 10.6 20.2453 10.61H9.97525C9.32525 10.64 8.70526 10.99 8.35526 11.59L4.34525 18.54L1.16525 20.38C0.0552535 21.02 -0.334753 22.45 0.315247 23.56C0.955247 24.67 2.38526 25.06 3.49526 24.41L7.00525 22.38C7.18525 22.28 7.33525 22.16 7.47525 22.02C7.73525 21.83 7.96525 21.59 8.13525 21.3L9.98525 18.1V23.05L3.92525 26.9C2.92525 27.54 2.31525 28.64 2.31525 29.83C2.31525 32.26 4.74524 33.94 7.01524 33.08L15.1253 30.03L23.2352 33.08C25.5052 33.94 27.9353 32.26 27.9353 29.83C27.9353 28.64 27.3252 27.53 26.3252 26.9L20.2652 23.05V18.04L22.1752 21.35C22.3052 21.57 22.4652 21.76 22.6452 21.92C22.8052 22.1 22.9953 22.26 23.2153 22.39L26.7252 24.42C27.8352 25.06 29.2653 24.68 29.9053 23.57C30.5453 22.46 30.1653 21.03 29.0553 20.39L29.0452 20.37Z"></path></svg>
+                {%- when 'weight' -%}
+                  <svg viewBox="0 0 37 39" fill="none" aria-hidden="true" focusable="false"><path fill="#020202" d="M22.5339 5.61999L10.8039 16.34C10.0639 17.02 10.2739 18.23 11.2039 18.61L13.9239 19.74C14.5939 20.02 14.9339 20.78 14.6839 21.46L11.0439 31.7C10.5639 33.04 12.1939 34.13 13.2539 33.17L26.7639 20.93C27.5239 20.24 27.2839 19 26.3339 18.64L22.7339 17.26C22.0539 17 21.6939 16.24 21.9239 15.55L24.7539 7.04999C25.2039 5.70999 23.5739 4.65 22.5339 5.61V5.61999Z"></path><path fill="#020202" d="M33.2639 16.48C32.6539 16.48 32.1639 15.99 32.1639 15.38C32.1639 8.11 26.2539 2.2 18.9839 2.2C18.3739 2.2 17.8839 1.71 17.8839 1.1C17.8839 0.489998 18.3739 0 18.9839 0C27.4639 0 34.3639 6.9 34.3639 15.38C34.3639 15.99 33.8739 16.48 33.2639 16.48Z"></path><path fill="#020202" d="M30.2239 15.33L32.6739 19.57C32.9339 20.02 33.5839 20.02 33.8339 19.57L36.2839 15.33C36.5439 14.88 36.2239 14.32 35.7039 14.32H30.8039C30.2839 14.32 29.9639 14.88 30.2239 15.33Z"></path><path fill="#020202" d="M2.77393 25.14C3.36393 25.02 3.95393 25.4 4.07393 25.99C5.55393 33.11 12.5539 37.69 19.6639 36.21C20.2539 36.09 20.8439 36.47 20.9639 37.06C21.0839 37.65 20.7039 38.24 20.1139 38.36C11.8139 40.09 3.65392 34.74 1.92392 26.43C1.80392 25.84 2.18393 25.25 2.77393 25.13V25.14Z"></path><path fill="#020202" d="M5.97393 25.65L2.71393 21.99C2.37393 21.6 1.73393 21.74 1.57393 22.23L0.0339253 26.89C-0.126075 27.38 0.303928 27.86 0.813928 27.76L5.61393 26.76C6.12393 26.65 6.32393 26.04 5.97393 25.65Z"></path></svg>
+                {%- when 'womens' -%}
+                  <svg viewBox="0 0 33 36" fill="none" aria-hidden="true" focusable="false"><path d="M32.5199 16.19C18.5799 17.47 16.8299 18.5 11.2999 32.38C14.2699 18.5 13.94 17.47 0 16.19C13.94 14.91 15.69 13.88 21.22 0C18.25 13.88 18.5799 14.91 32.5199 16.19Z" fill="#010101"/><path d="M31.6799 28.31C25.3899 28.89 24.6 29.35 22.1 35.62C23.44 29.35 23.29 28.89 17 28.31C23.29 27.73 24.08 27.27 26.58 21C25.24 27.26 25.3899 27.73 31.6799 28.31Z" fill="#010101"/></svg>
+                {%- when 'beauty' -%}
+                  <svg viewBox="0 0 41 38" fill="none" aria-hidden="true" focusable="false"><path fill="#010101" d="M38.0898 12.32C38.0898 5.51001 32.5697 0 25.7697 0H23.3498C16.4298 0.01 10.8198 5.62999 10.8198 12.55V14.25C10.6698 16.68 9.81995 20.99 5.72995 22.12C-0.0600524 23.72 -0.530189 28.03 0.339811 30.94C0.379811 31.06 0.399889 31.18 0.419889 31.29C0.989889 35.08 4.05986 38 7.88986 38C10.1099 38 12.4899 37.56 14.8899 36.39C24.2699 31.83 23.2498 37.66 29.8398 35.88C36.4298 34.1 39.6699 30.12 38.6799 25.27C37.6899 20.42 43.0498 17.64 38.0898 12.32ZM24.5798 29.86C18.0398 29.86 12.7299 24.57 12.6999 18.04C15.9599 17.44 22.4998 15.62 24.5798 10.45C24.5798 10.45 25.4299 14.9 32.2099 16.2C38.9999 17.5 36.0099 21.8 33.1999 22.66C30.8199 23.38 28.7299 25.76 30.2099 28.44C28.5299 29.35 26.6098 29.86 24.5698 29.86H24.5798Z"></path><path fill="#010101" d="M24.45 21.5299C22.74 19.7299 19.8699 23.51 19.8699 23.51C19.8699 23.51 21.2199 26.3 24.6299 26.38C28.0499 26.47 29.2898 23.51 29.2898 23.51C25.9498 19.47 24.45 21.5299 24.45 21.5299ZM22.4099 23.65C24.9599 22.58 26.7397 23.65 26.7397 23.65C24.4597 24.91 22.4099 23.65 22.4099 23.65Z"></path><path fill="white" d="M25.0098 7.02002C20.8298 7.40002 20.3099 7.71 18.6499 11.87C19.5399 7.71 19.4398 7.40002 15.2698 7.02002C19.4498 6.64002 19.9699 6.32998 21.6299 2.16998C20.7399 6.32998 20.8398 6.64002 25.0098 7.02002Z"></path><path fill="white" d="M33.45 11.23C31.63 11.4 31.3999 11.53 30.6799 13.34C31.0699 11.53 31.02 11.4 29.21 11.23C31.03 11.06 31.26 10.93 31.98 9.12C31.59 10.93 31.64 11.06 33.45 11.23Z"></path><path fill="white" d="M15.3799 27.55C11.8599 27.87 11.4098 28.13 10.0098 31.64C10.7598 28.13 10.6799 27.87 7.1499 27.55C10.6699 27.23 11.1198 26.97 12.5198 23.46C11.7698 26.97 11.8499 27.23 15.3799 27.55Z"></path></svg>
+                {%- else -%}
+                  <svg viewBox="0 0 28 24" fill="none" aria-hidden="true" focusable="false"><path fill="#010101" d="M13.6451 23.92C12.9151 23.92 12.2251 23.64 11.7151 23.12L2.51507 13.92C-0.504929 10.89 -0.854958 6.07 1.73504 2.93C3.27504 1.07 5.52504 0 7.92504 0C10.065 0 12.0751 0.829996 13.5851 2.34C15.2151 0.829996 17.225 0 19.365 0C21.765 0 24.015 1.07 25.555 2.93C28.1451 6.07 27.8051 10.89 24.7751 13.91L15.5751 23.11C15.0551 23.63 14.3751 23.91 13.6351 23.91L13.6451 23.92Z"></path></svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </span>
+          <span>{{ block.settings.title }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme quick links",
+  "class": "lm-quicklinks-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "checkbox", "id": "mobile_only", "label": "Show on mobile and tablet only", "default": true },
+    { "type": "text", "id": "aria_label", "label": "Accessible label", "default": "Shop by category" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Mood, Sleep, Energy" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "image_picker", "id": "icon", "label": "Custom icon" },
+        { "type": "select", "id": "builtin_icon", "label": "Built-in icon", "default": "mood", "options": [
+          { "value": "mood", "label": "Person (mood, sleep, energy)" },
+          { "value": "weight", "label": "Lightning (weight)" },
+          { "value": "womens", "label": "Sparkle (women's health)" },
+          { "value": "beauty", "label": "Face (beauty & digestion)" },
+          { "value": "heart", "label": "Heart (bundle)" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme quick links",
+      "blocks": [
+        { "type": "link", "settings": { "title": "Mood, Sleep, Energy", "url": "/collections/mood-sleep-energy", "builtin_icon": "mood" } },
+        { "type": "link", "settings": { "title": "Weight Management", "url": "/collections/metabolism-weight-management", "builtin_icon": "weight" } },
+        { "type": "link", "settings": { "title": "Women's Health", "url": "/collections/womens-health", "builtin_icon": "womens" } },
+        { "type": "link", "settings": { "title": "Beauty & Digestion", "url": "/collections/beauty-digestion", "builtin_icon": "beauty" } },
+        { "type": "link", "settings": { "title": "Build a Bundle", "url": "/products/byob-4-pack", "builtin_icon": "heart" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

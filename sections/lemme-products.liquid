@@ -1,0 +1,122 @@
+{{ 'lemme-swiper.min.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-products" aria-labelledby="LmProductsHeading-{{ section.id }}">
+  <div class="lm-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lm-products__heading" id="LmProductsHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+  </div>
+
+  <div class="lm-products__viewport" data-lm-products data-swiper-src="{{ 'lemme-swiper.min.js' | asset_url }}">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign p = block.settings.product
+            if p != blank
+              assign card_title = p.title
+              assign card_url = p.url
+              assign card_image = p.featured_media.preview_image
+              if p.compare_at_price > p.price
+                assign card_compare = p.compare_at_price | money_without_trailing_zeros
+              else
+                assign card_compare = ''
+              endif
+              assign card_price = p.price | money_without_trailing_zeros
+            else
+              assign card_title = block.settings.title
+              assign card_url = block.settings.url
+              assign card_image = ''
+              assign card_compare = ''
+              assign card_price = block.settings.price
+            endif
+            if block.settings.title_override != blank
+              assign card_title = block.settings.title_override
+            endif
+            if block.settings.image != blank
+              assign card_image = block.settings.image
+            endif
+            if card_url == blank
+              assign card_url = routes.all_products_collection_url
+            endif
+          -%}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <article class="lm-card">
+              <a class="lm-card__link" href="{{ card_url }}" aria-label="{{ card_title | escape }}" tabindex="-1"></a>
+              <div class="lm-card__media">
+                {%- render 'lemme-image', image: card_image, fallback: block.settings.bundled_image, alt: card_title, class: 'lm-card__img', sizes: '(min-width: 1025px) 25vw, (min-width: 750px) 50vw, 100vw', fw: 832, fh: 832 -%}
+                {%- if block.settings.hover_image != blank -%}
+                  {{ block.settings.hover_image | image_url: width: 900 | image_tag: class: 'lm-card__img lm-card__img--hover', alt: '', loading: 'lazy' }}
+                {%- endif -%}
+              </div>
+              <div class="lm-card__body">
+                <h3 class="lm-card__title">{{ card_title }}</h3>
+                {%- if block.settings.subtitle != blank -%}
+                  <div class="lm-card__subtitle">{{ block.settings.subtitle }}</div>
+                {%- endif -%}
+                {%- if card_price != blank -%}
+                  <div class="lm-card__price">{%- if card_compare != blank -%}<s>{{ card_compare }}</s>{%- endif -%}{{ card_price }}</div>
+                {%- endif -%}
+              </div>
+              <div class="lm-card__cta">
+                {%- render 'lemme-button', label: section.settings.button_label, url: card_url, style: 'light', size: 'sm' -%}
+              </div>
+            </article>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <button class="lm-products__nav lm-products__nav--prev" type="button" aria-label="Previous product">{% render 'lemme-icon', icon: 'chevron-left' %}</button>
+    <button class="lm-products__nav lm-products__nav--next" type="button" aria-label="Next product">{% render 'lemme-icon', icon: 'chevron-right' %}</button>
+    <div class="lm-products__pagination"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme product grid",
+  "class": "lm-products-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "current faves" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "paragraph", "content": "Desktop shows up to 4 cards in a row. Tablet shows 2 and mobile shows 1 in a swipeable carousel with arrows and dots." }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product", "info": "When chosen, title, price, image and link come from the product." },
+        { "type": "text", "id": "subtitle", "label": "Benefit line", "default": "Gut Health & Digestion*" },
+        { "type": "image_picker", "id": "image", "label": "Card image (overrides product image)" },
+        { "type": "image_picker", "id": "hover_image", "label": "Hover image (desktop)" },
+        { "type": "text", "id": "title_override", "label": "Title override" },
+        { "type": "header", "content": "Used when no product is chosen" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Lemme Debloat Gummies" },
+        { "type": "text", "id": "price", "label": "Price text", "default": "$30" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in image", "default": "lemme-product-debloat.webp", "options": [
+          { "value": "lemme-product-glp1.webp", "label": "Reset GLP-1" },
+          { "value": "lemme-product-purr.webp", "label": "Purr" },
+          { "value": "lemme-product-debloat.webp", "label": "Debloat" },
+          { "value": "lemme-product-burn.webp", "label": "Burn" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme product grid",
+      "blocks": [
+        { "type": "product", "settings": { "title": "Lemme Reset™ GLP-1 Production Support Capsules", "subtitle": "Support Cravings & GLP-1 Production<sup>†</sup>*", "price": "$80", "url": "/products/lemme-glp-1", "bundled_image": "lemme-product-glp1.webp" } },
+        { "type": "product", "settings": { "title": "Lemme Purr Gummies", "subtitle": "Vaginal Health & Wellness*", "price": "$30", "url": "/products/purr", "bundled_image": "lemme-product-purr.webp" } },
+        { "type": "product", "settings": { "title": "Lemme Debloat Gummies", "subtitle": "Gut Health & Digestion*", "price": "$30", "url": "/products/debloat", "bundled_image": "lemme-product-debloat.webp" } },
+        { "type": "product", "settings": { "title": "Lemme Burn Capsules", "subtitle": "Metabolism & AMPK Activator Capsules*<sup>†</sup>", "price": "$40", "url": "/products/lemme-burn", "bundled_image": "lemme-product-burn.webp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

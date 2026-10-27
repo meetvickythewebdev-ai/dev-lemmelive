@@ -1,0 +1,66 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-benefits" aria-labelledby="LmBenefitsHeading-{{ section.id }}">
+  <div class="lm-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lm-benefits__heading" id="LmBenefitsHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="lm-benefits__sub">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    <ul class="lm-benefits__grid">
+      {%- for block in section.blocks -%}
+        <li class="lm-benefit" {{ block.shopify_attributes }}>
+          <div class="lm-benefit__media">
+            {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: block.settings.title, sizes: '(min-width: 1025px) 25vw, 50vw', fw: 400, fh: 400 -%}
+          </div>
+          <div class="lm-benefit__body">
+            <span class="lm-benefit__check">{% render 'lemme-icon', icon: 'check' %}</span>
+            <h3 class="lm-benefit__title">{{ block.settings.title }}</h3>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme benefit cards",
+  "class": "lm-benefits-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "lemme get real results" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "The twist? So delicious you won't believe they're supplements." },
+    { "type": "paragraph", "content": "On mobile the cards collapse into compact rows without images, like the live site." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Expert formulated" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in image (used when no image is chosen)", "default": "lemme-benefit-expert-formulated.webp", "options": [
+          { "value": "lemme-benefit-expert-formulated.webp", "label": "Expert formulated" },
+          { "value": "lemme-benefit-third-party-tested.webp", "label": "3rd party tested" },
+          { "value": "lemme-benefit-tastes-like-heaven.webp", "label": "Tastes like heaven" },
+          { "value": "lemme-benefit-bioavailable.webp", "label": "Bioavailable" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme benefit cards",
+      "blocks": [
+        { "type": "benefit", "settings": { "title": "Expert formulated", "bundled_image": "lemme-benefit-expert-formulated.webp" } },
+        { "type": "benefit", "settings": { "title": "Validated by 3rd party testing", "bundled_image": "lemme-benefit-third-party-tested.webp" } },
+        { "type": "benefit", "settings": { "title": "Science-backed innovation", "bundled_image": "lemme-benefit-tastes-like-heaven.webp" } },
+        { "type": "benefit", "settings": { "title": "Thousands of 5-star testimonials ⭐⭐⭐⭐⭐", "bundled_image": "lemme-benefit-bioavailable.webp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

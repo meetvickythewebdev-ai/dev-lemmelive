@@ -1,0 +1,29 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-ticker" style="--lm-marquee-speed: {{ section.settings.speed }}s;" aria-label="{{ section.settings.text | escape }}">
+  <div class="lm-ticker__band" style="position:relative;">
+    <div class="lm-marquee" data-lm-marquee tabindex="0">
+      <div class="lm-marquee__track">
+        {%- for i in (1..6) -%}
+          <span class="lm-marquee__item"{% if forloop.index > 1 %} aria-hidden="true"{% endif %}>{{ section.settings.text }}{% render 'lemme-icon', icon: 'star' %}</span>
+        {%- endfor -%}
+      </div>
+    </div>
+    <button class="lm-ticker__toggle" type="button" aria-pressed="false" aria-label="Pause or play scrolling text" data-lm-marquee-toggle>
+      <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0h4v14H0zM8 0h4v14H8z" fill="#000"/></svg>
+    </button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme scrolling text",
+  "class": "lm-ticker-section",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text", "default": "OHMYGOSHWAGANDHA" },
+    { "type": "range", "id": "speed", "label": "Scroll speed (seconds per item)", "min": 4, "max": 30, "step": 1, "unit": "s", "default": 10 }
+  ],
+  "presets": [ { "name": "Lemme scrolling text" } ]
+}
+{% endschema %}

@@ -1,0 +1,122 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+{%- capture default_learn -%}Blog|/blogs/news,Subscribe|/pages/save-subscribe,Loyalty & Rewards|/pages/the-wellness-circle-loyalty,Influencer|/pages/influencer{%- endcapture -%}
+{%- capture default_help -%}Help/FAQ|/pages/faq,Contact Us|/pages/contact,Find Us|/pages/find-us,Shop iHerb|https://www.iherb.com{%- endcapture -%}
+{%- capture default_legal -%}Privacy Policy|/policies/privacy-policy,Accessibility|/pages/accessibility,Terms and Conditions of Service and Sale|/policies/terms-of-service,Consumer Health Data|/pages/consumer-health-data,Your Privacy Choices|/pages/your-privacy-choices,Submit a Privacy Request|/pages/privacy-request{%- endcapture -%}
+
+<div class="lm-footer">
+  <div class="lm-footer__sparkles" aria-hidden="true">
+    <span class="lm-sparkle lm-sparkle--1">{% render 'lemme-icon', icon: 'star' %}</span>
+    <span class="lm-sparkle lm-sparkle--2">{% render 'lemme-icon', icon: 'star' %}</span>
+  </div>
+  <div class="lm-container">
+    <div class="lm-footer__grid">
+      <div class="lm-footer__newsletter">
+        <h2 class="lm-footer__heading">{{ section.settings.heading }}</h2>
+        {%- assign newsletter_form_id = 'LmNewsletter-' | append: section.id -%}
+        {%- form 'customer', id: newsletter_form_id, class: 'lm-footer__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="lm-visually-hidden" for="LmNewsletterEmail-{{ section.id }}">Email</label>
+          <div class="lm-footer__field">
+            <input id="LmNewsletterEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" placeholder="Email" required aria-required="true"{% if form.errors %} aria-invalid="true" aria-describedby="LmNewsletterMsg-{{ section.id }}"{% endif %}>
+            <button type="submit" aria-label="{{ section.settings.submit_label | escape }}">{% render 'lemme-icon', icon: 'arrow-right' %}</button>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="lm-footer__msg" id="LmNewsletterMsg-{{ section.id }}" role="status">{{ section.settings.success_text }}</p>
+          {%- elsif form.errors -%}
+            <p class="lm-footer__msg" id="LmNewsletterMsg-{{ section.id }}" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          {%- endif -%}
+        {%- endform -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <div class="lm-footer__disclaimer">{{ section.settings.disclaimer }}</div>
+        {%- endif -%}
+
+        <ul class="lm-footer__social" aria-label="Social media">
+          {%- if section.settings.instagram != blank -%}<li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'lemme-icon', icon: 'instagram' %}</a></li>{%- endif -%}
+          {%- if section.settings.tiktok != blank -%}<li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'lemme-icon', icon: 'tiktok' %}</a></li>{%- endif -%}
+          {%- if section.settings.twitter != blank -%}<li><a href="{{ section.settings.twitter }}" target="_blank" rel="noopener" aria-label="X (Twitter)">{% render 'lemme-icon', icon: 'twitter' %}</a></li>{%- endif -%}
+          {%- if section.settings.facebook != blank -%}<li><a href="{{ section.settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'lemme-icon', icon: 'facebook' %}</a></li>{%- endif -%}
+        </ul>
+
+        <div class="lm-footer__legal">
+          {%- assign current_year = 'now' | date: '%Y' -%}
+          <p>{{ section.settings.copyright | replace: '[year]', current_year }}</p>
+          <div class="lm-footer__legal-links">
+            {%- if section.settings.legal_menu != blank -%}
+              {%- for link in section.settings.legal_menu.links -%}
+                <a href="{{ link.url }}">{%- if link.title contains 'Privacy Choices' -%}{% render 'lemme-icon', icon: 'privacy' %}{%- endif -%}{{ link.title }}</a>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign items = default_legal | split: ',' -%}
+              {%- for item in items -%}
+                {%- assign parts = item | split: '|' -%}
+                <a href="{{ parts[1] }}">{%- if parts[0] contains 'Privacy Choices' -%}{% render 'lemme-icon', icon: 'privacy' %}{%- endif -%}{{ parts[0] }}</a>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      <div class="lm-footer__menus">
+        {%- for n in (1..2) -%}
+          {%- liquid
+            if n == 1
+              assign menu = section.settings.menu_1
+              assign menu_title = section.settings.menu_1_title
+              assign fallback = default_learn
+            else
+              assign menu = section.settings.menu_2
+              assign menu_title = section.settings.menu_2_title
+              assign fallback = default_help
+            endif
+          -%}
+          <nav class="lm-footer__menu" aria-label="{{ menu_title | escape }}">
+            <h3 class="lm-footer__menu-title">{{ menu_title }}</h3>
+            <ul>
+              {%- if menu != blank -%}
+                {%- for link in menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+              {%- else -%}
+                {%- assign items = fallback | split: ',' -%}
+                {%- for item in items -%}{%- assign parts = item | split: '|' -%}<li><a href="{{ parts[1] }}">{{ parts[0] }}</a></li>{%- endfor -%}
+              {%- endif -%}
+            </ul>
+          </nav>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.fda_text != blank -%}
+        <div class="lm-footer__fda">{{ section.settings.fda_text }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lemme footer",
+  "class": "lm-footer-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Newsletter heading", "default": "be first to get the goods" },
+    { "type": "text", "id": "submit_label", "label": "Submit button accessible label", "default": "Subscribe" },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "Thanks for subscribing!" },
+    { "type": "richtext", "id": "disclaimer", "label": "Newsletter disclaimer", "default": "<p>By entering your email and clicking the submit button you agree to receive marketing email messages from Lemme at the email address provided. Unsubscribe at any time. View our <a href=\"/policies/privacy-policy\" title=\"Privacy Policy\">Privacy Policy</a> and <a href=\"/policies/terms-of-service\" title=\"Terms\">Terms</a>.</p>" },
+    { "type": "header", "content": "Menus", "info": "Leave a menu empty to show the built-in Lemme links." },
+    { "type": "text", "id": "menu_1_title", "label": "Menu 1 title", "default": "Learn" },
+    { "type": "link_list", "id": "menu_1", "label": "Menu 1" },
+    { "type": "text", "id": "menu_2_title", "label": "Menu 2 title", "default": "Get help" },
+    { "type": "link_list", "id": "menu_2", "label": "Menu 2" },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal links" },
+    { "type": "header", "content": "Social" },
+    { "type": "url", "id": "instagram", "label": "Instagram", "default": "https://www.instagram.com/lemmelive" },
+    { "type": "url", "id": "tiktok", "label": "TikTok", "default": "https://www.tiktok.com/@lemmelive" },
+    { "type": "url", "id": "twitter", "label": "X (Twitter)", "default": "https://twitter.com/lemmelive" },
+    { "type": "url", "id": "facebook", "label": "Facebook", "default": "https://www.facebook.com/lemmelive" },
+    { "type": "header", "content": "Legal" },
+    { "type": "text", "id": "copyright", "label": "Copyright line", "default": "© [year] Lemme is a registered trademark of KK Nutrition, Inc.", "info": "[year] is replaced with the current year." },
+    { "type": "richtext", "id": "fda_text", "label": "FDA disclaimer", "default": "<p>* These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.</p>" }
+  ],
+  "enabled_on": { "groups": ["footer"] },
+  "presets": [ { "name": "Lemme footer" } ]
+}
+{% endschema %}

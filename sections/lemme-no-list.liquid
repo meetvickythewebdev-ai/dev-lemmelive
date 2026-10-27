@@ -1,0 +1,68 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-nolist" data-lm-nolist aria-labelledby="LmNoListHeading-{{ section.id }}">
+  <div class="lm-container">
+    <div class="lm-nolist__card">
+      <div class="lm-nolist__content">
+        <h2 class="lm-nolist__heading" id="LmNoListHeading-{{ section.id }}">
+          {%- if section.settings.heading != blank -%}{{ section.settings.heading }} {% endif -%}
+          {%- if section.settings.heading_squiggle != blank -%}{%- render 'lemme-squiggle', text: section.settings.heading_squiggle -%}{%- endif -%}
+        </h2>
+        {%- if section.settings.text != blank -%}
+          <p class="lm-nolist__sub">{{ section.settings.text }}</p>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          {%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'light', magnetic: true -%}
+        {%- endif -%}
+      </div>
+      <div class="lm-nolist__box" data-lm-nolist-target>
+        <ul class="lm-nolist__list">
+          {%- for block in section.blocks -%}
+            <li class="lm-nolist__item" style="--lm-strike-delay: {{ forloop.index0 | times: 300 }}ms;" {{ block.shopify_attributes }}>
+              {% render 'lemme-icon', icon: 'x' %}
+              <span class="lm-nolist__strike">{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      {%- if section.settings.button_label != blank -%}
+        <div class="lm-nolist__mobile-btn">
+          {%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'light', full: true -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme what we leave out",
+  "class": "lm-nolist-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "what we leave" },
+    { "type": "text", "id": "heading_squiggle", "label": "Word with animated squiggle", "default": "out" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Because not all vitamins are created equal" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Learn more" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "paragraph", "content": "Each item is struck through one after another (300 ms apart) when the list scrolls into view." }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Item", "settings": [ { "type": "text", "id": "text", "label": "Ingredient", "default": "Parabens" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Lemme what we leave out",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Parabens" } },
+        { "type": "item", "settings": { "text": "Silicon dioxide" } },
+        { "type": "item", "settings": { "text": "Gluten" } },
+        { "type": "item", "settings": { "text": "Talc" } },
+        { "type": "item", "settings": { "text": "Synthetic colors" } },
+        { "type": "item", "settings": { "text": "FD&C dyes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+{%- comment -%}
+  Wraps a word with the animated lime squiggle underline used across lemmelive.com.
+  The squiggles scroll left continuously (1s per squiggle, linear, infinite) and pause on hover.
+  Params:
+    text  – the word(s) to underline
+    color – squiggle color (default lime #c5ff89)
+{%- endcomment -%}
+<span class="lm-squiggle" style="--lm-squiggle-color: {{ color | default: '#c5ff89' }};">
+  <span class="lm-squiggle__copy">{{ text }}</span>
+  <span class="lm-squiggle__wrapper" aria-hidden="true">
+    {%- for i in (1..24) -%}
+      <span>{% render 'lemme-icon', icon: 'squiggle' %}</span>
+    {%- endfor -%}
+  </span>
+</span>

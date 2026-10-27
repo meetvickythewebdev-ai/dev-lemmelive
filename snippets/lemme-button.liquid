@@ -1,0 +1,37 @@
+{%- comment -%}
+  Pill button matching lemmelive.com.
+  Params:
+    label     – button text
+    url       – link (renders <button> when blank)
+    style     – 'light' (white, fills black on hover) | 'dark' (black, inverts to white on hover)
+    magnetic  – true to enable the cursor-following "magnetic" hover (desktop only)
+    size      – 'lg' (hero) | 'md' (default) | 'sm' (product cards)
+    full      – true to stretch to container width
+    class     – extra classes
+    type      – button type when no url (default 'button')
+{%- endcomment -%}
+{%- liquid
+  assign btn_style = style | default: 'light'
+  assign btn_size = size | default: 'md'
+  capture btn_classes
+    echo 'lm-btn lm-btn--' | append: btn_style | append: ' lm-btn--' | append: btn_size
+    if full
+      echo ' lm-btn--full'
+    endif
+    if class != blank
+      echo ' ' | append: class
+    endif
+  endcapture
+-%}
+{%- if url != blank -%}
+  <a class="{{ btn_classes }}" href="{{ url }}" {% if magnetic %}data-lm-magnetic{% else %}data-lm-button{% endif %}>
+{%- else -%}
+  <button class="{{ btn_classes }}" type="{{ type | default: 'button' }}" {% if magnetic %}data-lm-magnetic{% else %}data-lm-button{% endif %}>
+{%- endif -%}
+    <span class="lm-btn__filler" aria-hidden="true"></span>
+    <span class="lm-btn__text"><span class="lm-btn__text-inner">{{ label }}</span></span>
+{%- if url != blank -%}
+  </a>
+{%- else -%}
+  </button>
+{%- endif -%}

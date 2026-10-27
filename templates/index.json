@@ -6,280 +6,337 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "quicklinks": {
+      "type": "lemme-quicklinks",
+      "settings": {},
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "link_1": {
+          "type": "link",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "text_color": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "title": "Mood, Sleep, Energy",
+            "url": "/collections/mood-sleep-energy",
+            "builtin_icon": "mood"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "link_2": {
+          "type": "link",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "title": "Weight Management",
+            "url": "/collections/metabolism-weight-management",
+            "builtin_icon": "weight"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "title": "Women's Health",
+            "url": "/collections/womens-health",
+            "builtin_icon": "womens"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "title": "Beauty & Digestion",
+            "url": "/collections/beauty-digestion",
+            "builtin_icon": "beauty"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "title": "Build a Bundle",
+            "url": "/products/byob-4-pack",
+            "builtin_icon": "heart"
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
-      }
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5"
+      ]
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "hero": {
+      "type": "lemme-hero",
+      "settings": {},
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "slide_1": {
+          "type": "slide",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "button_2_url": "/products/byob-4-pack"
+          }
         }
       },
-      "name": "t:names.product_list",
+      "block_order": [
+        "slide_1"
+      ]
+    },
+    "press": {
+      "type": "lemme-press",
+      "settings": {},
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "name": "Vanity Fair",
+            "bundled_logo": "lemme-logo-vanity-fair.png"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "name": "Vogue",
+            "bundled_logo": "lemme-logo-vogue.png"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "name": "WSJ",
+            "bundled_logo": "lemme-logo-wsj.png"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "name": "Marie Claire",
+            "bundled_logo": "lemme-logo-marie-claire.png"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "name": "Harper's Bazaar",
+            "bundled_logo": "lemme-logo-bazaar.png"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "name": "Forbes",
+            "bundled_logo": "lemme-logo-forbes.png"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6"
+      ]
+    },
+    "faves": {
+      "type": "lemme-products",
+      "settings": {},
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "title": "Lemme Reset™ GLP-1 Production Support Capsules",
+            "subtitle": "Support Cravings & GLP-1 Production<sup>†</sup>*",
+            "price": "$80",
+            "url": "/products/lemme-glp-1",
+            "bundled_image": "lemme-product-glp1.webp"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "title": "Lemme Purr Gummies",
+            "subtitle": "Vaginal Health & Wellness*",
+            "price": "$30",
+            "url": "/products/purr",
+            "bundled_image": "lemme-product-purr.webp"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "title": "Lemme Debloat Gummies",
+            "subtitle": "Gut Health & Digestion*",
+            "price": "$30",
+            "url": "/products/debloat",
+            "bundled_image": "lemme-product-debloat.webp"
+          }
+        },
+        "product_4": {
+          "type": "product",
+          "settings": {
+            "title": "Lemme Burn Capsules",
+            "subtitle": "Metabolism & AMPK Activator Capsules*<sup>†</sup>",
+            "price": "$40",
+            "url": "/products/lemme-burn",
+            "bundled_image": "lemme-product-burn.webp"
+          }
+        }
+      },
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3",
+        "product_4"
+      ]
+    },
+    "benefits": {
+      "type": "lemme-benefits",
+      "settings": {},
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Expert formulated",
+            "bundled_image": "lemme-benefit-expert-formulated.webp"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Validated by 3rd party testing",
+            "bundled_image": "lemme-benefit-third-party-tested.webp"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Science-backed innovation",
+            "bundled_image": "lemme-benefit-tastes-like-heaven.webp"
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Thousands of 5-star testimonials ⭐⭐⭐⭐⭐",
+            "bundled_image": "lemme-benefit-bioavailable.webp"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ]
+    },
+    "no_list": {
+      "type": "lemme-no-list",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
+        "button_url": "/pages/faq"
+      },
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "text": "Parabens"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "text": "Silicon dioxide"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "text": "Gluten"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "text": "Talc"
+          }
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {
+            "text": "Synthetic colors"
+          }
+        },
+        "item_6": {
+          "type": "item",
+          "settings": {
+            "text": "FD&C dyes"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6"
+      ]
+    },
+    "subscribe": {
+      "type": "lemme-subscribe",
+      "settings": {
+        "button_url": "/pages/save-subscribe"
+      },
+      "blocks": {
+        "perk_1": {
+          "type": "perk",
+          "settings": {
+            "text": "VIP access to exclusive drops",
+            "builtin_icon": "sparkle"
+          }
+        },
+        "perk_2": {
+          "type": "perk",
+          "settings": {
+            "text": "Pause, update frequency or cancel anytime",
+            "builtin_icon": "calendar"
+          }
+        },
+        "perk_3": {
+          "type": "perk",
+          "settings": {
+            "text": "Earn loyalty points for free products & discounts",
+            "builtin_icon": "box"
+          }
+        },
+        "perk_4": {
+          "type": "perk",
+          "settings": {
+            "text": "Guaranteed delivery during sell-outs",
+            "builtin_icon": "truck"
+          }
+        }
+      },
+      "block_order": [
+        "perk_1",
+        "perk_2",
+        "perk_3",
+        "perk_4"
+      ]
+    },
+    "real_science": {
+      "type": "lemme-banner",
+      "settings": {}
+    },
+    "ticker": {
+      "type": "lemme-ticker",
+      "settings": {}
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "quicklinks",
+    "hero",
+    "press",
+    "faves",
+    "benefits",
+    "no_list",
+    "subscribe",
+    "real_science",
+    "ticker"
   ]
 }

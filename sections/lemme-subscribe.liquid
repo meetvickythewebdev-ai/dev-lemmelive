@@ -1,0 +1,95 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-subscribe" aria-labelledby="LmSubscribeHeading-{{ section.id }}">
+  <div class="lm-container">
+    <div class="lm-subscribe__card">
+      <div class="lm-subscribe__bg lm-subscribe__bg--desktop">
+        {%- render 'lemme-image', image: section.settings.bg_desktop, fallback: 'lemme-subscribe-bg-desktop.webp', alt: '', fw: 1920, fh: 697 -%}
+      </div>
+      <div class="lm-subscribe__bg lm-subscribe__bg--mobile">
+        {%- render 'lemme-image', image: section.settings.bg_mobile, fallback: 'lemme-subscribe-bg-mobile.webp', alt: '', fw: 346, fh: 708 -%}
+      </div>
+      <div class="lm-subscribe__inner">
+        <div class="lm-subscribe__media">
+          {%- render 'lemme-image', image: section.settings.image, fallback: 'lemme-subscribe-products.webp', alt: section.settings.image_alt, sizes: '50vw', fw: 742, fh: 475 -%}
+        </div>
+        <div class="lm-subscribe__content">
+          <h2 class="lm-subscribe__heading" id="LmSubscribeHeading-{{ section.id }}">
+            <span>{%- render 'lemme-squiggle', text: section.settings.heading_line_1 -%}</span>
+            {%- if section.settings.heading_line_2 != blank -%}<span>{{ section.settings.heading_line_2 }}</span>{%- endif -%}
+          </h2>
+          {%- if section.settings.text != blank -%}
+            <p class="lm-subscribe__text">{{ section.settings.text }}</p>
+          {%- endif -%}
+          <ul class="lm-subscribe__perks">
+            {%- for block in section.blocks -%}
+              <li class="lm-subscribe__perk" {{ block.shopify_attributes }}>
+                <span class="lm-subscribe__perk-icon">
+                  {%- if block.settings.icon != blank -%}
+                    {{ block.settings.icon | image_url: width: 120 | image_tag: alt: '', loading: 'lazy' }}
+                  {%- else -%}
+                    {%- render 'lemme-perk-icon', icon: block.settings.builtin_icon -%}
+                  {%- endif -%}
+                </span>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+          {%- if section.settings.button_label != blank -%}
+            <div class="lm-subscribe__cta">
+              {%- render 'lemme-button', label: section.settings.button_label, url: section.settings.button_url, style: 'dark' -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme subscribe & save",
+  "class": "lm-subscribe-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1 (gets the squiggle)", "default": "save up to 20%" },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "on your favorites" },
+    { "type": "text", "id": "text", "label": "Text", "default": "With our subscription program, delivered straight to your door." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe now" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "header", "content": "Images", "info": "Leave empty to use the built-in Lemme images." },
+    { "type": "image_picker", "id": "image", "label": "Product image (desktop)" },
+    { "type": "text", "id": "image_alt", "label": "Product image alt text", "default": "Lemme Purr, Sleep and Debloat bottles" },
+    { "type": "image_picker", "id": "bg_desktop", "label": "Background (desktop)" },
+    { "type": "image_picker", "id": "bg_mobile", "label": "Background (mobile)" }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "VIP access to exclusive drops" },
+        { "type": "image_picker", "id": "icon", "label": "Custom icon" },
+        { "type": "select", "id": "builtin_icon", "label": "Built-in icon", "default": "sparkle", "options": [
+          { "value": "sparkle", "label": "Sparkle (VIP)" },
+          { "value": "calendar", "label": "Calendar (pause / cancel)" },
+          { "value": "box", "label": "Box (loyalty points)" },
+          { "value": "truck", "label": "Delivery (guaranteed)" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme subscribe & save",
+      "blocks": [
+        { "type": "perk", "settings": { "text": "VIP access to exclusive drops", "builtin_icon": "sparkle" } },
+        { "type": "perk", "settings": { "text": "Pause, update frequency or cancel anytime", "builtin_icon": "calendar" } },
+        { "type": "perk", "settings": { "text": "Earn loyalty points for free products & discounts", "builtin_icon": "box" } },
+        { "type": "perk", "settings": { "text": "Guaranteed delivery during sell-outs", "builtin_icon": "truck" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,69 @@
+{{ 'lemme-swiper.min.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+<section class="lm-section lm-press" data-lm-press data-swiper-src="{{ 'lemme-swiper.min.js' | asset_url }}" data-autoplay="{{ section.settings.autoplay | times: 1000 }}" aria-label="{{ section.settings.aria_label | escape }}">
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {%- for block in section.blocks -%}
+        <div class="swiper-slide lm-press__slide" {{ block.shopify_attributes }}>
+          {%- if block.settings.url != blank -%}<a href="{{ block.settings.url }}" target="_blank" rel="noopener">{%- endif -%}
+          {%- if block.settings.logo != blank -%}
+            {{ block.settings.logo | image_url: width: 400 | image_tag: class: 'lm-press__logo', alt: block.settings.name, loading: 'lazy' }}
+          {%- elsif block.settings.bundled_logo != 'none' -%}
+            <img class="lm-press__logo" src="{{ block.settings.bundled_logo | asset_url }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="160" height="32">
+          {%- else -%}
+            <span class="lm-press__text">{{ block.settings.name }}</span>
+          {%- endif -%}
+          {%- if block.settings.url != blank -%}</a>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="lm-press__pagination"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme press logos",
+  "class": "lm-press-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "range", "id": "autoplay", "label": "Seconds between slides (0 = off)", "min": 0, "max": 10, "step": 1, "unit": "s", "default": 4 },
+    { "type": "text", "id": "aria_label", "label": "Accessible label", "default": "As seen in" }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Publication name", "default": "Vogue" },
+        { "type": "image_picker", "id": "logo", "label": "Logo (white, transparent background)" },
+        { "type": "select", "id": "bundled_logo", "label": "Built-in logo", "default": "lemme-logo-vogue.png", "options": [
+          { "value": "lemme-logo-vanity-fair.png", "label": "Vanity Fair" },
+          { "value": "lemme-logo-vogue.png", "label": "Vogue" },
+          { "value": "lemme-logo-wsj.png", "label": "WSJ" },
+          { "value": "lemme-logo-marie-claire.png", "label": "Marie Claire" },
+          { "value": "lemme-logo-bazaar.png", "label": "Harper's Bazaar" },
+          { "value": "lemme-logo-forbes.png", "label": "Forbes" },
+          { "value": "none", "label": "None — show name as text" }
+        ] },
+        { "type": "url", "id": "url", "label": "Article link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme press logos",
+      "blocks": [
+        { "type": "logo", "settings": { "name": "Vanity Fair", "bundled_logo": "lemme-logo-vanity-fair.png" } },
+        { "type": "logo", "settings": { "name": "Vogue", "bundled_logo": "lemme-logo-vogue.png" } },
+        { "type": "logo", "settings": { "name": "WSJ", "bundled_logo": "lemme-logo-wsj.png" } },
+        { "type": "logo", "settings": { "name": "Marie Claire", "bundled_logo": "lemme-logo-marie-claire.png" } },
+        { "type": "logo", "settings": { "name": "Harper's Bazaar", "bundled_logo": "lemme-logo-bazaar.png" } },
+        { "type": "logo", "settings": { "name": "Forbes", "bundled_logo": "lemme-logo-forbes.png" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

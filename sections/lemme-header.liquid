@@ -1,0 +1,299 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign collection_blocks = section.blocks | where: 'type', 'collection'
+  assign best_blocks = section.blocks | where: 'type', 'best_seller'
+  assign benefit_blocks = section.blocks | where: 'type', 'benefit'
+  assign featured_blocks = section.blocks | where: 'type', 'featured'
+-%}
+
+{%- capture circles -%}
+  <div class="lm-mega__circles">
+    {%- for block in collection_blocks -%}
+      <a class="lm-mega__circle" href="{{ block.settings.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+        <span class="lm-mega__circle-img">
+          {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: block.settings.title, sizes: '128px', fw: 224, fh: 224 -%}
+        </span>
+        <span class="lm-mega__circle-text">{{ block.settings.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+{%- endcapture -%}
+
+{%- capture pills -%}
+  <ul class="lm-mega__pills">
+    {%- for block in best_blocks -%}
+      <li {{ block.shopify_attributes }}>
+        <a class="lm-mega__pill" href="{{ block.settings.url | default: '#' }}">
+          {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '64px', fw: 224, fh: 224 -%}
+          <span>{{ block.settings.title }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endcapture -%}
+
+{%- capture benefits -%}
+  <ul class="lm-mega__benefits">
+    {%- for block in benefit_blocks -%}
+      <li {{ block.shopify_attributes }}>
+        <a class="lm-mega__benefit" href="{{ block.settings.url | default: '#' }}">
+          {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: '', sizes: '24px', fw: 128, fh: 128 -%}
+          <span>{{ block.settings.title }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endcapture -%}
+
+<div class="lm-header-spacer" aria-hidden="true"></div>
+<header class="lm-header" data-lm-header>
+  <div class="lm-header__bar">
+    <div class="lm-header__left">
+      <button class="lm-header__icon-btn lm-header__menu-btn lm-header__mobile-only" type="button" aria-label="Menu" aria-expanded="false" aria-controls="LmDrawer-{{ section.id }}" data-lm-drawer-toggle>
+        {% render 'lemme-icon', icon: 'menu' %}{% render 'lemme-icon', icon: 'close' %}
+      </button>
+      <a class="lm-header__icon-btn lm-header__mobile-only" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}">{% render 'lemme-icon', icon: 'search' %}</a>
+
+      <a class="lm-header__toggle lm-header__desktop-only" href="{{ section.settings.shop_url | default: routes.all_products_collection_url }}" aria-expanded="false" aria-controls="LmMega-{{ section.id }}" data-lm-mega-toggle>
+        {{ section.settings.shop_label }} {% render 'lemme-icon', icon: 'plus' %}
+      </a>
+      {%- if section.settings.link_1_label != blank -%}
+        <a class="lm-header__link lm-header__desktop-only" href="{{ section.settings.link_1_url | default: '#' }}">{{ section.settings.link_1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.link_2_label != blank -%}
+        <a class="lm-header__link lm-header__desktop-only" href="{{ section.settings.link_2_url | default: '#' }}">{{ section.settings.link_2_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <a class="lm-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, width: 118 }}
+      {%- else -%}
+        {% render 'lemme-icon', icon: 'logo' %}
+      {%- endif -%}
+    </a>
+
+    <div class="lm-header__right">
+      <a class="lm-header__link lm-header__desktop-only" href="{{ routes.account_url }}">{{ section.settings.account_label }}</a>
+      <a class="lm-header__link lm-header__desktop-only" href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>
+      <a class="lm-header__link lm-header__cart" href="{{ routes.cart_url }}" aria-label="{{ section.settings.bag_label | escape }} ({{ cart.item_count }})">
+        <span class="lm-header__desktop-only">{{ section.settings.bag_label }}</span>
+        <span class="lm-header__count" data-lm-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  {%- if section.settings.promo_text != blank -%}
+    <div class="lm-promo" style="--lm-marquee-speed: {{ section.settings.promo_speed }}s;">
+      {%- if section.settings.promo_url != blank -%}<a href="{{ section.settings.promo_url }}" class="lm-promo__link">{%- endif -%}
+      <div class="lm-marquee" data-lm-marquee>
+        <div class="lm-marquee__track">
+          {%- for i in (1..4) -%}
+            <span class="lm-marquee__item"{% if forloop.index > 1 %} aria-hidden="true"{% endif %}>{{ section.settings.promo_text }}{% render 'lemme-icon', icon: 'star' %}</span>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- if section.settings.promo_url != blank -%}</a>{%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Desktop mega menu {%- endcomment -%}
+  <div class="lm-mega" id="LmMega-{{ section.id }}" data-lm-mega>
+    <div class="lm-mega__inner">
+      <div class="lm-mega__col">
+        <div class="lm-mega__col-head">
+          <h3 class="lm-mega__title">{{ section.settings.collections_title }}</h3>
+          {%- if section.settings.shop_all_label != blank -%}
+            {%- render 'lemme-button', label: section.settings.shop_all_label, url: section.settings.shop_all_url, style: 'dark' -%}
+          {%- endif -%}
+        </div>
+        {{ circles }}
+      </div>
+      <div class="lm-mega__col">
+        <h3 class="lm-mega__title">{{ section.settings.bestsellers_title }}</h3>
+        {{ pills }}
+      </div>
+      <div class="lm-mega__col">
+        <h3 class="lm-mega__title">{{ section.settings.benefits_title }}</h3>
+        {{ benefits }}
+        {%- if section.settings.subscribe_heading != blank -%}
+          <div class="lm-mega__subscribe">
+            <strong>{{ section.settings.subscribe_heading }}</strong>
+            {%- assign perks = section.settings.subscribe_points | newline_to_br | split: '<br />' -%}
+            <ul>{%- for perk in perks -%}{%- assign p = perk | strip -%}{%- if p != blank -%}<li>{{ p }}</li>{%- endif -%}{%- endfor -%}</ul>
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="lm-mega__col">
+        {%- if featured_blocks.size > 0 -%}
+          <h3 class="lm-mega__title">{{ section.settings.featured_title }}</h3>
+          <div class="lm-mega__featured">
+            {%- for block in featured_blocks -%}
+              <a class="lm-mega__feature" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+                {%- render 'lemme-image', image: block.settings.image, fallback: block.settings.bundled_image, alt: block.settings.label, sizes: '280px', fw: 800, fh: 800 -%}
+                {%- render 'lemme-button', label: block.settings.label, style: 'light' -%}
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.shipping_text != blank -%}
+          <p class="lm-mega__shipping">{% render 'lemme-icon', icon: 'truck' %}{{ section.settings.shipping_text }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Mobile drawer {%- endcomment -%}
+  <nav class="lm-drawer" id="LmDrawer-{{ section.id }}" data-lm-drawer aria-label="Main menu">
+    <div class="lm-drawer__inner">
+      <h3 class="lm-drawer__title">{{ section.settings.collections_title }}</h3>
+      {{ circles }}
+      <div class="lm-accordion">
+        <button class="lm-accordion__btn" type="button" aria-expanded="false" data-lm-accordion>
+          {{ section.settings.bestsellers_title }}<span class="lm-accordion__icon">{% render 'lemme-icon', icon: 'plus' %}</span>
+        </button>
+        <div class="lm-accordion__panel"><div>{{ pills }}</div></div>
+      </div>
+      <div class="lm-accordion">
+        <button class="lm-accordion__btn" type="button" aria-expanded="false" data-lm-accordion>
+          {{ section.settings.benefits_title }}<span class="lm-accordion__icon">{% render 'lemme-icon', icon: 'plus' %}</span>
+        </button>
+        <div class="lm-accordion__panel"><div>{{ benefits }}</div></div>
+      </div>
+      {%- if section.settings.link_1_label != blank or section.settings.link_2_label != blank -%}
+        <ul class="lm-mega__benefits" style="margin-top:16px;">
+          {%- if section.settings.link_1_label != blank -%}<li><a class="lm-mega__benefit" href="{{ section.settings.link_1_url | default: '#' }}"><span>{{ section.settings.link_1_label }}</span></a></li>{%- endif -%}
+          {%- if section.settings.link_2_label != blank -%}<li><a class="lm-mega__benefit" href="{{ section.settings.link_2_url | default: '#' }}"><span>{{ section.settings.link_2_label }}</span></a></li>{%- endif -%}
+          <li><a class="lm-mega__benefit" href="{{ routes.account_url }}"><span>{{ section.settings.account_label }}</span></a></li>
+        </ul>
+      {%- endif -%}
+      {%- if section.settings.shop_all_label != blank -%}
+        <div class="lm-drawer__cta">{%- render 'lemme-button', label: section.settings.shop_all_label, url: section.settings.shop_all_url, style: 'dark', full: true -%}</div>
+      {%- endif -%}
+      {%- if section.settings.shipping_text != blank -%}
+        <p class="lm-drawer__shipping">{% render 'lemme-icon', icon: 'truck' %}{{ section.settings.shipping_text }}</p>
+      {%- endif -%}
+    </div>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Lemme header",
+  "class": "lm-header-section",
+  "max_blocks": 30,
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the built-in white Lemme logo." },
+    { "type": "header", "content": "Navigation" },
+    { "type": "text", "id": "shop_label", "label": "Mega menu trigger label", "default": "Shop" },
+    { "type": "url", "id": "shop_url", "label": "Mega menu trigger link" },
+    { "type": "text", "id": "link_1_label", "label": "Link 1 label", "default": "Build your bundle" },
+    { "type": "url", "id": "link_1_url", "label": "Link 1 URL" },
+    { "type": "text", "id": "link_2_label", "label": "Link 2 label", "default": "Loyalty" },
+    { "type": "url", "id": "link_2_url", "label": "Link 2 URL" },
+    { "type": "text", "id": "account_label", "label": "Account label", "default": "Account" },
+    { "type": "text", "id": "search_label", "label": "Search label", "default": "Search" },
+    { "type": "text", "id": "bag_label", "label": "Cart label", "default": "Bag" },
+    { "type": "header", "content": "Promo bar" },
+    { "type": "text", "id": "promo_text", "label": "Promo text", "default": "Take 20% off sitewide and an extra 25% off subscriptions & first renewals" },
+    { "type": "url", "id": "promo_url", "label": "Promo link" },
+    { "type": "range", "id": "promo_speed", "label": "Scroll speed (seconds per item)", "min": 6, "max": 40, "step": 1, "unit": "s", "default": 16 },
+    { "type": "header", "content": "Mega menu" },
+    { "type": "text", "id": "collections_title", "label": "Collections title", "default": "Collections" },
+    { "type": "text", "id": "shop_all_label", "label": "Shop all button", "default": "Shop all" },
+    { "type": "url", "id": "shop_all_url", "label": "Shop all link", "default": "/collections/all" },
+    { "type": "text", "id": "bestsellers_title", "label": "Best sellers title", "default": "Shop best sellers" },
+    { "type": "text", "id": "benefits_title", "label": "Benefits title", "default": "Shop by benefit" },
+    { "type": "text", "id": "subscribe_heading", "label": "Subscribe box heading", "default": "Subscribe & save up to 35% on every order" },
+    { "type": "textarea", "id": "subscribe_points", "label": "Subscribe box points (one per line)", "default": "Free shipping on all US subscriptions\nPause, update frequency, or cancel anytime\nEarn loyalty points for free products" },
+    { "type": "text", "id": "featured_title", "label": "Featured title", "default": "Featured" },
+    { "type": "text", "id": "shipping_text", "label": "Shipping note", "default": "Free shipping on orders $50+" }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection circle",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Gummies" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in image (used when no image is chosen)", "default": "lemme-menu-gummies.webp", "options": [
+          { "value": "lemme-menu-gummies.webp", "label": "Gummies" },
+          { "value": "lemme-menu-capsules.webp", "label": "Capsules" },
+          { "value": "lemme-menu-chews.webp", "label": "Chews" },
+          { "value": "lemme-menu-bundle.webp", "label": "Bundle" }
+        ] }
+      ]
+    },
+    {
+      "type": "best_seller",
+      "name": "Best seller pill",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Purr Gummies" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in image (used when no image is chosen)", "default": "lemme-menu-purr.webp", "options": [
+          { "value": "lemme-menu-glp1.webp", "label": "Reset GLP-1" },
+          { "value": "lemme-menu-purr.webp", "label": "Purr" },
+          { "value": "lemme-menu-debloat.webp", "label": "Debloat" },
+          { "value": "lemme-menu-sleep.webp", "label": "Sleep" },
+          { "value": "lemme-menu-burn.webp", "label": "Burn" }
+        ] }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit link",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Women's health" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Icon" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in icon (used when no icon is chosen)", "default": "lemme-icon-womens-health.webp", "options": [
+          { "value": "lemme-icon-womens-health.webp", "label": "Women's health" },
+          { "value": "lemme-icon-mood-sleep-energy.webp", "label": "Mood, sleep, energy" },
+          { "value": "lemme-icon-weight-management.webp", "label": "Weight management" },
+          { "value": "lemme-icon-beauty-digestion.webp", "label": "Beauty & digestion" }
+        ] }
+      ]
+    },
+    {
+      "type": "featured",
+      "name": "Featured card",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Button label", "default": "Shop Lemme Reset™" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "bundled_image", "label": "Built-in image (used when no image is chosen)", "default": "lemme-menu-featured-reset.webp", "options": [
+          { "value": "lemme-menu-featured-reset.webp", "label": "Reset" },
+          { "value": "lemme-menu-featured-nad.webp", "label": "NAD+" }
+        ] }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["header"] },
+  "presets": [
+    {
+      "name": "Lemme header",
+      "blocks": [
+        { "type": "collection", "settings": { "title": "Gummies", "url": "/collections/gummies", "bundled_image": "lemme-menu-gummies.webp" } },
+        { "type": "collection", "settings": { "title": "Capsules", "url": "/collections/capsules", "bundled_image": "lemme-menu-capsules.webp" } },
+        { "type": "collection", "settings": { "title": "Chews", "url": "/collections/chews", "bundled_image": "lemme-menu-chews.webp" } },
+        { "type": "collection", "settings": { "title": "Build Your Bundle", "url": "/products/byob-4-pack", "bundled_image": "lemme-menu-bundle.webp" } },
+        { "type": "best_seller", "settings": { "title": "Reset™ GLP-1 Support", "url": "/products/lemme-glp-1", "bundled_image": "lemme-menu-glp1.webp" } },
+        { "type": "best_seller", "settings": { "title": "Purr Gummies", "url": "/products/purr", "bundled_image": "lemme-menu-purr.webp" } },
+        { "type": "best_seller", "settings": { "title": "Debloat Gummies", "url": "/products/debloat", "bundled_image": "lemme-menu-debloat.webp" } },
+        { "type": "best_seller", "settings": { "title": "Sleep Gummies", "url": "/products/sleep", "bundled_image": "lemme-menu-sleep.webp" } },
+        { "type": "best_seller", "settings": { "title": "Burn Capsules", "url": "/products/lemme-burn", "bundled_image": "lemme-menu-burn.webp" } },
+        { "type": "benefit", "settings": { "title": "Women's Health", "url": "/collections/womens-health", "bundled_image": "lemme-icon-womens-health.webp" } },
+        { "type": "benefit", "settings": { "title": "Mood, Sleep, Energy", "url": "/collections/mood-sleep-energy", "bundled_image": "lemme-icon-mood-sleep-energy.webp" } },
+        { "type": "benefit", "settings": { "title": "Weight Management", "url": "/collections/metabolism-weight-management", "bundled_image": "lemme-icon-weight-management.webp" } },
+        { "type": "benefit", "settings": { "title": "Beauty & Digestion", "url": "/collections/beauty-digestion", "bundled_image": "lemme-icon-beauty-digestion.webp" } },
+        { "type": "featured", "settings": { "label": "Shop Lemme Reset™", "url": "/products/lemme-glp-1", "bundled_image": "lemme-menu-featured-reset.webp" } },
+        { "type": "featured", "settings": { "label": "Shop NAD+", "url": "/products/lemme-nad-capsules", "bundled_image": "lemme-menu-featured-nad.webp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
