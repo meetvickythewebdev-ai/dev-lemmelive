@@ -190,6 +190,33 @@
 .lm-pdp-subben__list li { display: flex; align-items: flex-start; gap: 8px; line-height: 20px; }
 .lm-pdp-subben__list .lm-icon { color: #3b31ce; width: 20px; height: 20px; }
 
+/* ---------- "lemme get the full routine" bundle card ---------- */
+.lm-pdp-routine { margin-top: 40px; padding: 10px 22px 20px; background: var(--lm-lilac); border: 1.6px solid var(--lm-black); border-radius: 25px; }
+@media (min-width: 750px) { .lm-pdp-routine { padding: 10px 40px 20px; } }
+.lm-pdp .lm-pdp-routine__heading { font-family: var(--lm-font-display); font-weight: 500; font-size: 24px; line-height: 60px; margin-bottom: 8px; }
+.lm-pdp .lm-pdp-routine__text { margin: -8px 0 8px; font-size: 14px; line-height: 20px; }
+.lm-pdp-routine__images { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 15px; }
+.lm-pdp-routine__plus { font-weight: 700; }
+.lm-pdp-routine__image { display: block; width: 96px; height: 96px; padding: 7px; border: 1.6px solid var(--lm-black); border-radius: 25px; background: var(--lm-lilac-light); }
+.lm-pdp-routine__image img { width: 100%; height: 100%; object-fit: contain; }
+@media (max-width: 400px) { .lm-pdp-routine__image { width: 80px; height: 80px; } }
+.lm-pdp-routine__total { display: flex; align-items: baseline; gap: 6px; }
+.lm-pdp-routine__total strong { font-size: 16px; text-transform: uppercase; }
+.lm-pdp-routine__total s { font-size: 18px; font-weight: 700; }
+.lm-pdp-routine__price { font-size: 20px; line-height: 32px; font-weight: 700; color: #3b32ce; }
+.lm-pdp-routine__btn { margin: 15px 0 20px; padding: 12px 51px; border: 0; border-radius: 30px; background: var(--lm-black); color: var(--lm-white); font-family: var(--lm-font-body); font-size: 16px; line-height: 20px; font-weight: 700; cursor: pointer; transition: background-color .25s ease, color .25s ease; }
+.lm-pdp-routine__btn:hover { background: var(--lm-lime); color: var(--lm-black); }
+.lm-pdp-routine__btn[disabled] { opacity: .6; }
+.lm-pdp .lm-pdp-routine__status { margin: -12px 0 12px; font-size: 14px; font-weight: 700; }
+.lm-pdp .lm-pdp-routine__status:empty { display: none; }
+.lm-pdp-routine__main { display: flex; justify-content: space-between; gap: 12px; font-family: var(--lm-font-display); font-weight: 500; font-size: 16px; line-height: 18px; text-transform: uppercase; }
+.lm-pdp-routine__main-option { margin-bottom: 15px; padding: 5px 0; font-size: 14px; line-height: 18px; font-weight: 300; text-transform: capitalize; }
+.lm-pdp-routine__addons { margin: 0 2px; padding: 0; border: 0; min-width: 0; }
+.lm-pdp-routine__addons legend { margin-bottom: 12px; padding: 0; font-size: 14px; font-weight: 700; text-transform: uppercase; }
+.lm-pdp-routine__addon { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+.lm-pdp-routine__addon input { width: 12px; height: 12px; margin: 0; accent-color: var(--lm-black); flex-shrink: 0; }
+.lm-pdp-routine__addon label { flex: 1; display: flex; justify-content: space-between; gap: 12px; font-family: var(--lm-font-display); font-weight: 500; font-size: 16px; line-height: 18px; text-transform: uppercase; cursor: pointer; }
+
 /* ---------- Gift box ---------- */
 .lm-pdp-gift { position: relative; margin: 36px 0 10px; padding: 16px 12px 10px; border: 1.6px solid var(--lm-black); border-radius: 24px; background: #ebdbf0; }
 .lm-pdp-gift__label { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); padding: 5px 16px; border-radius: 999px; background: var(--lm-black); color: var(--lm-white); font-size: 15px; line-height: 24px; letter-spacing: .04em; white-space: nowrap; }

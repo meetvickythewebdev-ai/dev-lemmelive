@@ -313,6 +313,44 @@
             {%- endif -%}
           </div>
         </div>
+
+        {%- comment -%} "lemme get the full routine" bundle card {%- endcomment -%}
+        {%- assign routine = m.routine_products.value -%}
+        {%- if routine.size > 0 -%}
+          <section class="lm-pdp-routine" aria-labelledby="LmRoutine-{{ section.id }}" data-lm-routine>
+            <h2 class="lm-pdp-routine__heading" id="LmRoutine-{{ section.id }}">{{ section.settings.routine_heading }}</h2>
+            {%- if section.settings.routine_text != blank -%}<p class="lm-pdp-routine__text">{{ section.settings.routine_text }}</p>{%- endif -%}
+            <ul class="lm-pdp-routine__images">
+              <li><a class="lm-pdp-routine__image" href="{{ product.url }}" aria-label="{{ product.title | escape }}">{%- if product.featured_media -%}{{ product.featured_media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', width: 84, height: 84 }}{%- endif -%}</a></li>
+              {%- for rp in routine -%}
+                <li class="lm-pdp-routine__plus" aria-hidden="true">+</li>
+                <li><a class="lm-pdp-routine__image" href="{{ rp.url }}" aria-label="{{ rp.title | escape }}">{%- if rp.featured_media -%}{{ rp.featured_media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', width: 84, height: 84 }}{%- endif -%}</a></li>
+              {%- endfor -%}
+            </ul>
+            <div class="lm-pdp-routine__total">
+              <strong>{{ section.settings.routine_total_label }}</strong>
+              <s data-lm-routine-original hidden></s>
+              <span class="lm-pdp-routine__price" data-lm-routine-total></span>
+            </div>
+            <button class="lm-pdp-routine__btn" type="button" data-lm-routine-add>{{ section.settings.routine_button }}</button>
+            <p class="lm-pdp-routine__status" role="status" aria-live="polite" data-lm-routine-status></p>
+            <div class="lm-pdp-routine__main">
+              <span class="lm-pdp-routine__main-title">{{ product.title }}</span>
+              <span class="lm-pdp-routine__main-price" data-lm-routine-main-price></span>
+            </div>
+            <div class="lm-pdp-routine__main-option" data-lm-routine-main-option></div>
+            <fieldset class="lm-pdp-routine__addons">
+              <legend>{{ section.settings.routine_addons_label }}</legend>
+              {%- for rp in routine -%}
+                {%- assign rv = rp.selected_or_first_available_variant -%}
+                <div class="lm-pdp-routine__addon">
+                  <input type="checkbox" id="LmRoutine-{{ section.id }}-{{ rv.id }}" value="{{ rv.id }}" data-price="{{ rv.price }}" data-compare="{{ rv.compare_at_price | default: rv.price }}"{% if rv.available %} checked{% else %} disabled{% endif %}>
+                  <label for="LmRoutine-{{ section.id }}-{{ rv.id }}"><span>{{ rp.title }}</span><span>{{ rv.price | money_without_trailing_zeros }}</span></label>
+                </div>
+              {%- endfor -%}
+            </fieldset>
+          </section>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -402,6 +440,12 @@
     { "type": "text", "id": "sub_benefit_3", "label": "Benefit 3", "default": "Gift or swap items" },
     { "type": "text", "id": "sub_benefit_4", "label": "Benefit 4", "default": "Earn loyalty points for free products & discounts" },
     { "type": "text", "id": "sub_benefit_5", "label": "Benefit 5", "default": "Pause, update frequency or cancel anytime by logging into your account and clicking ‘Manage Subscriptions’ under ‘Account Details’" },
+    { "type": "header", "content": "Bundle card", "info": "Shown when the product has a \"lemme.routine_products\" metafield (the products to add on)." },
+    { "type": "text", "id": "routine_heading", "label": "Heading", "default": "lemme get the full routine:" },
+    { "type": "text", "id": "routine_text", "label": "Text under heading", "info": "For example: Create a bundle (3 items) and save $10! Only use this if you have a matching discount." },
+    { "type": "text", "id": "routine_total_label", "label": "Total label", "default": "Total price:" },
+    { "type": "text", "id": "routine_button", "label": "Button", "default": "Add Bundle to Cart" },
+    { "type": "text", "id": "routine_addons_label", "label": "Add-ons label", "default": "One-time add-ons" },
     { "type": "header", "content": "Links and labels" },
     { "type": "text", "id": "benefits_link_label", "label": "Product benefits link", "default": "Product benefits" },
     { "type": "text", "id": "facts_amount_label", "label": "Facts table column 1", "default": "Amount Per Serving" },
