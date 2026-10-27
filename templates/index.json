@@ -144,7 +144,8 @@
             "subtitle": "Support Cravings & GLP-1 Production<sup>†</sup>*",
             "price": "$80",
             "url": "/products/lemme-glp-1",
-            "bundled_image": "lemme-product-glp1.webp"
+            "bundled_image": "lemme-product-glp1.webp",
+            "bundled_hover_bg": "lemme-cardbg-glp1.webp"
           }
         },
         "product_2": {
@@ -154,7 +155,8 @@
             "subtitle": "Vaginal Health & Wellness*",
             "price": "$30",
             "url": "/products/purr",
-            "bundled_image": "lemme-product-purr.webp"
+            "bundled_image": "lemme-product-purr.webp",
+            "bundled_hover_bg": "lemme-cardbg-purr.webp"
           }
         },
         "product_3": {
@@ -164,7 +166,8 @@
             "subtitle": "Gut Health & Digestion*",
             "price": "$30",
             "url": "/products/debloat",
-            "bundled_image": "lemme-product-debloat.webp"
+            "bundled_image": "lemme-product-debloat.webp",
+            "bundled_hover_bg": "lemme-cardbg-debloat.webp"
           }
         },
         "product_4": {
@@ -174,7 +177,8 @@
             "subtitle": "Metabolism & AMPK Activator Capsules*<sup>†</sup>",
             "price": "$40",
             "url": "/products/lemme-burn",
-            "bundled_image": "lemme-product-burn.webp"
+            "bundled_image": "lemme-product-burn.webp",
+            "bundled_hover_bg": "lemme-cardbg-burn.webp"
           }
         }
       },

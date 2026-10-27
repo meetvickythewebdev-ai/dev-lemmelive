@@ -46,6 +46,15 @@
             <article class="lm-card">
               <a class="lm-card__link" href="{{ card_url }}" aria-label="{{ card_title | escape }}" tabindex="-1"></a>
               <div class="lm-card__media">
+                {%- liquid
+                  assign bg_fallback = ''
+                  if block.settings.bundled_hover_bg != 'none'
+                    assign bg_fallback = block.settings.bundled_hover_bg
+                  endif
+                -%}
+                {%- if block.settings.hover_bg != blank or bg_fallback != blank -%}
+                  {%- render 'lemme-image', image: block.settings.hover_bg, fallback: bg_fallback, alt: '', class: 'lm-card__bg', sizes: '(min-width: 1025px) 25vw, (min-width: 750px) 50vw, 100vw', fw: 624, fh: 672 -%}
+                {%- endif -%}
                 {%- render 'lemme-image', image: card_image, fallback: block.settings.bundled_image, alt: card_title, class: 'lm-card__img', sizes: '(min-width: 1025px) 25vw, (min-width: 750px) 50vw, 100vw', fw: 832, fh: 832 -%}
                 {%- if block.settings.hover_image != blank -%}
                   {{ block.settings.hover_image | image_url: width: 900 | image_tag: class: 'lm-card__img lm-card__img--hover', alt: '', loading: 'lazy' }}
@@ -92,7 +101,15 @@
         { "type": "product", "id": "product", "label": "Product", "info": "When chosen, title, price, image and link come from the product." },
         { "type": "text", "id": "subtitle", "label": "Benefit line", "default": "Gut Health & Digestion*" },
         { "type": "image_picker", "id": "image", "label": "Card image (overrides product image)" },
-        { "type": "image_picker", "id": "hover_image", "label": "Hover image (desktop)" },
+        { "type": "image_picker", "id": "hover_bg", "label": "Hover background shape", "info": "Shown behind the product when the card is hovered (desktop). Use a transparent PNG." },
+        { "type": "select", "id": "bundled_hover_bg", "label": "Built-in hover background", "default": "none", "info": "Used when no hover background image is chosen.", "options": [
+          { "value": "none", "label": "None" },
+          { "value": "lemme-cardbg-glp1.webp", "label": "Reset GLP-1 (blue g)" },
+          { "value": "lemme-cardbg-purr.webp", "label": "Purr (yellow shape)" },
+          { "value": "lemme-cardbg-debloat.webp", "label": "Debloat (pink D)" },
+          { "value": "lemme-cardbg-burn.webp", "label": "Burn (red B)" }
+        ] },
+        { "type": "image_picker", "id": "hover_image", "label": "Hover product image (desktop)" },
         { "type": "text", "id": "title_override", "label": "Title override" },
         { "type": "header", "content": "Used when no product is chosen" },
         { "type": "text", "id": "title", "label": "Title", "default": "Lemme Debloat Gummies" },
@@ -111,10 +128,10 @@
     {
       "name": "Lemme product grid",
       "blocks": [
-        { "type": "product", "settings": { "title": "Lemme Reset™ GLP-1 Production Support Capsules", "subtitle": "Support Cravings & GLP-1 Production<sup>†</sup>*", "price": "$80", "url": "/products/lemme-glp-1", "bundled_image": "lemme-product-glp1.webp" } },
-        { "type": "product", "settings": { "title": "Lemme Purr Gummies", "subtitle": "Vaginal Health & Wellness*", "price": "$30", "url": "/products/purr", "bundled_image": "lemme-product-purr.webp" } },
-        { "type": "product", "settings": { "title": "Lemme Debloat Gummies", "subtitle": "Gut Health & Digestion*", "price": "$30", "url": "/products/debloat", "bundled_image": "lemme-product-debloat.webp" } },
-        { "type": "product", "settings": { "title": "Lemme Burn Capsules", "subtitle": "Metabolism & AMPK Activator Capsules*<sup>†</sup>", "price": "$40", "url": "/products/lemme-burn", "bundled_image": "lemme-product-burn.webp" } }
+        { "type": "product", "settings": { "title": "Lemme Reset™ GLP-1 Production Support Capsules", "subtitle": "Support Cravings & GLP-1 Production<sup>†</sup>*", "price": "$80", "url": "/products/lemme-glp-1", "bundled_image": "lemme-product-glp1.webp", "bundled_hover_bg": "lemme-cardbg-glp1.webp" } },
+        { "type": "product", "settings": { "title": "Lemme Purr Gummies", "subtitle": "Vaginal Health & Wellness*", "price": "$30", "url": "/products/purr", "bundled_image": "lemme-product-purr.webp", "bundled_hover_bg": "lemme-cardbg-purr.webp" } },
+        { "type": "product", "settings": { "title": "Lemme Debloat Gummies", "subtitle": "Gut Health & Digestion*", "price": "$30", "url": "/products/debloat", "bundled_image": "lemme-product-debloat.webp", "bundled_hover_bg": "lemme-cardbg-debloat.webp" } },
+        { "type": "product", "settings": { "title": "Lemme Burn Capsules", "subtitle": "Metabolism & AMPK Activator Capsules*<sup>†</sup>", "price": "$40", "url": "/products/lemme-burn", "bundled_image": "lemme-product-burn.webp", "bundled_hover_bg": "lemme-cardbg-burn.webp" } }
       ]
     }
   ]
