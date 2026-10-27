@@ -60,7 +60,8 @@
 
         {%- if m.frontrow_id != blank -%}
           <div class="lp-gallery__frontrow">
-            <iframe class="lp-gallery__frontrow-frame" title="FrontrowMD Clinicians' Choice Banner" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=sticker&amp;product_id={{ m.frontrow_id.value | url_encode }}" width="92" height="153" loading="lazy"></iframe>
+            <script async src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=sticker&amp;product_id={{ m.frontrow_id.value | url_encode }}"></script>
+            <iframe data-state="max" class="iframe-frontrow-sticker lp-gallery__frontrow-frame" id="frontrow-sticker" title="FrontrowMD Clinicians' Choice Banner" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=sticker&amp;product_id={{ m.frontrow_id.value | url_encode }}" width="92" height="153"></iframe>
           </div>
         {%- endif -%}
 

@@ -109,7 +109,8 @@ details[open] > summary .lp-when-open { display: block; }
 .lp-gallery__zoom[aria-pressed="true"] { background: #000; color: #fff; }
 @media (hover: hover) { .lp-gallery__zoom:hover { background: #000; color: #fff; } }
 .lp-gallery__frontrow { position: absolute; z-index: 4; top: 16px; left: 16px; }
-.lp-gallery__frontrow-frame { display: block; border: 0; width: 92px; height: 153px; transform: scale(1.3); transform-origin: 0 0; background: transparent; }
+.lp-gallery__frontrow-frame { display: block; position: relative; z-index: 3; border: 0; width: 92px; height: 153px; transform: scale(1.3) !important; transform-origin: 0 0 !important; background: transparent; border-radius: 0 !important; }
+.iframe.frontrow { display: none; position: fixed; z-index: 99999997; inset: 0; width: 100%; height: 100%; overflow: hidden; }
 .lp-gallery__badge { position: absolute; z-index: 4; top: 16px; right: 16px; pointer-events: none; }
 .lp-gallery__badge > span { text-transform: uppercase; font-size: 14px; }
 .lp-gallery__thumbs { overflow: hidden; padding: 0 24px; }
