@@ -486,7 +486,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 .lm-section.lp-data { background: var(--lp-50); padding: 64px 20px; text-align: center; }
 .lp-data__inner { display: flex; flex-direction: column; align-items: center; max-width: 1512px; margin: 0 auto; }
 .lp-data__heading { max-width: 900px; }
-.lp-data__text { max-width: 946px; margin: 24px 0 0; font-size: 18px; line-height: 1.5; }
+.lp-data__text { max-width: 946px; margin: 24px 0 32px; font-size: 20px; line-height: 1.5; }
 .lp-data__text p { margin: 0; }
 @media (min-width: 1024px) {
   .lm-section.lp-data { padding: 80px 40px; }
@@ -517,7 +517,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 .lp-compare__table th, .lp-compare__table td { padding: 0; border: 0; background: transparent; text-align: inherit; }
 .lp-compare__table tbody :is(th, td) { border-top: var(--lp-line); }
 .lp-compare__label { height: 72px; padding: 8px 16px 8px 0 !important; vertical-align: middle; text-align: left; font-size: 14px; font-weight: 700; line-height: 1.2; word-break: break-word; }
-.lp-compare__cell { height: 72px; padding: 16px !important; vertical-align: middle; text-align: center; }
+.lp-compare__cell { height: 72px; padding: 8px 0 !important; vertical-align: middle; text-align: center; }
 .lp-compare__cell--lemme { background: var(--lp-50) !important; }
 .lp-compare__table tbody tr:last-child .lp-compare__cell--lemme { border-radius: 0 0 9999px 9999px; }
 .lp-compare__value { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
