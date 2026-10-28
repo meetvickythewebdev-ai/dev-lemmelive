@@ -11,10 +11,6 @@
 {%- liquid
   assign st = section.settings
   assign terms = search.terms | strip
-  assign current_type = ''
-  if search.types.size == 1
-    assign current_type = search.types | first
-  endif
 -%}
 <section class="lse" aria-labelledby="LseTitle-{{ section.id }}">
   <div class="lm-container">
@@ -28,7 +24,6 @@
       </h1>
       <form class="lse__form" action="{{ routes.search_url }}" method="get" role="search">
         <input type="hidden" name="options[prefix]" value="last">
-        {%- if current_type != blank -%}<input type="hidden" name="type" value="{{ current_type }}">{%- endif -%}
         <label class="lm-visually-hidden" for="LseInput-{{ section.id }}">{{ st.placeholder }}</label>
         <input class="lse__input" id="LseInput-{{ section.id }}" type="search" name="q" value="{{ terms | escape }}" placeholder="{{ st.placeholder | escape }}" autocomplete="off" enterkeyhint="search">
         <button class="lse__submit" type="submit" aria-label="{{ st.submit_label | escape }}">{% render 'lemme-icon', icon: 'arrow-right' %}</button>
@@ -39,12 +34,24 @@
       {%- paginate search.results by st.per_page -%}
         {%- if st.show_types -%}
           {%- capture base -%}{{ routes.search_url }}?q={{ terms | url_encode }}&amp;options%5Bprefix%5D=last{%- endcapture -%}
-          <nav class="lse__types" aria-label="{{ st.types_label | escape }}">
-            <a class="lse__type{% if current_type == blank %} is-active{% endif %}" href="{{ base }}"{% if current_type == blank %} aria-current="page"{% endif %}>{{ st.all_label }}</a>
-            <a class="lse__type{% if current_type == 'product' %} is-active{% endif %}" href="{{ base }}&amp;type=product"{% if current_type == 'product' %} aria-current="page"{% endif %}>{{ st.products_label }}</a>
-            <a class="lse__type{% if current_type == 'article' %} is-active{% endif %}" href="{{ base }}&amp;type=article"{% if current_type == 'article' %} aria-current="page"{% endif %}>{{ st.articles_label }}</a>
-            <a class="lse__type{% if current_type == 'page' %} is-active{% endif %}" href="{{ base }}&amp;type=page"{% if current_type == 'page' %} aria-current="page"{% endif %}>{{ st.pages_label }}</a>
+          <nav class="lse__types" aria-label="{{ st.types_label | escape }}" data-lse-types>
+            <a class="lse__type" href="{{ base }}" data-type="">{{ st.all_label }}</a>
+            <a class="lse__type" href="{{ base }}&amp;type=product" data-type="product">{{ st.products_label }}</a>
+            <a class="lse__type" href="{{ base }}&amp;type=article" data-type="article">{{ st.articles_label }}</a>
+            <a class="lse__type" href="{{ base }}&amp;type=page" data-type="page">{{ st.pages_label }}</a>
           </nav>
+          <script>
+            (function () {
+              var nav = document.currentScript.previousElementSibling;
+              var type = new URLSearchParams(location.search).get('type') || '';
+              if (type.indexOf(',') > -1) type = '';
+              var form = document.querySelector('.lse__form');
+              if (type && form) { var h = document.createElement('input'); h.type = 'hidden'; h.name = 'type'; h.value = type; form.appendChild(h); }
+              nav.querySelectorAll('[data-type]').forEach(function (a) {
+                if (a.getAttribute('data-type') === type) { a.classList.add('is-active'); a.setAttribute('aria-current', 'page'); }
+              });
+            })();
+          </script>
         {%- endif -%}
 
         {%- if search.results_count > 0 -%}
