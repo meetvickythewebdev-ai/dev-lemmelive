@@ -1,7 +1,7 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 
-<section class="lm-section lm-nolist" data-lm-nolist aria-labelledby="LmNoListHeading-{{ section.id }}">
+<section class="lm-section lm-nolist{% if section.settings.size == 'large' %} lm-nolist--large{% endif %}" data-lm-nolist aria-labelledby="LmNoListHeading-{{ section.id }}">
   <div class="lm-container">
     <div class="lm-nolist__card">
       <div class="lm-nolist__content">
@@ -46,6 +46,7 @@
     { "type": "text", "id": "text", "label": "Text", "default": "Because not all vitamins are created equal" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Learn more" },
     { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "select", "id": "size", "label": "Size", "default": "default", "options": [ { "value": "default", "label": "Default (homepage)" }, { "value": "large", "label": "Large (bundle page)" } ] },
     { "type": "paragraph", "content": "Each item is struck through one after another (300 ms apart) when the list scrolls into view." }
   ],
   "blocks": [

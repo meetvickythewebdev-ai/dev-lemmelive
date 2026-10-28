@@ -528,6 +528,21 @@ body.lm-no-scroll { overflow: hidden; }
   .lm-nolist__mobile-btn { display: none; }
 }
 @media (min-width: 1025px) { .lm-nolist__heading { font-size: 80px; } }
+/* Large variant (bundle page) */
+@media (min-width: 750px) { .lm-nolist--large .lm-nolist__sub { font-size: 24px; line-height: 32px; } }
+@media (min-width: 1025px) {
+  .lm-nolist--large .lm-nolist__card { grid-template-columns: minmax(0, 40%) minmax(0, 60%); gap: 0; padding: 21px; min-height: 0; }
+  .lm-nolist--large .lm-nolist__content { padding: 1.8055vw 16px 1.8055vw 26px; }
+  .lm-nolist--large .lm-nolist__heading { max-width: none; font-size: 3.75vw; line-height: 3.75vw; }
+  .lm-nolist--large .lm-nolist__sub { margin-top: 2vw; }
+  .lm-nolist--large .lm-nolist__content .lm-btn { margin-top: 36px; }
+  .lm-nolist--large .lm-nolist__box { justify-content: flex-start; padding: 48px; }
+  .lm-nolist--large .lm-nolist__list { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+}
+@media (min-width: 1400px) {
+  .lm-nolist--large .lm-nolist__heading { font-size: 5.5555vw; line-height: 5.5555vw; }
+  .lm-nolist--large .lm-nolist__item { font-size: 20px; line-height: 20px; }
+}
 @media (max-width: 749px) { .lm-nolist__content .lm-btn { display: none; } }
 
 /* ==========================================================================

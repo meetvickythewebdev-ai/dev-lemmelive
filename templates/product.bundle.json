@@ -55,7 +55,8 @@
         "heading_squiggle": "out",
         "text": "Because not all vitamins are created equal",
         "button_label": "Learn more",
-        "button_url": "/pages/faq"
+        "button_url": "/pages/faq",
+        "size": "large"
       }
     },
     "products": {

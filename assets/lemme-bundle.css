@@ -2,7 +2,8 @@
    Matches lemmelive.com/products/daily-digestive-bundle. */
 .lb-main, .lb-ingr { --lb-line: 2px solid #000; --lb-card: #f7f1f9; --lb-lilac: #dfc8e7; --lb-blue: #3b31ce; --lb-lime: #c5ff89; color: #000; font-family: var(--lm-font-body); }
 .lb-main sup, .lb-ingr sup, .lb-drawer sup { vertical-align: super; font-size: 60%; line-height: 0; position: relative; top: 0; }
-body, .page-wrapper { transition: background-color .1s linear; }
+/* The page colour shows through every section, so the scroll fade covers the whole page like on the live site. */
+body:has([data-lb-main]) .lm-section:not(.lp-drawer) { background-color: transparent; }
 
 /* ---------- Layout ---------- */
 .lm-section.lb-main { padding: 24px 0 0; background: transparent; }
