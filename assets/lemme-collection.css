@@ -226,11 +226,14 @@
 @media (prefers-reduced-motion: reduce) { .lco-filters, .lco-filters::backdrop { transition: none; } }
 .lco-filters__panel { display: flex; flex-direction: column; height: 100%; }
 .lco-filters__head { display: flex; align-items: center; justify-content: space-between; padding: 24px 20px; }
-.lco-filters__title { margin: 0; font-family: var(--lm-font-display); font-size: 37px; font-weight: 500; line-height: 1.2; }
+.lco-filters__title { margin: 0; font-family: var(--lm-font-display); font-size: 37px; font-weight: 500; line-height: 14.4vw; }
+@media (min-width: 550px) { .lco-filters__title { line-height: 7.2vw; } }
+@media (min-width: 1025px) { .lco-filters__title { line-height: 5.5555vw; } }
 .lco-filters__close { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 2px solid #000; border-radius: 8px; background: #fff; color: #000; font-size: 20px; line-height: 1; cursor: pointer; }
 .lco-filters__body { flex: 1; overflow: auto; padding: 0 20px; }
 .lco-filters__section { margin: 0; padding: 20px 0; border: 0; min-width: 0; }
-.lco-filters__label { margin: 0 0 16px; padding: 0; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.lco-filters__label { float: left; width: 100%; margin: 0 0 16px; padding: 0; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.lco-filters__label + * { clear: both; }
 .lco-filters__sort { display: flex; flex-direction: column; gap: 16px; margin: 0; padding: 0; list-style: none; }
 .lco-radio { position: relative; display: flex; align-items: center; gap: 12px; font-size: 16px; cursor: pointer; }
 .lco-radio input { position: absolute; opacity: 0; width: 20px; height: 20px; margin: 0; }

@@ -97,8 +97,8 @@
       syncControls();
       if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
       document.documentElement.classList.add('lco-locked');
-      dialog.getBoundingClientRect();
-      requestAnimationFrame(function () { dialog.classList.add('is-open'); });
+      void dialog.offsetWidth;
+      dialog.classList.add('is-open');
     }
     function close() {
       if (!dialog.open) return;

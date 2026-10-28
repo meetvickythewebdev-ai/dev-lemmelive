@@ -568,6 +568,7 @@ body.lm-no-scroll { overflow: hidden; }
 .lm-ticker__toggle { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--lm-black); background: var(--lm-white); display: none; align-items: center; justify-content: center; cursor: pointer; }
 .lm-ticker__band:focus-within .lm-ticker__toggle { display: flex; }
 @media (min-width: 750px) { .lm-ticker { padding: 0 0 144px; } }
+.lm-ticker.lm-ticker--flush { padding-bottom: 0; }
 
 /* ==========================================================================
    FOOTER (lemmelive.com "footer v2")
