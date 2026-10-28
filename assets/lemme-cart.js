@@ -36,7 +36,7 @@
     busy = true;
     var id = d.getAttribute('data-section-id');
     var url = window.location.pathname + '?sections=' + encodeURIComponent(id);
-    return fetch(url, { headers: { Accept: 'application/json' } })
+    return fetch(url, { cache: 'no-store' })
       .then(function (r) { return r.json(); })
       .then(function (json) {
         var html = json && json[id];
