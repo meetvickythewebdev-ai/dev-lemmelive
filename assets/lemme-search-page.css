@@ -64,3 +64,5 @@
 .lse__pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .lse__suggested { margin-top: 72px; }
 @media (min-width: 1025px) { .lse__suggested { margin-top: 96px; } }
+.lse .lse__popular .lse__subtitle { font-size: 24px; margin-bottom: 20px; }
+@media (min-width: 1025px) { .lse__popular { margin-top: 72px; } .lse .lse__popular .lse__subtitle { font-size: 2.5vw; margin-bottom: 28px; } }
