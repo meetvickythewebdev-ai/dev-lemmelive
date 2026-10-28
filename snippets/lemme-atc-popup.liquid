@@ -1,0 +1,81 @@
+{%- comment -%}
+  "lemme toss these in..." upsell popup shown next to the cart drawer (lemmelive.com add-to-bag popup).
+  Set up in Theme settings > Add to bag popup. Rendered inside the cart drawer so it refreshes with the bag.
+  Params: cart_product_ids (",id,id," of products in the bag), round (round prices to whole dollars)
+{%- endcomment -%}
+{%- liquid
+  assign s = settings
+  assign picks = ''
+  if s.lemme_popup_enabled
+    for i in (1..2)
+      if i == 1
+        assign p = s.lemme_popup_product_1
+      else
+        assign p = s.lemme_popup_product_2
+      endif
+      if p == blank or p.available == false
+        continue
+      endif
+      assign needle = ',' | append: p.id | append: ','
+      if s.lemme_popup_hide_in_bag and cart_product_ids contains needle
+        continue
+      endif
+      assign picks = picks | append: p.handle | append: ','
+    endfor
+  endif
+  assign handles = picks | split: ','
+-%}
+{%- if handles.size > 0 -%}
+  <div class="lc-pop" data-lc-pop data-trigger="{{ s.lemme_popup_trigger | default: 'add' }}" role="region" aria-labelledby="LcPopTitle">
+    <button class="lc-pop__close" type="button" data-lc-pop-close aria-label="Close suggestions">{% render 'lemme-pdp-icon', icon: 'close' %}</button>
+    <div class="lc-pop__content">
+      {%- if s.lemme_popup_title != blank -%}<h2 class="lc-pop__title" id="LcPopTitle">{{ s.lemme_popup_title }}</h2>{%- endif -%}
+      <ul class="lc-pop__items" role="list">
+        {%- for handle in handles -%}
+          {%- liquid
+            assign p = all_products[handle]
+            assign pm = p.metafields.lemme
+            assign v = p.selected_or_first_available_variant
+            assign img = pm.collection_image.value | default: pm.card_image.value | default: p.featured_media.preview_image
+            assign shape = pm.collection_shape.value | default: pm.card_background.value
+            if forloop.index == 1
+              assign tilt = 4
+            else
+              assign tilt = -4
+            endif
+          -%}
+          <li class="lc-pop__item">
+            <article class="lc-pop__card"{% if shape != blank %} style="--lc-pop-shape: url('{{ shape | image_url: width: 624 }}'); --lc-pop-tilt: {{ tilt }}deg;"{% endif %}>
+              <a class="lc-pop__link" href="{{ p.url }}"><span class="lm-visually-hidden">{{ p.title }}</span></a>
+              <div class="lc-pop__media">
+                {%- if shape != blank -%}<span class="lc-pop__shape" aria-hidden="true"></span>{%- endif -%}
+                {%- if img != blank -%}{{ img | image_url: width: 600 | image_tag: loading: 'lazy', alt: '', class: 'lc-pop__img', widths: '300, 450, 600', sizes: '300px' }}{%- endif -%}
+              </div>
+              <div class="lc-pop__info">
+                <h3 class="lc-pop__name">{{ p.title }}</h3>
+                <p class="lc-pop__details">
+                  {%- if pm.subtitle != blank -%}<span>{{ pm.subtitle.value }}</span>{%- endif -%}
+                  <span class="lc-pop__price">
+                    {%- if v.compare_at_price > v.price -%}
+                      <span class="lm-visually-hidden">Sale price</span>{% render 'lemme-money', cents: v.price, round: round %} <s><span class="lm-visually-hidden">Regular price</span>{% render 'lemme-money', cents: v.compare_at_price, round: round %}</s>
+                    {%- else -%}
+                      {% render 'lemme-money', cents: v.price, round: round %}
+                    {%- endif -%}
+                  </span>
+                </p>
+              </div>
+              <button class="lm-btn lm-btn--md lc-pop__add" type="button" data-lm-button data-lc-add="{{ v.id }}" aria-label="{{ s.lemme_popup_button | escape }}: {{ p.title | escape }}">
+                <span class="lm-btn__filler" aria-hidden="true"></span>
+                <span class="lm-btn__text"><span class="lm-btn__text-inner">{{ s.lemme_popup_button }}</span></span>
+              </button>
+            </article>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <span class="lc-pop__sparkles" aria-hidden="true">
+        <svg class="lc-pop__sparkle lc-pop__sparkle--1" viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg>
+        <svg class="lc-pop__sparkle lc-pop__sparkle--2" viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg>
+      </span>
+    </div>
+  </div>
+{%- endif -%}

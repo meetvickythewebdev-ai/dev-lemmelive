@@ -2116,5 +2116,68 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Add to bag popup",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "The \"lemme toss these in...\" popup that opens next to the bag (desktop) and suggests up to 2 products."
+      },
+      {
+        "type": "checkbox",
+        "id": "lemme_popup_enabled",
+        "label": "Show popup",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "lemme_popup_trigger",
+        "label": "Show when",
+        "default": "add",
+        "options": [
+          {
+            "value": "add",
+            "label": "A product is added to the bag"
+          },
+          {
+            "value": "open",
+            "label": "The bag opens"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "lemme_popup_title",
+        "label": "Title",
+        "default": "lemme toss these in..."
+      },
+      {
+        "type": "product",
+        "id": "lemme_popup_product_1",
+        "label": "Product 1"
+      },
+      {
+        "type": "product",
+        "id": "lemme_popup_product_2",
+        "label": "Product 2"
+      },
+      {
+        "type": "text",
+        "id": "lemme_popup_button",
+        "label": "Button label",
+        "default": "Add to Bag"
+      },
+      {
+        "type": "checkbox",
+        "id": "lemme_popup_hide_in_bag",
+        "label": "Hide products that are already in the bag",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Cards use each product's Lemme metafields: Collection image (falls back to the main image), Collection shape (shown on hover) and Subtitle. Like the live site, the popup shows on screens 1025px and wider."
+      }
+    ]
   }
 ]

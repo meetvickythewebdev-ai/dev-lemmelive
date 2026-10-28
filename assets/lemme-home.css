@@ -472,6 +472,28 @@ body.lm-no-scroll { overflow: hidden; }
   .lm-benefits--trust .lm-benefit__body { padding: 16px 12px; }
   .lm-benefits--trust .lm-benefit__check { width: 40px; height: 40px; }
 }
+/* Round icons layout (bundle page "discover the power of ...") */
+.lm-benefits--icons { padding: 80px 0; }
+.lm-benefits--icons .lm-benefits__heading { max-width: 860px; font-size: 40px; line-height: 1; }
+.lm-benefits--icons .lm-benefits__sub { max-width: 860px; margin-top: 16px; font-size: 16px; line-height: 24px; }
+.lm-benefits__icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 16px; margin: 40px 0 0; padding: 0; list-style: none; }
+.lm-benefit-icon { width: calc(50% - 16px); text-align: center; }
+.lm-benefit-icon__circle { display: flex; align-items: center; justify-content: center; width: 80px; height: 80px; margin: 0 auto 16px; overflow: hidden; border: 2px solid var(--lm-black); border-radius: 50%; background: var(--lm-white); }
+.lm-benefit-icon__circle img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.lm-benefits--icons .lm-benefit-icon__label { max-width: 200px; margin: 0 auto; font-family: var(--lm-font-body); font-size: 16px; font-weight: 700; line-height: 16px; text-transform: uppercase; }
+@media (min-width: 750px) {
+  .lm-benefit-icon { width: calc(33.3333% - 16px); }
+  .lm-benefits--icons .lm-benefits__heading { font-size: 54px; }
+  .lm-benefits--icons .lm-benefits__sub { font-size: 24px; line-height: 32px; }
+}
+@media (min-width: 1025px) {
+  .lm-benefits--icons { padding: 96px 0; }
+  .lm-benefits--icons .lm-benefits__heading { max-width: 66.6667%; font-size: 3.75vw; line-height: 1; }
+  .lm-benefits--icons .lm-benefits__sub { max-width: 66.6667%; }
+  .lm-benefits__icons { gap: 24px; margin-top: 48px; }
+  .lm-benefit-icon { width: calc(16.666% - 24px); }
+  .lm-benefit-icon__circle { width: 96px; height: 96px; margin-bottom: 24px; }
+}
 
 /* ==========================================================================
    NO LIST ("what we leave out") — strike-through animation on scroll

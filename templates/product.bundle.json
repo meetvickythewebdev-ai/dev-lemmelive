@@ -1,0 +1,81 @@
+{
+  "sections": {
+    "main": {
+      "type": "lemme-bundle-main",
+      "blocks": {
+        "benefits": { "type": "tab_benefits", "settings": { "title": "Product benefits", "show_names": false } },
+        "supplement": { "type": "tab_supplement", "settings": { "title": "Supplement Facts", "show_names": true } }
+      },
+      "block_order": ["benefits", "supplement"],
+      "settings": {
+        "top_color": "#dfc8e7",
+        "page_color": "#dfc8e7",
+        "round_prices": true,
+        "one_time_label": "One-time purchase",
+        "subscribe_label": "Subscribe & Save [percent]%",
+        "badge_label": "Save [percent]%",
+        "add_label": "Subscribe & Save an Extra 25%"
+      }
+    },
+    "highlights": {
+      "type": "lemme-benefits",
+      "settings": {
+        "heading": "{{ product.metafields.lemme.highlights_heading.value }}",
+        "subheading": "{{ product.metafields.lemme.highlights_text.value }}",
+        "layout": "icons",
+        "icon_items": "{{ product.metafields.lemme.highlight_items.value }}"
+      }
+    },
+    "ingredients": {
+      "type": "lemme-bundle-ingredients",
+      "settings": { "heading": "so what’s in it?" }
+    },
+    "leave_out": {
+      "type": "lemme-no-list",
+      "blocks": {
+        "item1": { "type": "item", "settings": { "text": "Parabens" } },
+        "item2": { "type": "item", "settings": { "text": "Silicon dioxide" } },
+        "item3": { "type": "item", "settings": { "text": "Gluten" } },
+        "item4": { "type": "item", "settings": { "text": "Talc" } },
+        "item5": { "type": "item", "settings": { "text": "Synthetic colors" } },
+        "item6": { "type": "item", "settings": { "text": "FD&C dyes" } }
+      },
+      "block_order": ["item1", "item2", "item3", "item4", "item5", "item6"],
+      "settings": {
+        "heading": "what we leave",
+        "heading_squiggle": "out",
+        "text": "Because not all vitamins are created equal",
+        "button_label": "Learn more",
+        "button_url": "/pages/faq"
+      }
+    },
+    "products": {
+      "type": "lemme-products",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "purr", "subtitle": "Vaginal Health & Wellness*" } },
+        "p2": { "type": "product", "settings": { "product": "lemme-nad-capsules", "subtitle": "Healthy Aging & Skin Longevity*" } },
+        "p3": { "type": "product", "settings": { "product": "lemme-skin-firming-hydrating-gummy-rings", "subtitle": "Firming & Hydrating Gummy Rings*" } },
+        "p4": { "type": "product", "settings": { "product": "lemme-burn-gummies", "subtitle": "Metabolism Support*" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": { "heading": "you're gonna love these", "button_label": "Shop now" }
+    },
+    "faq": {
+      "type": "lemme-pdp-faq",
+      "settings": {
+        "nav_label": "FAQ",
+        "heading": "answers to all your questions",
+        "button_label": "Read all FAQs",
+        "button_url": "/pages/faq",
+        "open_first": true,
+        "faqs": "{{ product.metafields.lemme.faqs.value }}",
+        "padding_top": 0
+      }
+    },
+    "ticker": {
+      "type": "lemme-ticker",
+      "settings": { "text": "OHMYGOSHWAGANDHA", "bottom_space": false, "speed": 10 }
+    }
+  },
+  "order": ["main", "highlights", "ingredients", "leave_out", "products", "faq", "ticker"]
+}

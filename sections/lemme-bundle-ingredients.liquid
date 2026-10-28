@@ -1,0 +1,81 @@
+{{ 'lemme-bundle.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-bundle.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  "so what's in it?" for bundles: a dropdown with each product in the bundle and its ingredient cards.
+  Products come from lemme.bundle_products (or the section setting); cards from each product's lemme.ingredients.
+{%- endcomment -%}
+{%- liquid
+  assign st = section.settings
+  assign components = st.bundle_products | default: product.metafields.lemme.bundle_products.value
+  assign groups = 0
+  for comp in components
+    if comp.metafields.lemme.ingredients.value.size > 0
+      assign groups = groups | plus: 1
+    endif
+  endfor
+-%}
+{%- if groups > 0 -%}
+<section class="lm-section lb-ingr" aria-labelledby="LbIngr-{{ section.id }}" data-lb-ingr>
+  <div class="lb-ingr__inner">
+    <div class="lb-ingr__head">
+      <h2 class="lb-ingr__heading" id="LbIngr-{{ section.id }}">{{ st.heading }}</h2>
+      {%- if groups > 1 -%}
+        <div class="lb-ingr__select">
+          <label class="lm-visually-hidden" for="LbIngrSelect-{{ section.id }}">{{ st.select_label }}</label>
+          <select id="LbIngrSelect-{{ section.id }}" data-lb-ingr-select>
+            {%- for comp in components -%}
+              {%- if comp.metafields.lemme.ingredients.value.size > 0 -%}
+                <option value="{{ comp.handle }}">{{ comp.metafields.lemme.short_name.value | default: comp.title | remove: ' Gummies' | remove: ' Capsules' }}</option>
+              {%- endif -%}
+            {%- endfor -%}
+          </select>
+          {% render 'lemme-pdp-icon', icon: 'chevron-down', class: 'lb-select__icon' %}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- assign shown = 0 -%}
+    {%- for comp in components -%}
+      {%- assign items = comp.metafields.lemme.ingredients.value -%}
+      {%- if items.size == 0 -%}{%- continue -%}{%- endif -%}
+      <div class="lb-ingr__group" data-lb-ingr-group="{{ comp.handle }}"{% if shown > 0 %} hidden{% endif %}>
+        <ul class="lb-ingr__track{% if items.size < 4 %} is-centered{% endif %}" role="list" data-lb-ingr-track>
+          {%- for item in items -%}
+            <li class="lb-ingr__slide">
+              <article class="lb-ingr__card">
+                <div class="lb-ingr__copy">
+                  <h3 class="lb-ingr__name">{{ item.name.value }}</h3>
+                  <p class="lb-ingr__text">{{ item.details.value | default: item.description.value | newline_to_br }}</p>
+                </div>
+                {%- if item.image.value != blank -%}
+                  <div class="lb-ingr__media">{{ item.image.value | image_url: width: 900 | image_tag: loading: 'lazy', alt: '', widths: '400, 600, 900', sizes: '(min-width: 1025px) 25vw, 90vw' }}</div>
+                {%- endif -%}
+              </article>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="lb-ingr__nav" data-lb-ingr-nav hidden>
+          <button class="lb-gallery__arrow" type="button" aria-label="Previous ingredients" data-lb-ingr-prev>{% render 'lemme-pdp-icon', icon: 'arrow-left-small' %}</button>
+          <div class="lb-gallery__dots" data-lb-ingr-dots></div>
+          <button class="lb-gallery__arrow" type="button" aria-label="Next ingredients" data-lb-ingr-next>{% render 'lemme-pdp-icon', icon: 'arrow-right-small' %}</button>
+        </div>
+      </div>
+      {%- assign shown = shown | plus: 1 -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme bundle ingredients",
+  "class": "lb-ingr-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "so what’s in it?" },
+    { "type": "text", "id": "select_label", "label": "Dropdown label (screen readers)", "default": "Choose a product" },
+    { "type": "product_list", "id": "bundle_products", "label": "Products", "info": "Empty = the product's lemme.bundle_products.", "limit": 4 },
+    { "type": "paragraph", "content": "Cards come from each product's lemme.ingredients (Ingredient entries: name, details or short description, image). Hidden when none of the products have ingredients." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

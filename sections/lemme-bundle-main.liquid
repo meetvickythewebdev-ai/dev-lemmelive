@@ -1,0 +1,327 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-bundle.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-pdp.js' | asset_url }}" defer></script>
+<script src="{{ 'lemme-bundle.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  Bundle product page: gallery + buy box (lemmelive.com/products/daily-digestive-bundle).
+  The gallery and the "Product benefits / Supplement Facts" drawer reuse lemme-pdp.js and lemme-pdp-panel.
+  Per product (metafields):
+    lemme.background_color  – colour behind the top of the page
+    lemme.page_background   – colour the page fades to while scrolling
+    lemme.bundle_products   – products in the bundle (benefit icon tabs and drawer panels)
+    lemme.subtitle          – line under the title
+{%- endcomment -%}
+{%- liquid
+  assign m = product.metafields.lemme
+  assign st = section.settings
+  assign title = st.title | default: product.title
+  assign subtitle = st.subtitle | default: m.subtitle.value
+  assign components = st.bundle_products | default: m.bundle_products.value
+  assign top_color = m.background_color.value | default: st.top_color | default: '#dfc8e7'
+  assign page_color = m.page_background.value | default: st.page_color | default: '#dfc8e7'
+
+  assign variant = product.selected_or_first_available_variant
+  assign round = st.round_prices
+  assign compare = variant.compare_at_price | default: variant.price
+  if variant.price > compare
+    assign compare = variant.price
+  endif
+
+  assign plan_group = nil
+  assign allocation = nil
+  for alloc in variant.selling_plan_allocations
+    assign allocation = alloc
+    break
+  endfor
+  if allocation
+    for group in product.selling_plan_groups
+      if group.id == allocation.selling_plan_group_id
+        assign plan_group = group
+      endif
+    endfor
+  endif
+  assign sub_percent = 0
+  if allocation and compare > 0
+    assign sub_percent = compare | minus: allocation.price | times: 100.0 | divided_by: compare | floor
+  endif
+  assign rating = product.metafields.reviews.rating.value
+  assign drawer_id = 'LbDrawer-' | append: section.id
+  assign highlights = st.highlights | newline_to_br | split: '<br />'
+-%}
+
+<style>
+  :root { --lb-top: {{ top_color }}; --lb-page: {{ page_color }}; --lb-bg: {{ top_color }}; }
+  body, .page-wrapper { background-color: var(--lb-bg); }
+</style>
+
+<section class="lm-section lb-main" data-lp-main data-lb-main data-section-id="{{ section.id }}" data-lb-top="{{ top_color }}" data-lb-page="{{ page_color }}">
+  <div class="lb-main__layout">
+
+    {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+    <div class="lb-gallery" data-lp-gallery>
+      {%- if product.media.size > 1 -%}
+        <div class="lb-gallery__thumbs" role="tablist" aria-label="{{ product.title | escape }} images">
+          {%- for media in product.media -%}
+            <button class="lb-gallery__thumb{% if forloop.first %} is-active{% endif %}" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show image {{ forloop.index }}" data-lp-thumb="{{ forloop.index0 }}">
+              {{ media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', width: 88, height: 88 }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      <div class="lb-gallery__main">
+        <div class="lb-gallery__stage">
+          <div class="lb-gallery__track" data-lp-track tabindex="0" aria-label="{{ 'Product images, use arrow keys to browse' | escape }}">
+            {%- for media in product.media -%}
+              {%- liquid
+                if forloop.first
+                  assign img_loading = 'eager'
+                  assign img_priority = 'high'
+                else
+                  assign img_loading = 'lazy'
+                  assign img_priority = 'auto'
+                endif
+              -%}
+              <div class="lb-gallery__slide" data-lp-slide>
+                {{ media.preview_image | image_url: width: 1800 | image_tag: widths: '400, 600, 800, 1000, 1300, 1800', sizes: '(min-width: 1025px) 50vw, 100vw', loading: img_loading, fetchpriority: img_priority, alt: media.alt, class: 'lb-gallery__img', draggable: 'false' }}
+              </div>
+            {%- else -%}
+              <div class="lb-gallery__slide">{{ 'product-1' | placeholder_svg_tag: 'lb-gallery__img' }}</div>
+            {%- endfor -%}
+          </div>
+          {%- if product.media.size > 0 -%}
+            <button class="lb-gallery__zoom" type="button" aria-label="Zoom image" aria-pressed="false" data-lp-zoom>{% render 'lemme-pdp-icon', icon: 'zoom' %}</button>
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="lb-gallery__nav">
+            <button class="lb-gallery__arrow" type="button" aria-label="Previous image" data-lp-prev disabled>{% render 'lemme-pdp-icon', icon: 'arrow-left-small' %}</button>
+            <div class="lb-gallery__dots">
+              {%- for media in product.media -%}
+                <button class="lb-gallery__dot{% if forloop.first %} is-active{% endif %}" type="button" tabindex="-1" aria-label="Show image {{ forloop.index }}" data-lp-thumb="{{ forloop.index0 }}"></button>
+              {%- endfor -%}
+            </div>
+            <button class="lb-gallery__arrow" type="button" aria-label="Next image" data-lp-next>{% render 'lemme-pdp-icon', icon: 'arrow-right-small' %}</button>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ---------- Buy box ---------- {%- endcomment -%}
+    <div class="lb-box">
+      <div class="lb-card">
+        {%- if rating != blank -%}
+          {%- assign pct = rating.rating | times: 100.0 | divided_by: rating.scale_max -%}
+          <a class="lb-rating" href="#{{ st.reviews_anchor | default: 'reviews' }}">
+            <span class="lb-stars" style="--lb-rating: {{ pct }}%;" aria-hidden="true"></span>
+            <span class="lb-rating__label">({{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }})</span>
+            <span class="lm-visually-hidden">Rated {{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }} stars</span>
+          </a>
+        {%- endif -%}
+        <h1 class="lb-title">{{ title }}</h1>
+        {%- if subtitle != blank -%}<p class="lb-subtitle">{{ subtitle }}</p>{%- endif -%}
+
+        <div class="lb-buy" data-lb-buy data-round="{{ round }}">
+          <fieldset class="lb-options">
+            <legend class="lm-visually-hidden">{{ st.options_legend }}</legend>
+            <div class="lb-option{% if compare > variant.price %} lb-option--sale{% endif %}">
+              <input class="lb-option__radio" type="radio" name="lb-plan-{{ section.id }}" id="LbOnce-{{ section.id }}" value="" data-price="{{ variant.price }}" data-compare="{{ compare }}" checked>
+              <label class="lb-option__label" for="LbOnce-{{ section.id }}">
+                <span class="lb-option__name">{{ st.one_time_label }}</span>
+                <span class="lb-option__prices">
+                  <span class="lm-visually-hidden">Sale price</span>
+                  <span>{% render 'lemme-money', cents: variant.price, round: round %}</span>
+                  {%- if compare > variant.price -%}
+                    <span class="lm-visually-hidden">Regular price</span>
+                    <s>{% render 'lemme-money', cents: compare, round: round %}</s>
+                  {%- endif -%}
+                </span>
+              </label>
+            </div>
+            {%- if allocation -%}
+              <div class="lb-option lb-option--sub" data-lb-sub>
+                {%- if sub_percent > 0 and st.badge_label != blank -%}<span class="lb-option__badge">{{ st.badge_label | replace: '[percent]', sub_percent }}</span>{%- endif -%}
+                <input class="lb-option__radio" type="radio" name="lb-plan-{{ section.id }}" id="LbSub-{{ section.id }}" value="{{ allocation.selling_plan.id }}" data-price="{{ allocation.price }}" data-compare="{{ compare }}" data-sub>
+                <label class="lb-option__label" for="LbSub-{{ section.id }}">
+                  <span class="lb-option__name">{{ st.subscribe_label | replace: '[percent]', sub_percent }}</span>
+                  <span class="lb-option__prices lb-option__prices--sale">
+                    <span class="lm-visually-hidden">Sale price</span>
+                    <span data-lb-sub-price>{% render 'lemme-money', cents: allocation.price, round: round %}</span>
+                    <span class="lm-visually-hidden">Regular price</span>
+                    <s>{% render 'lemme-money', cents: compare, round: round %}</s>
+                  </span>
+                </label>
+                <div class="lb-option__more" data-lb-sub-more hidden>
+                  {%- if plan_group.selling_plans.size > 1 -%}
+                    <div class="lb-select">
+                      <label class="lm-visually-hidden" for="LbFreq-{{ section.id }}">{{ st.frequency_label }}</label>
+                      <select id="LbFreq-{{ section.id }}" data-lb-frequency>
+                        {%- for plan in plan_group.selling_plans -%}
+                          {%- liquid
+                            assign plan_price = allocation.price
+                            for pa in variant.selling_plan_allocations
+                              if pa.selling_plan.id == plan.id
+                                assign plan_price = pa.price
+                              endif
+                            endfor
+                          -%}
+                          <option value="{{ plan.id }}" data-price="{{ plan_price }}">{{ plan.name }}</option>
+                        {%- endfor -%}
+                      </select>
+                      {% render 'lemme-pdp-icon', icon: 'chevron-down', class: 'lb-select__icon' %}
+                    </div>
+                  {%- endif -%}
+                  {%- if st.highlights != blank -%}
+                    <ul class="lb-perks">
+                      {%- for line in highlights -%}
+                        {%- assign line = line | strip -%}
+                        {%- if line != blank -%}<li>{% render 'lemme-pdp-icon', icon: 'sparkle' %}<span>{{ line }}</span></li>{%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          </fieldset>
+
+          {%- form 'product', product, class: 'lb-form', novalidate: 'novalidate', data-lb-form: '' -%}
+            <input type="hidden" name="id" value="{{ variant.id }}" data-lb-variant>
+            <input type="hidden" name="selling_plan" value="" data-lb-plan disabled>
+            <div class="lb-qty">
+              <button class="lb-qty__btn" type="button" data-lb-qty="-1" aria-label="Decrease quantity">{% render 'lemme-pdp-icon', icon: 'minus' %}</button>
+              <label class="lm-visually-hidden" for="LbQty-{{ section.id }}">Quantity</label>
+              <input class="lb-qty__input" type="number" id="LbQty-{{ section.id }}" name="quantity" value="1" min="1" max="99" inputmode="numeric" data-lb-qty-input>
+              <button class="lb-qty__btn" type="button" data-lb-qty="1" aria-label="Increase quantity">{% render 'lemme-pdp-icon', icon: 'plus' %}</button>
+            </div>
+            <button class="lm-btn lm-btn--md lb-submit" type="submit" name="add" data-lm-button data-lb-submit data-label="{{ st.add_label | escape }}" data-sold-out="{{ st.sold_out_label | escape }}"{% unless variant.available %} disabled{% endunless %}>
+              <span class="lm-btn__filler" aria-hidden="true"></span>
+              <span class="lm-btn__text"><span class="lm-btn__text-inner" data-lb-submit-label>{% if variant.available %}{{ st.add_label }}{% else %}{{ st.sold_out_label }}{% endif %}</span></span>
+            </button>
+            <p class="lb-status" role="status" aria-live="polite" data-lb-status></p>
+          {%- endform -%}
+        </div>
+
+        {%- if components.size > 0 -%}
+          <div class="lb-tabs" data-lb-tabs>
+            <div class="lb-tabs__list" role="tablist" aria-label="{{ st.tabs_label | escape }}">
+              {%- for comp in components -%}
+                <button class="lb-tabs__tab{% if forloop.first %} is-active{% endif %}" type="button" role="tab" id="LbTab-{{ section.id }}-{{ forloop.index }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="LbTabPanel-{{ section.id }}-{{ forloop.index }}"{% unless forloop.first %} tabindex="-1"{% endunless %} data-lb-tab>{{ comp.title }}</button>
+              {%- endfor -%}
+            </div>
+            {%- for comp in components -%}
+              {%- assign icons = comp.metafields.lemme.benefit_icon_items.value -%}
+              <div class="lb-tabs__panel" role="tabpanel" id="LbTabPanel-{{ section.id }}-{{ forloop.index }}" aria-labelledby="LbTab-{{ section.id }}-{{ forloop.index }}"{% unless forloop.first %} hidden{% endunless %} data-lb-panel>
+                {%- if comp.metafields.lemme.benefit_icons_title != blank -%}<p class="lb-tabs__title">{{ comp.metafields.lemme.benefit_icons_title.value }}</p>{%- endif -%}
+                <ul class="lb-icons" role="list">
+                  {%- for item in icons -%}
+                    <li class="lb-icons__item">
+                      {%- if item.icon.value != blank -%}{{ item.icon.value | image_url: width: 192 | image_tag: alt: '', loading: 'lazy', width: 76, height: 76 }}{%- endif -%}
+                      <span>{{ item.label.value }}</span>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if components.size > 0 -%}
+          {%- capture drawer_links -%}
+            {%- for block in section.blocks -%}
+              <button class="lb-link" type="button" aria-controls="{{ drawer_id }}" data-lp-open="{{ block.id }}" data-lp-title="{{ block.settings.title | escape }}" {{ block.shopify_attributes }}>{{ block.settings.title }}</button>
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- if drawer_links != blank -%}<div class="lb-links">{{ drawer_links }}</div>{%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if components.size > 0 and section.blocks.size > 0 -%}
+    <div class="lp-drawer-overlay" data-lp-overlay data-lp-portal="overlay-{{ section.id }}" hidden></div>
+    <aside class="lm-section lp-drawer lb-drawer" id="{{ drawer_id }}" role="dialog" aria-modal="true" aria-labelledby="{{ drawer_id }}-title" data-lp-drawer hidden>
+      <div class="lp-drawer__inner">
+        <header class="lp-drawer__header">
+          <h2 class="lp-drawer__title" id="{{ drawer_id }}-title" data-lp-drawer-title></h2>
+          <button class="lp-drawer__close" type="button" aria-label="Close" data-lp-close>{% render 'lemme-pdp-icon', icon: 'close' %}</button>
+        </header>
+        <div class="lp-drawer__body" data-lp-drawer-body>
+          {%- for block in section.blocks -%}
+            <div class="lb-drawer__panel" data-lp-panel="{{ block.id }}" hidden>
+              {%- for comp in components -%}
+                {%- capture panel -%}{%- render 'lemme-pdp-panel', block: block, product: comp, display_title: comp.title -%}{%- endcapture -%}
+                {%- if panel != blank -%}
+                  <div class="lb-drawer__product">
+                    {%- if block.settings.show_names -%}<p class="lb-drawer__name">{{ comp.title }}</p>{%- endif -%}
+                    <div class="lp-panel{% if block.type == 'tab_supplement' %} lp-facts{% endif %}">{{ panel }}</div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        <nav class="lp-drawer__nav" aria-label="Product details">
+          <button class="lp-drawer__nav-btn" type="button" data-lp-drawer-prev hidden>{% render 'lemme-pdp-icon', icon: 'arrow-left-small' %}<span data-lp-label></span></button>
+          <button class="lp-drawer__nav-btn lp-drawer__nav-btn--next" type="button" data-lp-drawer-next hidden><span data-lp-label></span>{% render 'lemme-pdp-icon', icon: 'arrow-right-small' %}</button>
+        </nav>
+      </div>
+    </aside>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Lemme bundle product",
+  "class": "lb-main-section",
+  "settings": [
+    { "type": "paragraph", "content": "Colours, subtitle and the products in the bundle come from each product's Lemme metafields: Background colour, Page background (bundle), Subtitle and Bundle products." },
+    { "type": "text", "id": "title", "label": "Title", "info": "Empty = product title." },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "info": "Empty = the product's lemme.subtitle." },
+    { "type": "product_list", "id": "bundle_products", "label": "Products in the bundle", "info": "Empty = the product's lemme.bundle_products.", "limit": 4 },
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "top_color", "label": "Top colour", "info": "Used when the product has no lemme.background_color." },
+    { "type": "color", "id": "page_color", "label": "Colour after scrolling", "info": "Used when the product has no lemme.page_background." },
+    { "type": "header", "content": "Purchase options" },
+    { "type": "checkbox", "id": "round_prices", "label": "Show prices rounded to whole dollars", "info": "Matches the live site. The cart and checkout still charge the exact price.", "default": true },
+    { "type": "text", "id": "options_legend", "label": "Options label (screen readers)", "default": "Delivery options" },
+    { "type": "text", "id": "one_time_label", "label": "One-time option", "default": "One-time purchase" },
+    { "type": "text", "id": "subscribe_label", "label": "Subscription option", "info": "Shown when the product has a subscription plan. [percent] = the saving.", "default": "Subscribe & Save [percent]%" },
+    { "type": "text", "id": "badge_label", "label": "Subscription badge", "default": "Save [percent]%" },
+    { "type": "text", "id": "frequency_label", "label": "Frequency label (screen readers)", "default": "Delivery frequency" },
+    { "type": "textarea", "id": "highlights", "label": "Perks under the subscription option", "info": "One per line.", "default": "VIP access to exclusive drops\nGuaranteed delivery during sell-outs\nGift or swap items\nEarn loyalty points for free products & discounts\nPause, update frequency or cancel anytime by logging into your account and clicking ‘Manage Subscriptions’ under ‘Account Details’" },
+    { "type": "text", "id": "add_label", "label": "Add to bag button", "default": "Add to Bag" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold out" },
+    { "type": "text", "id": "tabs_label", "label": "Benefit tabs label (screen readers)", "default": "Included products features" },
+    { "type": "text", "id": "reviews_anchor", "label": "Rating link target", "default": "reviews" }
+  ],
+  "blocks": [
+    {
+      "type": "tab_benefits",
+      "name": "Link: Product benefits",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Link and drawer title", "default": "Product benefits" },
+        { "type": "checkbox", "id": "show_names", "label": "Show product names", "default": false },
+        { "type": "paragraph", "content": "Shows each bundled product's benefits intro and list (lemme.benefits_intro and lemme.benefits)." }
+      ]
+    },
+    {
+      "type": "tab_supplement",
+      "name": "Link: Supplement facts",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Link and drawer title", "default": "Supplement Facts" },
+        { "type": "checkbox", "id": "show_names", "label": "Show product names", "default": true },
+        { "type": "text", "id": "heading", "label": "Facts heading", "default": "Supplement facts" },
+        { "type": "text", "id": "col_amount", "label": "Table column 1", "default": "Amount Per Serving" },
+        { "type": "text", "id": "col_dv", "label": "Table column 2", "default": "% Daily Value*" },
+        { "type": "text", "id": "other_label", "label": "Other ingredients label", "default": "Other Ingredients" },
+        { "type": "text", "id": "warning_label", "label": "Warning label", "default": "WARNING" },
+        { "type": "paragraph", "content": "Shows each bundled product's supplement facts from its metafields." }
+      ]
+    }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

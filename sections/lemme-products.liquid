@@ -18,7 +18,7 @@
             if p != blank
               assign card_title = p.title
               assign card_url = p.url
-              assign card_image = p.featured_media.preview_image
+              assign card_image = p.metafields.lemme.card_image.value | default: p.metafields.lemme.collection_image.value | default: p.featured_media.preview_image
               if p.compare_at_price > p.price
                 assign card_compare = p.compare_at_price | money_without_trailing_zeros
               else
@@ -55,7 +55,7 @@
                 {%- liquid
                   assign bg_image = block.settings.hover_bg
                   if bg_image == blank and p != blank
-                    assign bg_image = p.metafields.lemme.card_background.value
+                    assign bg_image = p.metafields.lemme.card_background.value | default: p.metafields.lemme.collection_shape.value
                   endif
                 -%}
                 {%- if bg_image != blank or bg_fallback != blank -%}

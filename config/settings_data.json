@@ -117,7 +117,14 @@
       "foreground": "#000000",
       "color1": "#333333",
       "color2": "#DFDFDF"
-    }
+    },
+    "lemme_popup_enabled": true,
+    "lemme_popup_trigger": "add",
+    "lemme_popup_title": "lemme toss these in...",
+    "lemme_popup_product_1": "lemme-relax-soft-chews",
+    "lemme_popup_product_2": "purr",
+    "lemme_popup_button": "Add to Bag",
+    "lemme_popup_hide_in_bag": true
   },
   "presets": {
     "Horizon": {

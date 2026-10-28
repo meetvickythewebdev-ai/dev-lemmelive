@@ -63,6 +63,7 @@
         if (s2) s2.scrollTop = top;
         if (breakdownOpen) toggleBreakdown(fresh.querySelector('[data-lc-toggle]'), true);
         setCount(+fresh.getAttribute('data-count') || 0);
+        if (window.LemmeHome && typeof window.LemmeHome.init === 'function') { try { window.LemmeHome.init(fresh); } catch (err) {} }
         // Put focus back where it was, or on something sensible.
         if (focusKey && d.open) {
           var target = null;
@@ -115,10 +116,29 @@
     if (panel) panel.hidden = !open;
   }
 
+  /* ---------- Add-to-bag popup (snippets/lemme-atc-popup.liquid) ---------- */
+  var popWanted = false;
+  function showPop(added) {
+    var d = dialog();
+    var pop = d && d.querySelector('[data-lc-pop]');
+    var trigger = pop ? pop.getAttribute('data-trigger') : 'add';
+    popWanted = !!added || trigger === 'open';
+    syncPop();
+  }
+  function syncPop() {
+    var d = dialog();
+    if (!d) return;
+    var pop = d.querySelector('[data-lc-pop]');
+    d.classList.toggle('lc--pop', popWanted && !!pop);
+  }
+  function hidePop() { popWanted = false; syncPop(); }
+
   /* ---------- Open / close ---------- */
-  function open(from) {
+  function open(from, added) {
     var d = dialog();
     if (!d) return false;
+    if (from === true) { added = true; from = null; }
+    showPop(added);
     if (d.open) { d.classList.add('is-open'); return true; }
     opener = from || document.activeElement;
     if (typeof d.showModal === 'function') d.showModal(); else d.setAttribute('open', '');
@@ -134,6 +154,7 @@
     var d = dialog();
     if (!d || !d.open) return;
     d.classList.remove('is-open');
+    hidePop();
     var done = function () {
       if (d.classList.contains('is-open')) return;
       if (typeof d.close === 'function') d.close(); else d.removeAttribute('open');
@@ -158,11 +179,9 @@
     }
     if (!d.contains(e.target)) return;
 
-    // Click on the dimmed page (the dialog's backdrop) closes it.
-    if (e.target === d) {
-      var r = d.getBoundingClientRect();
-      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) { close(); return; }
-    }
+    // Click on the dimmed page (outside the panel and the popup cards) closes it.
+    if (e.target === d || e.target.hasAttribute('data-lc-inner')) { close(); return; }
+    if (e.target.closest('[data-lc-pop-close]') || e.target.matches('[data-lc-pop], .lc-pop__content, .lc-pop__items')) { hidePop(); return; }
     if (e.target.closest('[data-lc-close]')) { close(); return; }
 
     var toggle = e.target.closest('[data-lc-toggle]');
@@ -185,6 +204,7 @@
       post('cart/add.js', { items: [{ id: +add.getAttribute('data-lc-add'), quantity: 1 }] })
         .then(function () { return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); }); })
         .then(function (cart) { emit(cart); return refresh(); })
+        .then(syncPop)
         .catch(function (err) { add.removeAttribute('aria-busy'); announce(err.message); });
     }
   });
@@ -206,8 +226,9 @@
     if (detail.sourceId === 'lemme-cart') return;
     var d = dialog();
     if (!d) return;
-    refresh();
-    if (detail.data && detail.data.source === 'product-form' && d.getAttribute('data-open-on-add') === 'true') open();
+    var added = detail.data && detail.data.source === 'product-form';
+    refresh().then(function () { if (added && d.open) syncPop(); });
+    if (added && d.getAttribute('data-open-on-add') === 'true') open(null, true);
   });
 
   // Theme editor: show the drawer while its settings are being edited.
@@ -224,5 +245,10 @@
     if (d && d.getAttribute('data-section-id') === e.detail.sectionId) open();
   });
 
-  window.LemmeCart = { open: open, close: close, refresh: refresh };
+  document.addEventListener('keydown', function (e) {
+    var d = dialog();
+    if (e.key === 'Escape' && d && d.classList.contains('lc--pop') && d.open) { e.preventDefault(); e.stopPropagation(); hidePop(); }
+  }, true);
+
+  window.LemmeCart = { open: open, close: close, refresh: refresh, hidePopup: hidePop };
 })();
