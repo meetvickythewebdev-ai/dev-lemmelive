@@ -13,13 +13,6 @@
   "sections": {
     "lemme_header": {
       "type": "lemme-header",
-      "settings": {
-        "link_1_url": "/products/byob-4-pack",
-        "link_2_url": "/pages/the-wellness-circle-loyalty",
-        "promo_url": "/pages/save-subscribe",
-        "drawer_link_1_url": "/blogs/news",
-        "drawer_link_2_url": "/pages/faq"
-      },
       "blocks": {
         "collection_1": {
           "type": "collection",
@@ -158,12 +151,53 @@
         "benefit_13",
         "featured_14",
         "featured_15"
-      ]
+      ],
+      "settings": {
+        "shop_label": "Shop",
+        "shop_url": "",
+        "link_1_label": "Build your bundle",
+        "link_1_url": "/products/byob-4-pack",
+        "link_2_label": "",
+        "link_2_url": "",
+        "account_label": "Account",
+        "search_label": "Search",
+        "bag_label": "Bag",
+        "drawer_link_1_label": "Blog",
+        "drawer_link_1_url": "",
+        "drawer_link_2_label": "Help/FAQ",
+        "drawer_link_2_url": "",
+        "promo_text": "Take 20% off sitewide and an extra 25% off subscriptions & first renewals",
+        "promo_url": "/pages/save-subscribe",
+        "promo_speed": 16,
+        "collections_title": "Collections",
+        "shop_all_label": "Shop all",
+        "shop_all_url": "shopify://collections/all",
+        "bestsellers_title": "Shop best sellers",
+        "benefits_title": "Shop by benefit",
+        "subscribe_heading": "Subscribe & save up to 35% on every order",
+        "subscribe_url": "",
+        "subscribe_points": "Free shipping on all US subscriptions\nPause, update frequency, or cancel anytime\nEarn loyalty points for free products",
+        "featured_title": "Featured",
+        "shipping_text": "Free shipping on orders $50+"
+      }
     },
     "lemme_cart_drawer": {
       "type": "lemme-cart-drawer",
       "settings": {
+        "open_on_add": true,
+        "round_prices": true,
+        "title": "your bag",
+        "close_label": "Close bag",
+        "subscribe_label": "Subscribe & Save",
+        "one_time_label": "One-time only",
+        "remove_label": "Remove",
+        "free_label": "Free Gift",
+        "empty_text": "Your bag is empty",
+        "empty_button_label": "Shop all",
+        "empty_button_link": "/collections/all",
         "promo_image": "shopify://shop_images/lemme-cart-maelys-gift.png",
+        "promo_link": "",
+        "upsell_heading": "Throw In One Of Our Bestsellers",
         "upsell_products": [
           "purr",
           "lemme-burn-gummies",
@@ -173,7 +207,16 @@
           "lemme-skin-firming-hydrating-gummy-rings"
         ],
         "upsell_count": 1,
-        "empty_button_link": "/collections/all"
+        "add_label": "Add",
+        "subtotal_label": "Subtotal",
+        "savings_label": "Total savings",
+        "off_label": "OFF",
+        "checkout_label": "Checkout",
+        "benefit_1": "Expert formulated",
+        "benefit_2": "3rd-party tested",
+        "benefit_3": "5-star reviews",
+        "info": "Taxes and discount codes calculated at checkout.",
+        "subscription_note": "Each Subscribe & Save item will be billed at the Subscribe & Save Price shown on a recurring basis at the frequency you choose today, unless you pause, update the frequency, or cancel your shipments by logging into your account and clicking ‘Manage Subscriptions’ under ‘Account Details.’"
       }
     },
     "lemme_search_drawer": {
