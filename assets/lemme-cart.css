@@ -142,7 +142,7 @@ html.lc-locked { overflow: hidden; }
 /* Footer */
 .lc__footer { flex: 0 0 auto; padding: 0 0 8px; background: var(--lc-bg); }
 .lc__totals { padding: 10px 20px 0; border-top: 1.6px solid #000; }
-.lc__breakdown { padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px solid #d3d4dd; }
+.lc__breakdown { margin-bottom: 12px; }
 .lc__line { display: flex; justify-content: space-between; margin: 0 0 6px; font-size: 15px; line-height: 18px; font-weight: 500; color: #6b6b6b; }
 .lc__line-val { font-weight: 700; color: #000; }
 .lc__line-val--save { color: #1a8047; }
