@@ -119,7 +119,8 @@
       "settings": {
         "heading": "lemme get real results",
         "subheading": "The twist? So delicious you won't believe they're good for you.",
-        "background": "#f7f1f9"
+        "background": "#f7f1f9",
+        "layout": "trust"
       }
     }
   },
