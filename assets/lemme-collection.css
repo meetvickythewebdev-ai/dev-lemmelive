@@ -2,7 +2,7 @@
    Values follow lemmelive.com/collections: vw-based headings, 2-3-4 column grid, lilac cards. */
 
 /* ---------- Hero ---------- */
-.lco-hero { position: relative; color: #000; }
+.lco-hero { position: relative; color: #000; font-family: var(--lm-font-body); font-size: 16px; line-height: 1.6; }
 .lco-hero--no-image { padding-bottom: 0; }
 .lco-hero__content { width: 100%; padding: 40px 0; }
 .lco-hero:not(.lco-hero--no-image) .lco-hero__content { position: absolute; z-index: 2; left: 0; top: 50%; transform: translateY(-50%); }
@@ -31,7 +31,7 @@
 }
 
 /* ---------- Section ---------- */
-.lco { position: relative; padding-bottom: 96px; color: #000; }
+.lco { position: relative; padding-bottom: 96px; color: #000; font-family: var(--lm-font-body); font-size: 16px; line-height: 1.6; }
 
 /* Shop by benefit */
 .lco-benefits { position: relative; z-index: 11; width: 100%; margin: -10vw 0 42px; }
@@ -56,7 +56,7 @@
 @media (max-width: 980px) {
   .lco-benefits { width: calc(100% + 40px); margin: -12vw 0 0 -20px; padding: 15px 0 20px; border-top: 1px solid #000; }
   .lco-benefits__container { max-width: 100%; padding: 0 15px; }
-  .lco-benefits__heading { margin-bottom: 15px; }
+  .lco-benefits__heading { margin-bottom: 15px; padding: 8px 0 0; }
   .lco-benefits__list { flex-wrap: wrap; gap: 0; width: 100%; padding: 0; overflow: visible; }
   .lco-benefits__list li { flex: 0 0 50%; margin-bottom: 15px; padding: 0 3px; }
   .lco-benefits__list .lco-pill { width: 100%; min-width: 0; font-size: 14px; }
@@ -77,7 +77,7 @@
 .lco__trigger {
   display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 44px; margin: 0; padding: 2px 24px 0;
   border: 2px solid #000; border-radius: 30px; background: #fff; color: #000; cursor: pointer;
-  font-family: var(--lm-font-body); font-size: 16px; font-weight: 700; text-transform: uppercase;
+  font-family: var(--lm-font-body); font-size: 16px; font-weight: 700; line-height: 25.6px; text-transform: uppercase;
 }
 .lco__trigger:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
 .lco__trigger.is-active { background: #dfc8e7; }
@@ -134,7 +134,7 @@
 .lco-item__sale { color: #3b31ce; }
 .lco-item__sale s { color: #000; }
 .lco-item__add { position: relative; z-index: 11; width: 100%; margin-top: auto; }
-.lco-item__btn { width: 100%; padding: 15px 20px; }
+.lco-item__btn { width: 100%; padding: 15px 20px; white-space: nowrap; }
 .lco-item__btn[disabled] { background: #f1f1f1; color: #bebebe; box-shadow: inset 0 0 0 2px #bebebe; cursor: default; }
 .lco-item__btn[aria-busy="true"] { opacity: .6; pointer-events: none; }
 
@@ -154,8 +154,8 @@
 @keyframes lco-sparkling { 0% { transform: scale(.6) rotate(0deg); opacity: .6; } 100% { transform: scale(1) rotate(25deg); opacity: 1; } }
 @keyframes lco-floating { 0% { top: -2px; } 50% { top: -14px; } 100% { top: -2px; } }
 
-@media (min-width: 550px) and (max-width: 749px) { .lco-item__title { font-size: 5.5vw; line-height: 5.5vw; } }
-@media (max-width: 749px) { .lco-item__title { line-height: 5.5vw; } }
+@media (max-width: 749px) { .lco-item__title { line-height: 6.4vw; } }
+@media (min-width: 550px) and (max-width: 749px) { .lco-item__title { line-height: 4.3636vw; } }
 @media (min-width: 750px) {
   .lco-item { padding: 24px; border-width: 2px; border-radius: 24px; }
   .lco-item__image { width: 70%; }
