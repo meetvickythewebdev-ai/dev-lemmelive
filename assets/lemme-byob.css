@@ -106,7 +106,7 @@
   .lbb-form__toggle { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: flex; justify-content: flex-end; height: 30px; padding: 0 16px 0 0; border: 0; background: none; transform: translateY(-50%); cursor: pointer; }
   .lbb-form__toggle-icon { display: inline-flex; transform: rotate(180deg); transition: transform .2s cubic-bezier(.5, -.5, .25, 1.4); }
   .lbb-form.is-open .lbb-form__toggle-icon { transform: none; }
-  .lbb-form__body { max-height: calc(100dvh - 96px); padding: 0 20px 24px; overflow-y: auto; }
+  .lbb-form__body { max-height: calc(100dvh - var(--lm-header-bottom, 104px) - 52px); padding: 0 20px 24px; overflow-y: auto; overscroll-behavior: contain; }
   .lbb .lbb-form__heading { display: none; }
   .lbb-step { display: flex; }
   .lbb-form:not(.is-open) .lbb-pack__badge { opacity: 0; }
