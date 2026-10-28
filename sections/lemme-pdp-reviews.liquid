@@ -19,6 +19,24 @@
       </div>
     </div>
   </div>
+  {%- if section.settings.short_count -%}
+    <script>
+      (function () {
+        /* Okendo prints "Based on 30 reviews"; the live site shows "30 reviews". */
+        var root = document.getElementById('reviews');
+        if (!root || !window.MutationObserver) return;
+        function trim() {
+          root.querySelectorAll('.oke-w-ratingAverageModule-count').forEach(function (el) {
+            var t = el.textContent;
+            var m = t.match(/^\s*based on\s+(.+?)\s*$/i);
+            if (m) el.textContent = m[1];
+          });
+        }
+        new MutationObserver(trim).observe(root, { childList: true, subtree: true });
+        trim();
+      })();
+    </script>
+  {%- endif -%}
 </section>
 {%- elsif request.design_mode -%}
 <section class="lm-section lp-reviews" id="reviews">
@@ -38,6 +56,7 @@
   "settings": [
     { "type": "text", "id": "nav_label", "label": "Link label", "default": "Reviews" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "believe the hype" },
+    { "type": "checkbox", "id": "short_count", "label": "Show \"30 reviews\" instead of \"Based on 30 reviews\"", "default": true },
     { "type": "paragraph", "content": "Add Okendo's \"Reviews Widget\" app block here. The styling that matches lemmelive.com is in assets/lemme-reviews.css." }
   ],
   "blocks": [ { "type": "@app" } ],
