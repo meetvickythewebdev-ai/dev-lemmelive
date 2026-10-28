@@ -209,7 +209,7 @@
         {%- endif -%}
 
         {%- comment -%} Purchase options {%- endcomment -%}
-        <div class="lp-buy" data-lp-buy>
+        <div class="lp-buy" data-lp-buy{% if section.settings.round_prices %} data-lp-round{% endif %}>
           <p class="lp-label-row"><span class="lp-label-row__label">{{ section.settings.options_label }}</span><span data-lp-option-name></span></p>
           <fieldset class="lp-options">
             <legend class="lm-visually-hidden">{{ section.settings.options_legend }}</legend>
@@ -239,11 +239,19 @@
                 assign opt_text = option_copy[idx] | strip
                 assign saving = 0
                 if opt_compare > opt_price
-                  assign saving = opt_compare | minus: opt_price | times: 100.0 | divided_by: opt_compare | round
+                  assign saving = opt_compare | minus: opt_price | times: 100.0 | divided_by: opt_compare | floor
+                endif
+                assign show_price = opt_price
+                assign show_compare = opt_compare
+                assign show_once = variant.price
+                if section.settings.round_prices
+                  assign show_price = opt_price | divided_by: 100.0 | round | times: 100
+                  assign show_compare = opt_compare | divided_by: 100.0 | round | times: 100
+                  assign show_once = variant.price | divided_by: 100.0 | round | times: 100
                 endif
               -%}
               <div class="lp-option">
-                <input class="lp-option__radio lm-visually-hidden" type="radio" name="lp-option-{{ section.id }}" id="LpOption-{{ section.id }}-{{ variant.id }}" value="{{ variant.id }}" data-name="{{ opt_label | escape }}" data-selling-plan="{{ plan_id }}" data-price="{{ opt_price | money_without_trailing_zeros }}" data-price-cents="{{ opt_price }}" data-compare-cents="{{ opt_compare | default: opt_price }}" data-once-price="{{ variant.price | money_without_trailing_zeros }}" data-once-cents="{{ variant.price }}" data-available="{{ variant.available }}"{% if variant.id == selected_variant.id %} checked{% endif %}{% unless variant.available %} disabled{% endunless %}>
+                <input class="lp-option__radio lm-visually-hidden" type="radio" name="lp-option-{{ section.id }}" id="LpOption-{{ section.id }}-{{ variant.id }}" value="{{ variant.id }}" data-name="{{ opt_label | escape }}" data-selling-plan="{{ plan_id }}" data-price="{{ show_price | money_without_trailing_zeros }}" data-price-cents="{{ opt_price }}" data-compare-cents="{{ opt_compare | default: opt_price }}" data-once-price="{{ show_once | money_without_trailing_zeros }}" data-once-cents="{{ variant.price }}" data-available="{{ variant.available }}"{% if variant.id == selected_variant.id %} checked{% endif %}{% unless variant.available %} disabled{% endunless %}>
                 <label class="lp-option__label" for="LpOption-{{ section.id }}-{{ variant.id }}">
                   <span class="lp-option__main">
                     <span class="lp-option__mark" aria-hidden="true"></span>
@@ -256,9 +264,9 @@
                     <span class="lp-option__pricing">
                       <span class="lp-option__price">
                         {%- if opt_compare > opt_price -%}
-                          <span class="lm-visually-hidden">Sale price</span><span>{{ opt_price | money_without_trailing_zeros }}</span><span class="lm-visually-hidden">Regular price</span><s>{{ opt_compare | money_without_trailing_zeros }}</s>
+                          <span class="lm-visually-hidden">Sale price</span><span>{{ show_price | money_without_trailing_zeros }}</span><span class="lm-visually-hidden">Regular price</span><s>{{ show_compare | money_without_trailing_zeros }}</s>
                         {%- else -%}
-                          <span>{{ opt_price | money_without_trailing_zeros }}</span>
+                          <span>{{ show_price | money_without_trailing_zeros }}</span>
                         {%- endif -%}
                       </span>
                       {%- if saving > 0 -%}<span class="lp-option__savings">{{ saving }}% off</span>{%- endif -%}
@@ -440,6 +448,7 @@
     { "type": "text", "id": "add_label", "label": "Add to bag label", "default": "Add to Bag" },
     { "type": "text", "id": "added_label", "label": "Added message", "default": "Added to your bag!" },
     { "type": "text", "id": "sold_out", "label": "Sold out label", "default": "Sold out" },
+    { "type": "checkbox", "id": "round_prices", "label": "Show prices rounded to whole dollars", "info": "Matches the live site ($25.50 shows as $26). The cart and checkout still charge the exact price.", "default": true },
     { "type": "text", "id": "buy_once_label", "label": "Buy once link (subscription products)", "default": "Buy once for" },
     { "type": "header", "content": "Bundle" },
     { "type": "text", "id": "routine_heading", "label": "Heading", "default": "Lemme Get the Full Routine:" },

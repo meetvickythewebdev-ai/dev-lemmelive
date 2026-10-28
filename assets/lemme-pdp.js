@@ -15,6 +15,7 @@
   function once(el, key) { if (!el || el['__lp' + key]) return false; el['__lp' + key] = true; return true; }
   function money(cents) {
     var v = cents / 100;
+    if (document.querySelector('[data-lp-round]')) v = Math.round(v);
     return '$' + (v % 1 === 0 ? v.toFixed(0) : v.toFixed(2));
   }
 
