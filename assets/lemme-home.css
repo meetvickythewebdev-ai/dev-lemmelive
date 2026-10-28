@@ -7,10 +7,7 @@
 /* ---------- Fonts ----------
    The live site uses the licensed fonts "Mier A" (Regular/Bold) and "Recoleta" (Medium).
    The font files (lemme-font-mier-a-regular.woff2, lemme-font-mier-a-bold.woff2, lemme-font-recoleta-medium.woff2) live in
-   Content > Files, so they are loaded with file_url. If they are missing the stacks below fall back to similar fonts. */
-@font-face { font-family: "Mier A"; src: url("{{ 'lemme-font-mier-a-regular.woff2' | file_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Mier A"; src: url("{{ 'lemme-font-mier-a-bold.woff2' | file_url }}") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Recoleta"; src: url("{{ 'lemme-font-recoleta-medium.woff2' | file_url }}") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+   Content > Files. They are declared in snippets/lemme-fonts.liquid (rendered in layout/theme.liquid), because this stylesheet must stay plain CSS: the theme editor cannot compile Liquid stylesheets that use file_url and falls back to an old copy. If they are missing the stacks below fall back to similar fonts. */
 
 :root {
   --lm-lilac: #dfc8e7;
