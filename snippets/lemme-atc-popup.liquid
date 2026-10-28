@@ -69,13 +69,15 @@
                 <span class="lm-btn__text"><span class="lm-btn__text-inner">{{ s.lemme_popup_button }}</span></span>
               </button>
             </article>
+            {%- if forloop.first -%}
+              <span class="lc-pop__sparkles" aria-hidden="true">
+                <svg class="lc-pop__sparkle lc-pop__sparkle--1" viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg>
+                <svg class="lc-pop__sparkle lc-pop__sparkle--2" viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg>
+              </span>
+            {%- endif -%}
           </li>
         {%- endfor -%}
       </ul>
-      <span class="lc-pop__sparkles" aria-hidden="true">
-        <svg class="lc-pop__sparkle lc-pop__sparkle--1" viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg>
-        <svg class="lc-pop__sparkle lc-pop__sparkle--2" viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg>
-      </span>
     </div>
   </div>
 {%- endif -%}

@@ -211,10 +211,10 @@ html.lc-locked, html.lc-locked .page-wrapper { overflow: hidden; }
 .lc .lc-pop__details { margin: 0 0 16px; }
 .lc-pop__details span { display: block; font-size: 16px; font-weight: 700; line-height: 24px; }
 .lc-pop__price s { display: inline; color: #9a90a3; }
-.lc-pop__add { position: relative; z-index: 2; align-self: center; margin-top: auto; --lm-btn-bg: var(--lc-lime); min-height: 46px; padding: 13px 24px; }
+.lc .lc-pop__add { position: relative; z-index: 2; align-self: center; margin-top: auto; --lm-btn-bg: var(--lc-lime); min-height: 46px; padding: 13px 24px; }
 .lc-pop__add[aria-busy="true"] { opacity: .6; pointer-events: none; }
-.lc-pop__sparkles { position: absolute; left: 0; bottom: 0; width: 100%; pointer-events: none; color: #000; }
+.lc-pop__sparkles { position: absolute; inset: 0; pointer-events: none; color: #000; }
 .lc-pop__sparkle { position: absolute; display: block; height: auto; }
-.lc-pop__sparkle--1 { left: calc(50% - 50px - 14%); bottom: -4%; width: 60px; transform: translateY(100%); }
-.lc-pop__sparkle--2 { left: calc(50% - 50px + 5%); bottom: -9%; width: 36px; transform: translateY(100%); }
-@media (min-width: 1400px) { .lc-pop__sparkle--1 { width: 85px; } }
+.lc-pop__sparkle--1 { left: -14%; bottom: -4%; width: 60px; }
+.lc-pop__sparkle--2 { left: 5%; bottom: -9%; width: 36px; }
+@media (min-width: 1400px) { .lc-pop__sparkle--1 { bottom: -6%; width: 85px; } }
