@@ -194,6 +194,17 @@
       var updates = {};
       rmBundle.getAttribute('data-lc-remove-bundle').split(',').forEach(function (k) { if (k) updates[k] = 0; });
       post('cart/update.js', { updates: updates })
+        .then(function (cart) {
+          // Drop the one-time bundle code when no one-time bundle is left in the bag
+          var code = (d.getAttribute('data-byob-code') || '').toUpperCase();
+          var codes = (cart.discount_codes || []).map(function (c) { return c.code; });
+          var hasCode = codes.some(function (c) { return c.toUpperCase() === code; });
+          var oneTimeLeft = cart.items.some(function (i) { return i.properties && i.properties._bundle_parent && !i.selling_plan_allocation; });
+          if (code && hasCode && !oneTimeLeft) {
+            return post('cart/update.js', { discount: codes.filter(function (c) { return c.toUpperCase() !== code; }).join(',') });
+          }
+          return cart;
+        })
         .then(function (cart) { emit(cart); return refresh(); })
         .catch(function (err) { if (bundleRow) bundleRow.classList.remove('is-busy'); announce(err.message); return refresh(); });
       return;

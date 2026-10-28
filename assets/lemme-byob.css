@@ -17,7 +17,7 @@
 .lbb-card__actions { display: flex; justify-content: center; margin-top: 16px; }
 .lbb-card__add { width: 100%; max-width: 162px; min-height: 42px; padding: 0 16px; }
 .lbb-card.is-picked .lbb-card__add { display: none; }
-.lbb-qty { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 162px; height: 42px; border: 2px solid #000; border-radius: 48px; background: #fff; overflow: hidden; }
+.lbb-qty { display: flex; align-items: center; justify-content: space-between; width: 162px; max-width: 100%; height: 42px; border: 2px solid #000; border-radius: 48px; background: #fff; overflow: hidden; }
 .lbb-qty[hidden] { display: none; }
 .lbb-qty__btn { display: grid; place-items: center; width: 48px; height: 100%; padding: 0; border: 0; background: none; color: #000; cursor: pointer; }
 .lbb-qty__btn svg { width: 14px; height: 14px; }

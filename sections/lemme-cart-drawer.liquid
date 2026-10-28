@@ -37,7 +37,7 @@
   endif
 -%}
 
-<dialog class="lc" id="LemmeCartDrawer" data-lc data-section-id="{{ section.id }}" data-open-on-add="{{ st.open_on_add }}" aria-labelledby="LemmeCartTitle-{{ section.id }}">
+<dialog class="lc" id="LemmeCartDrawer" data-lc data-section-id="{{ section.id }}" data-open-on-add="{{ st.open_on_add }}" data-byob-code="{{ settings.lemme_byob_code | escape }}" aria-labelledby="LemmeCartTitle-{{ section.id }}">
   <div class="lc__wrap" data-lc-inner data-count="{{ cart.item_count }}">
   {%- render 'lemme-atc-popup', cart_product_ids: cart_product_ids, round: round -%}
   <div class="lc__panel">
