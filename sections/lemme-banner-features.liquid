@@ -22,7 +22,7 @@
         {%- if section.settings.eyebrow != blank -%}
           <p class="ls-bwf__eyebrow">{% render 'lemme-pdp-icon', icon: 'sparkle-big' %}<span>{{ section.settings.eyebrow }}</span>{% render 'lemme-pdp-icon', icon: 'sparkle-big' %}</p>
         {%- endif -%}
-        <h2 class="ls-bwf__heading ls-bwf__heading--mobile" id="LsBwf-{{ section.id }}">{{ section.settings.heading }}</h2>
+        <h2 class="ls-bwf__heading ls-bwf__heading--mobile" id="LsBwf-{{ section.id }}">{{ section.settings.heading_mobile | default: section.settings.heading | newline_to_br }}</h2>
         <h2 class="ls-bwf__heading ls-bwf__heading--desktop">{{ heading_d | newline_to_br }}</h2>
         {%- if section.settings.text != blank -%}<div class="ls-bwf__copy">{{ section.settings.text }}</div>{%- endif -%}
       </div>
@@ -53,6 +53,7 @@
     { "type": "image_picker", "id": "image_mobile", "label": "Image (mobile)", "info": "Shown at the bottom of the card." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "subscribe & save" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "save up to 20% on your favorites" },
+    { "type": "textarea", "id": "heading_mobile", "label": "Heading (mobile)", "info": "Optional. Each line is a new line on phones.", "default": "save up to\n20% on your\nfavorites" },
     { "type": "textarea", "id": "heading_desktop", "label": "Heading on desktop (optional line breaks)" },
     { "type": "richtext", "id": "text", "label": "Text" },
     { "type": "text", "id": "button_label", "label": "Button", "default": "subscribe now" },

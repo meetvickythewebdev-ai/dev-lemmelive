@@ -13,7 +13,8 @@
         <picture>
           <source media="(min-width: 1024px)" srcset="{{ img_d | image_url: width: 1500 }} 1500w, {{ img_d | image_url: width: 2200 }} 2200w, {{ img_d | image_url: width: 3000 }} 3000w" sizes="100vw">
           <source srcset="{{ img_m | image_url: width: 600 }} 600w, {{ img_m | image_url: width: 900 }} 900w, {{ img_m | image_url: width: 1200 }} 1200w" sizes="100vw">
-          {{ img_m | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.heading | strip_newlines, sizes: '100vw' }}
+          {%- assign hero_alt = section.settings.heading | strip_newlines -%}
+          {{ img_m | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', alt: hero_alt, sizes: '100vw' }}
         </picture>
       {%- else -%}
         {{ 'hero-apparel-1' | placeholder_svg_tag: 'ls-hero__placeholder' }}

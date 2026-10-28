@@ -64,7 +64,7 @@
         -%}
         <div class="lm-ft__column" data-lm-ft-column>
           <h3 class="lm-ft__column-heading">
-            <button class="lm-ft__trigger" type="button" aria-expanded="false" aria-controls="LmFtMenu-{{ section.id }}-{{ n }}" data-lm-ft-trigger>
+            <button class="lm-ft__trigger" type="button" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="LmFtMenu-{{ section.id }}-{{ n }}" data-lm-ft-trigger>
               <span class="lm-ft__column-title">{{ menu_title }}</span>
               <span class="lm-ft__column-icon" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'plus' , class: 'lm-ft__icon-open' %}{% render 'lemme-pdp-icon', icon: 'minus', class: 'lm-ft__icon-close' %}</span>
             </button>

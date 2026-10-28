@@ -264,7 +264,8 @@
       "settings": {
         "image": "shopify://shop_images/d-subs-banner-v2.png",
         "image_mobile": "shopify://shop_images/m-subs-banner_1.png",
-        "button_url": "/collections/all"
+        "button_url": "/collections/all",
+        "heading_mobile": "save up to\n20% on your\nfavorites"
       }
     },
     "why": {

@@ -139,7 +139,7 @@
 .ls-bwf__feature-text { margin: 0; overflow-wrap: break-word; font-size: 16px; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
 .ls-bwf__cta { align-self: stretch; width: 100%; }
 @media (min-width: 1024px) {
-  .lm-section.ls-bwf { padding: 0 40px 80px; }
+  .lm-section.ls-bwf { padding: 80px 40px; }
   .ls-bwf__card { width: 100%; max-width: 1512px; margin-inline: auto; border: 2px solid #000; border-radius: 24px; }
   .ls-bwf__media { width: 50%; height: 100%; }
   .ls-bwf__media picture { height: 100%; }
@@ -172,9 +172,9 @@
 .ls-tabs__panel { display: flex; flex-direction: column; gap: 32px; padding: 32px 20px 64px; }
 .ls-tabs__panel[hidden] { display: none; }
 .ls-tabs__copy { display: flex; flex-direction: column; gap: 24px; }
-.ls-tabs__heading { margin: 0; font-family: var(--lm-font-display); font-size: 40px; font-weight: 600; line-height: 1; }
+.ls-tabs__heading { text-box: cap alphabetic; margin: 0; font-family: var(--lm-font-display); font-size: 40px; font-weight: 600; line-height: 1; }
 .ls-tabs__text { font-size: 20px; line-height: 1.5; }
-.ls-tabs__text p { margin: 0; }
+.ls-tabs__text p { text-box: cap alphabetic; margin: 0; }
 .ls-tabs__media { position: relative; }
 .ls-tabs__track { display: flex; gap: 16px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .ls-tabs__track::-webkit-scrollbar { display: none; }
@@ -182,8 +182,8 @@
 .ls-tabs__frame { position: relative; height: 223px; overflow: hidden; border: 2px solid #000; border-radius: 24px 24px 0 0; background: #fff; }
 .ls-tabs__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .ls-tabs__card { display: flex; flex: 1 1 auto; flex-direction: column; gap: 16px; padding: 20px 16px 24px; border: 2px solid #000; border-top: 0; border-radius: 0 0 24px 24px; background: #fff; font-size: 16px; line-height: 1.5; }
-.ls-tabs__card-title { margin: 0; font-weight: 700; }
-.ls-tabs__card-text { margin: 0; }
+.ls-tabs__card-title { text-box: cap alphabetic; margin: 0; font-weight: 700; }
+.ls-tabs__card-text { text-box: cap alphabetic; margin: 0; }
 .ls-tabs__arrow { position: absolute; z-index: 2; top: calc(50% - 22px); display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin: 0; padding: 0; border: 2px solid #000; border-radius: 50%; background: #fff; color: #000; cursor: pointer; transform: translateY(-50%); }
 .ls-tabs__arrow .lp-icon { width: 20px; height: 20px; }
 .ls-tabs__arrow:disabled { display: none; }
