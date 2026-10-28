@@ -38,7 +38,8 @@
 .ls-hero__actions { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 .ls-hero__actions .ls-btn { width: 100%; }
 @media (min-width: 1024px) {
-  .ls-hero__layout { height: auto; max-height: 756px; aspect-ratio: 1512 / 756; }
+  /* Full width at every size: height follows the 2:1 artwork up to 756px, then the image crops instead of narrowing */
+  .ls-hero__layout { width: 100%; height: min(50vw, 756px); max-height: none; }
   .ls-hero__content { position: relative; box-sizing: border-box; justify-content: center; align-items: flex-start; gap: 32px; width: 100%; max-width: 720px; height: 100%; padding: 48px; }
   .ls-hero__copy { gap: 16px; }
   .ls-hero__heading { font-size: 80px; }
