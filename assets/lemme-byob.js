@@ -1,6 +1,6 @@
 /* Lemme build your bundle (sections/lemme-byob.liquid).
    Pick products into the pack's slots, choose one-time or subscription, then everything is added to the bag in one
-   request with a shared _bundle_id (the pack line is the $0 parent). Picks are kept for a day so switching pack size
+   request with a shared _bundle_id. Picks are kept for a day so switching pack size
    keeps them. One-time bundles get the discount code from Theme settings applied to the bag. */
 (function () {
   'use strict';
@@ -166,9 +166,11 @@
       var plan = m === 'sub' && planSelect ? +planSelect.value : null;
       var bundleId = uuid();
       var title = section.getAttribute('data-title');
-      var items = [{ id: +section.getAttribute('data-variant'), quantity: 1, properties: { _bundle_id: bundleId, _bundle_parent: true, _bundle_size: String(size) } }];
+      // Only the chosen products are added (no $0 pack line, so checkout lists just the products). They share a
+      // _bundle_id so the bag groups them into one card; "bundle" shows the pack name under each line at checkout.
+      var items = [];
       picks.forEach(function (id) {
-        var found = items.filter(function (it) { return String(it.id) === id && !it.properties._bundle_parent; })[0];
+        var found = items.filter(function (it) { return String(it.id) === id; })[0];
         if (found) { found.quantity++; return; }
         items.push({ id: +id, quantity: 1, properties: { _bundle_id: bundleId, bundle: title, _bundle_size: String(size) } });
       });

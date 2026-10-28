@@ -199,7 +199,7 @@
           var code = (d.getAttribute('data-byob-code') || '').toUpperCase();
           var codes = (cart.discount_codes || []).map(function (c) { return c.code; });
           var hasCode = codes.some(function (c) { return c.toUpperCase() === code; });
-          var oneTimeLeft = cart.items.some(function (i) { return i.properties && i.properties._bundle_parent && !i.selling_plan_allocation; });
+          var oneTimeLeft = cart.items.some(function (i) { return i.properties && i.properties._bundle_id && !i.selling_plan_allocation; });
           if (code && hasCode && !oneTimeLeft) {
             return post('cart/update.js', { discount: codes.filter(function (c) { return c.toUpperCase() !== code; }).join(',') });
           }

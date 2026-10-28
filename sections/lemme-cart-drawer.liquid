@@ -23,12 +23,7 @@
     endif
     assign cart_product_ids = cart_product_ids | append: item.product_id | append: ','
   endfor
-  assign bundle_parents = ','
-  for item in cart.items
-    if item.properties._bundle_parent and item.properties._bundle_id != blank
-      assign bundle_parents = bundle_parents | append: item.properties._bundle_id | append: ','
-    endif
-  endfor
+  assign bundles_seen = ','
   assign byob_group = settings.lemme_byob_group_name | default: 'Subscribe & Save Bundle'
   assign savings = compare_total | minus: cart.total_price
   assign savings_pct = 0
@@ -57,38 +52,58 @@
               assign bid = item.properties._bundle_id
               assign bneedle = ',' | append: bid | append: ','
             -%}
-            {%- if bid != blank and item.properties._bundle_parent -%}
-              {%- comment -%} Build your bundle: one card for the whole bundle (its $0 parent line + the chosen products) {%- endcomment -%}
+            {%- if bid != blank and bundles_seen contains bneedle -%}
+              {%- continue -%}
+            {%- elsif bid != blank -%}
+              {%- comment -%} Build your bundle: one card for all lines sharing a _bundle_id (older bundles may also have a $0 pack line, which is folded in) {%- endcomment -%}
               {%- liquid
+                assign bundles_seen = bundles_seen | append: bid | append: ','
                 assign b_total = 0
                 assign b_compare = 0
-                assign b_keys = item.key
+                assign b_keys = ''
                 assign b_count = 0
+                assign b_title = ''
+                assign b_sub = false
                 for child in cart.items
-                  if child.properties._bundle_id == bid and child.key != item.key
+                  if child.properties._bundle_id == bid
+                    assign b_keys = b_keys | append: child.key | append: ','
+                    if child.properties._bundle_parent
+                      if b_title == blank
+                        assign b_title = child.product.title
+                      endif
+                      continue
+                    endif
+                    if child.selling_plan_allocation
+                      assign b_sub = true
+                    endif
+                    if b_title == blank and child.properties.bundle != blank
+                      assign b_title = child.properties.bundle
+                    endif
                     assign b_total = b_total | plus: child.final_line_price
                     assign c_unit = child.variant.compare_at_price | default: 0
                     if child.variant.price > c_unit
                       assign c_unit = child.variant.price
                     endif
                     assign b_compare = c_unit | times: child.quantity | plus: b_compare
-                    assign b_keys = b_keys | append: ',' | append: child.key
                     assign b_count = b_count | plus: child.quantity
                   endif
                 endfor
+                if b_title == blank
+                  assign b_title = 'Bundle'
+                endif
                 assign title_id = 'LcItem-' | append: section.id | append: '-' | append: forloop.index
               -%}
               <li class="lc-item lc-item--bundle" data-lc-item data-key="{{ item.key }}" data-qty="{{ item.quantity }}">
                 <span class="lc-item__media lc-item__media--bundle" aria-hidden="true">
                   {%- for child in cart.items -%}
-                    {%- if child.properties._bundle_id == bid and child.key != item.key and child.image -%}
+                    {%- if child.properties._bundle_id == bid and child.properties._bundle_parent == blank and child.image -%}
                       {{ child.image | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 52, height: 52 }}
                     {%- endif -%}
                   {%- endfor -%}
                 </span>
                 <div class="lc-item__info">
-                  <span class="lc-item__title" id="{{ title_id }}">{{ item.product.title }}</span>
-                  {%- if item.selling_plan_allocation -%}<b class="lc-item__plan">{{ st.subscribe_label }}</b>{%- endif -%}
+                  <span class="lc-item__title" id="{{ title_id }}">{{ b_title }}</span>
+                  {%- if b_sub -%}<b class="lc-item__plan">{{ st.subscribe_label }}</b>{%- endif -%}
                   <div class="lc-item__row">
                     <span class="lc-item__price">
                       {%- if b_compare > b_total -%}
@@ -103,15 +118,13 @@
                   </div>
                   <ul class="lc-item__bundle" role="list">
                     {%- for child in cart.items -%}
-                      {%- if child.properties._bundle_id == bid and child.key != item.key -%}
+                      {%- if child.properties._bundle_id == bid and child.properties._bundle_parent == blank -%}
                         <li>{% if child.quantity > 1 %}{{ child.quantity }} × {% endif %}{{ child.product.title }}</li>
                       {%- endif -%}
                     {%- endfor -%}
                   </ul>
                 </div>
               </li>
-              {%- continue -%}
-            {%- elsif bid != blank and bundle_parents contains bneedle -%}
               {%- continue -%}
             {%- endif -%}
             {%- liquid
