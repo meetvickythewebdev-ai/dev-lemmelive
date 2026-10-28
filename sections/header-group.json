@@ -175,10 +175,82 @@
         "upsell_count": 1,
         "empty_button_link": "/collections/all"
       }
+    },
+    "lemme_search_drawer": {
+      "type": "lemme-search-drawer",
+      "blocks": {
+        "pill1": {
+          "type": "link",
+          "settings": {
+            "label": "Mood, Sleep & Energy",
+            "url": "shopify://collections/mood-sleep-energy"
+          }
+        },
+        "pill2": {
+          "type": "link",
+          "settings": {
+            "label": "Weight Management",
+            "url": "shopify://collections/metabolism-weight-management"
+          }
+        },
+        "pill3": {
+          "type": "link",
+          "settings": {
+            "label": "Capsules",
+            "url": "shopify://collections/capsules"
+          }
+        },
+        "pill4": {
+          "type": "link",
+          "settings": {
+            "label": "Gummies & Chews",
+            "url": "shopify://collections/gummies"
+          }
+        },
+        "pill5": {
+          "type": "link",
+          "settings": {
+            "label": "Beauty & Digestion",
+            "url": "shopify://collections/beauty-digestion"
+          }
+        }
+      },
+      "block_order": [
+        "pill1",
+        "pill2",
+        "pill3",
+        "pill4",
+        "pill5"
+      ],
+      "settings": {
+        "placeholder": "Search",
+        "clear_label": "Clear search",
+        "min_chars": 2,
+        "products_title": "Suggested products",
+        "products": [
+          "purr",
+          "debloat",
+          "lemme-relax-soft-chews"
+        ],
+        "limit": 10,
+        "show_queries": true,
+        "show_collections": true,
+        "hidden_collections": "Subscription Sale, Custom Bundle, Minis, Drops, Apparel",
+        "show_pages": false,
+        "show_articles": false,
+        "queries_title": "Suggested searches",
+        "results_title": "Suggested products",
+        "collections_title": "Suggested collections",
+        "pages_title": "Pages",
+        "articles_title": "Articles",
+        "no_results": "No results found",
+        "view_all_label": "View all results"
+      }
     }
   },
   "order": [
     "lemme_header",
-    "lemme_cart_drawer"
+    "lemme_cart_drawer",
+    "lemme_search_drawer"
   ]
 }

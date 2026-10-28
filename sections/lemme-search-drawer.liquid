@@ -1,0 +1,183 @@
+{%- comment -%}
+  Search drawer that slides in under the header (lemmelive.com header search).
+  Opened by the header search icon. While typing, results come from Shopify predictive search:
+  this same section is re-rendered with /search/suggest?section_id=… and only [data-lsd-results] is swapped in.
+  Enter (or the "View all" link) goes to the search page.
+{%- endcomment -%}
+{%- liquid
+  assign st = section.settings
+  assign hidden_titles = st.hidden_collections | downcase | split: ','
+-%}
+{%- capture pills -%}
+  {%- for block in section.blocks -%}
+    {%- if block.settings.label != blank and block.settings.url != blank -%}
+      <a class="lsd-pill" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- capture suggested -%}
+  {%- if st.products.size > 0 -%}
+    {%- if st.products_title != blank -%}<h2 class="lsd-title">{{ st.products_title }}</h2>{%- endif -%}
+    <ul class="lsd-products" role="list">
+      {%- for p in st.products -%}{%- render 'lemme-search-card', product: p -%}{%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if predictive_search.performed -%}
+  {%- comment -%} Predictive search response: only this block is used by lemme-search.js {%- endcomment -%}
+  <div data-lsd-results data-terms="{{ predictive_search.terms | escape }}">
+    {%- liquid
+      assign res = predictive_search.resources
+      assign n_collections = 0
+      for c in res.collections
+        assign hide = false
+        assign t = c.title | downcase
+        for h in hidden_titles
+          assign h = h | strip
+          if h != blank and t contains h
+            assign hide = true
+          endif
+        endfor
+        unless hide
+          assign n_collections = n_collections | plus: 1
+        endunless
+      endfor
+      assign n_pages = 0
+      if st.show_pages
+        assign n_pages = res.pages.size
+      endif
+      assign n_articles = 0
+      if st.show_articles
+        assign n_articles = res.articles.size
+      endif
+      assign total = res.products.size | plus: n_collections | plus: n_pages | plus: n_articles
+    -%}
+    {%- if total == 0 -%}
+      <p class="lsd-empty">{{ st.no_results }}</p>
+      {%- if pills != blank -%}
+        <h2 class="lsd-title">{{ st.collections_title }}</h2>
+        <div class="lsd-pills">{{ pills }}</div>
+      {%- endif -%}
+      {{ suggested }}
+    {%- else -%}
+      {%- if n_collections > 0 and st.show_collections -%}
+        <h2 class="lsd-title">{{ st.collections_title }}</h2>
+        <div class="lsd-pills">
+          {%- for c in res.collections -%}
+            {%- liquid
+              assign hide = false
+              assign t = c.title | downcase
+              for h in hidden_titles
+                assign h = h | strip
+                if h != blank and t contains h
+                  assign hide = true
+                endif
+              endfor
+            -%}
+            {%- unless hide -%}<a class="lsd-pill" href="{{ c.url }}">{{ c.title }}</a>{%- endunless -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if res.queries.size > 0 and st.show_queries -%}
+        <h2 class="lsd-title">{{ st.queries_title }}</h2>
+        <ul class="lsd-terms" role="list">
+          {%- for q in res.queries -%}
+            <li><button class="lsd-term" type="button" data-lsd-term="{{ q.text | escape }}">{{ q.styled_text }}</button></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- if res.products.size > 0 -%}
+        <h2 class="lsd-title">{{ st.results_title }}</h2>
+        <ul class="lsd-products" role="list">
+          {%- for p in res.products limit: st.limit -%}{%- render 'lemme-search-card', product: p, url: p.url -%}{%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- if n_pages > 0 -%}
+        <h2 class="lsd-title">{{ st.pages_title }}</h2>
+        <ul class="lsd-links" role="list">{%- for pg in res.pages -%}<li><a class="lsd-link" href="{{ pg.url }}">{{ pg.title }}</a></li>{%- endfor -%}</ul>
+      {%- endif -%}
+      {%- if n_articles > 0 -%}
+        <h2 class="lsd-title">{{ st.articles_title }}</h2>
+        <ul class="lsd-links" role="list">{%- for a in res.articles -%}<li><a class="lsd-link" href="{{ a.url }}">{{ a.title }}</a></li>{%- endfor -%}</ul>
+      {%- endif -%}
+      {%- if st.view_all_label != blank -%}
+        <a class="lsd-all" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&amp;options%5Bprefix%5D=last">{{ st.view_all_label | replace: '[terms]', predictive_search.terms }}</a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- else -%}
+{{ 'lemme-search.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-search.js' | asset_url }}" defer></script>
+<div class="lsd-backdrop" data-lsd-backdrop hidden></div>
+<aside class="lsd" id="LemmeSearchDrawer" role="dialog" aria-modal="true" aria-label="{{ st.placeholder | default: 'Search' | escape }}" data-lsd data-section-id="{{ section.id }}" data-min="{{ st.min_chars }}" tabindex="-1" hidden>
+  <form class="lsd__form" action="{{ routes.search_url }}" method="get" role="search" data-lsd-form>
+    <input type="hidden" name="options[prefix]" value="last">
+    <div class="lsd__field">
+      <label class="lm-visually-hidden" for="LemmeSearchInput">{{ st.placeholder | default: 'Search' }}</label>
+      <input class="lsd__input" id="LemmeSearchInput" type="search" name="q" value="" placeholder="{{ st.placeholder | escape }}" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-controls="LemmeSearchResults" data-lsd-input>
+      <button class="lsd__clear" type="button" aria-label="{{ st.clear_label | escape }}" data-lsd-clear hidden>{% render 'lemme-pdp-icon', icon: 'close' %}</button>
+    </div>
+    <div class="lsd__default" data-lsd-default>
+      {%- if pills != blank -%}<div class="lsd-pills">{{ pills }}</div>{%- endif -%}
+      {{ suggested }}
+    </div>
+    <div class="lsd__results" id="LemmeSearchResults" aria-live="polite" data-lsd-output hidden></div>
+  </form>
+</aside>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme search drawer",
+  "class": "lsd-section",
+  "limit": 1,
+  "max_blocks": 10,
+  "settings": [
+    { "type": "paragraph", "content": "Opens from the search icon in the header. Results appear while typing; Enter shows the full search page." },
+    { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "Search" },
+    { "type": "text", "id": "clear_label", "label": "Clear button label (screen readers)", "default": "Clear search" },
+    { "type": "range", "id": "min_chars", "label": "Characters before results show", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "header", "content": "Before typing" },
+    { "type": "text", "id": "products_title", "label": "Products heading", "default": "Suggested products" },
+    { "type": "product_list", "id": "products", "label": "Suggested products", "limit": 6, "info": "Also shown when a search has no results. Image: the product's lemme.search_image (or main image); text: lemme.subtitle." },
+    { "type": "header", "content": "Results" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 10, "step": 1, "default": 10 },
+    { "type": "checkbox", "id": "show_queries", "label": "Show suggested searches", "default": true },
+    { "type": "checkbox", "id": "show_collections", "label": "Show matching collections", "default": true },
+    { "type": "text", "id": "hidden_collections", "label": "Hide collections whose title contains", "info": "Comma separated.", "default": "Subscription Sale, Custom Bundle, Minis, Drops, Apparel" },
+    { "type": "checkbox", "id": "show_pages", "label": "Show pages", "default": false },
+    { "type": "checkbox", "id": "show_articles", "label": "Show blog posts", "default": false },
+    { "type": "text", "id": "queries_title", "label": "Suggested searches heading", "default": "Suggested searches" },
+    { "type": "text", "id": "results_title", "label": "Products heading", "default": "Suggested products" },
+    { "type": "text", "id": "collections_title", "label": "Collections heading", "default": "Suggested collections" },
+    { "type": "text", "id": "pages_title", "label": "Pages heading", "default": "Pages" },
+    { "type": "text", "id": "articles_title", "label": "Blog posts heading", "default": "Articles" },
+    { "type": "text", "id": "no_results", "label": "No results message", "default": "No results found" },
+    { "type": "text", "id": "view_all_label", "label": "View all link", "info": "[terms] = what was typed. Empty = hidden.", "default": "View all results" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Collection pill",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Capsules" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lemme search drawer",
+      "blocks": [
+        { "type": "link", "settings": { "label": "Mood, Sleep & Energy", "url": "shopify://collections/mood-sleep-energy" } },
+        { "type": "link", "settings": { "label": "Weight Management", "url": "shopify://collections/metabolism-weight-management" } },
+        { "type": "link", "settings": { "label": "Capsules", "url": "shopify://collections/capsules" } },
+        { "type": "link", "settings": { "label": "Gummies & Chews", "url": "shopify://collections/gummies" } },
+        { "type": "link", "settings": { "label": "Beauty & Digestion", "url": "shopify://collections/beauty-digestion" } }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

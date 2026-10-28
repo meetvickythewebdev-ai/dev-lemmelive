@@ -1,0 +1,30 @@
+{%- comment -%}
+  Product card used in the search drawer (lemmelive.com search drawer "Suggested products").
+  Params: product, url (optional, e.g. the predictive search tracking url)
+  Image: lemme.search_image, falling back to the main product image. Text under the title: lemme.subtitle.
+{%- endcomment -%}
+{%- liquid
+  assign pm = product.metafields.lemme
+  assign img = pm.search_image.value | default: product.featured_media.preview_image
+  assign v = product.selected_or_first_available_variant
+-%}
+<li class="lsd-product">
+  <a class="lsd-product__link" href="{{ url | default: product.url }}">
+    <span class="lsd-product__media">
+      {%- if img != blank -%}{{ img | image_url: width: 400 | image_tag: loading: 'lazy', alt: '', class: 'lsd-product__img', widths: '200, 300, 400', sizes: '140px' }}{%- endif -%}
+    </span>
+    <span class="lsd-product__content">
+      <span class="lsd-product__head">
+        <span class="lsd-product__title">{{ product.title }}</span>
+        {% render 'lemme-pdp-icon', icon: 'sparkle-big', class: 'lsd-product__star' %}
+      </span>
+      <span class="lsd-product__details">
+        {%- if pm.subtitle != blank -%}<span class="lsd-product__subtitle">{{ pm.subtitle.value }}</span>{%- endif -%}
+        <span class="lsd-product__price">
+          {%- if v.compare_at_price > v.price -%}<span class="lm-visually-hidden">Sale price</span>{%- endif -%}
+          {% render 'lemme-money', cents: v.price, round: true %}
+        </span>
+      </span>
+    </span>
+  </a>
+</li>

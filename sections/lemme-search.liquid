@@ -1,0 +1,190 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-collection.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-search-page.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+<script src="{{ 'lemme-collection.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  Search results page. Products use the collection page cards (quick add included);
+  blog posts and pages show as text cards. Empty / no-result searches show popular searches and suggested products.
+{%- endcomment -%}
+{%- liquid
+  assign st = section.settings
+  assign terms = search.terms | strip
+  assign current_type = ''
+  if search.types.size == 1
+    assign current_type = search.types | first
+  endif
+-%}
+<section class="lse" aria-labelledby="LseTitle-{{ section.id }}">
+  <div class="lm-container">
+    <header class="lse__head">
+      <h1 class="lse__title" id="LseTitle-{{ section.id }}">
+        {%- if search.performed and terms != blank -%}
+          {{ st.results_heading }} {% render 'lemme-squiggle', text: terms %}
+        {%- else -%}
+          {{ st.heading }}{% if st.heading_squiggle != blank %} {% render 'lemme-squiggle', text: st.heading_squiggle %}{% endif %}
+        {%- endif -%}
+      </h1>
+      <form class="lse__form" action="{{ routes.search_url }}" method="get" role="search">
+        <input type="hidden" name="options[prefix]" value="last">
+        {%- if current_type != blank -%}<input type="hidden" name="type" value="{{ current_type }}">{%- endif -%}
+        <label class="lm-visually-hidden" for="LseInput-{{ section.id }}">{{ st.placeholder }}</label>
+        <input class="lse__input" id="LseInput-{{ section.id }}" type="search" name="q" value="{{ terms | escape }}" placeholder="{{ st.placeholder | escape }}" autocomplete="off" enterkeyhint="search">
+        <button class="lse__submit" type="submit" aria-label="{{ st.submit_label | escape }}">{% render 'lemme-icon', icon: 'arrow-right' %}</button>
+      </form>
+    </header>
+
+    {%- if search.performed and terms != blank -%}
+      {%- paginate search.results by st.per_page -%}
+        {%- if st.show_types -%}
+          {%- capture base -%}{{ routes.search_url }}?q={{ terms | url_encode }}&amp;options%5Bprefix%5D=last{%- endcapture -%}
+          <nav class="lse__types" aria-label="{{ st.types_label | escape }}">
+            <a class="lse__type{% if current_type == blank %} is-active{% endif %}" href="{{ base }}"{% if current_type == blank %} aria-current="page"{% endif %}>{{ st.all_label }}</a>
+            <a class="lse__type{% if current_type == 'product' %} is-active{% endif %}" href="{{ base }}&amp;type=product"{% if current_type == 'product' %} aria-current="page"{% endif %}>{{ st.products_label }}</a>
+            <a class="lse__type{% if current_type == 'article' %} is-active{% endif %}" href="{{ base }}&amp;type=article"{% if current_type == 'article' %} aria-current="page"{% endif %}>{{ st.articles_label }}</a>
+            <a class="lse__type{% if current_type == 'page' %} is-active{% endif %}" href="{{ base }}&amp;type=page"{% if current_type == 'page' %} aria-current="page"{% endif %}>{{ st.pages_label }}</a>
+          </nav>
+        {%- endif -%}
+
+        {%- if search.results_count > 0 -%}
+          {%- liquid
+            if search.results_count == 1
+              assign count_text = st.count_one
+            else
+              assign count_text = st.count_many
+            endif
+          -%}
+          <p class="lse__count" role="status">{{ count_text | replace: '[count]', search.results_count | replace: '[terms]', terms }}</p>
+          <ul class="lco__grid lse__grid" role="list">
+            {%- for item in search.results -%}
+              <li class="lse__cell">
+                {%- if item.object_type == 'product' -%}
+                  {%- render 'lemme-collection-card', product: item, index: forloop.index, quick_add_label: st.quick_add_label, sold_out_label: st.sold_out_label, rotation: 4 -%}
+                {%- else -%}
+                  <article class="lse-item">
+                    {%- if item.object_type == 'article' and item.image -%}
+                      <div class="lse-item__media">{{ item.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: '', widths: '300, 450, 600', sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw' }}</div>
+                    {%- endif -%}
+                    <p class="lse-item__kind">{% if item.object_type == 'article' %}{{ st.article_kind }}{% else %}{{ st.page_kind }}{% endif %}</p>
+                    <h2 class="lse-item__title"><a class="lse-item__link" href="{{ item.url }}">{{ item.title }}</a></h2>
+                    {%- assign excerpt = item.excerpt | default: item.content | strip_html | truncatewords: 22 -%}
+                    {%- if excerpt != blank -%}<p class="lse-item__text">{{ excerpt }}</p>{%- endif -%}
+                    <span class="lse-item__more" aria-hidden="true">{{ st.read_more_label }}</span>
+                  </article>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="lco-pagination" aria-label="{{ st.pagination_label | escape }}">
+              <ol role="list">
+                <li class="lco-pagination__arrow">
+                  {%- if paginate.previous -%}
+                    <a href="{{ paginate.previous.url }}" aria-label="Previous page">{% render 'lemme-pdp-icon', icon: 'arrow-left' %}</a>
+                  {%- else -%}
+                    <span class="is-disabled" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'arrow-left' %}</span>
+                  {%- endif -%}
+                </li>
+                {%- for part in paginate.parts -%}
+                  <li class="lco-pagination__page{% if part.is_link == false and part.title == paginate.current_page %} is-current{% endif %}">
+                    {%- if part.is_link -%}
+                      <a href="{{ part.url }}"><span class="lm-visually-hidden">Page </span>{{ part.title }}</a>
+                    {%- elsif part.title == paginate.current_page -%}
+                      <span aria-current="page"><span class="lm-visually-hidden">Page </span>{{ part.title }}</span>
+                    {%- else -%}
+                      <span>{{ part.title }}</span>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+                <li class="lco-pagination__arrow">
+                  {%- if paginate.next -%}
+                    <a href="{{ paginate.next.url }}" aria-label="Next page">{% render 'lemme-pdp-icon', icon: 'arrow-right' %}</a>
+                  {%- else -%}
+                    <span class="is-disabled" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'arrow-right' %}</span>
+                  {%- endif -%}
+                </li>
+              </ol>
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <div class="lse__empty" role="status">
+            <p class="lse__empty-title">{{ st.no_results | replace: '[terms]', terms }}</p>
+            {%- if st.no_results_text != blank -%}<p class="lse__empty-text">{{ st.no_results_text }}</p>{%- endif -%}
+          </div>
+          {%- assign show_suggestions = true -%}
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      {%- assign show_suggestions = true -%}
+    {%- endif -%}
+
+    {%- if show_suggestions -%}
+      {%- capture pills -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.term != blank -%}
+            <a class="lse__pill" href="{{ routes.search_url }}?q={{ block.settings.term | url_encode }}&amp;options%5Bprefix%5D=last" {{ block.shopify_attributes }}>{{ block.settings.term }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- if pills != blank -%}
+        <div class="lse__popular">
+          <h2 class="lse__subtitle">{{ st.popular_title }}</h2>
+          <div class="lse__pills">{{ pills }}</div>
+        </div>
+      {%- endif -%}
+      {%- if st.products.size > 0 -%}
+        <div class="lse__suggested">
+          <h2 class="lse__subtitle">{{ st.products_title }}</h2>
+          <ul class="lco__grid lse__grid" role="list">
+            {%- for p in st.products -%}
+              <li class="lse__cell">{%- render 'lemme-collection-card', product: p, index: forloop.index, quick_add_label: st.quick_add_label, sold_out_label: st.sold_out_label, rotation: 4 -%}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme search results",
+  "class": "lse-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (no search yet)", "default": "what are you" },
+    { "type": "text", "id": "heading_squiggle", "label": "Word with squiggle (no search yet)", "default": "looking for?" },
+    { "type": "text", "id": "results_heading", "label": "Heading before the search terms", "default": "results for" },
+    { "type": "text", "id": "placeholder", "label": "Search field placeholder", "default": "Search" },
+    { "type": "text", "id": "submit_label", "label": "Search button label (screen readers)", "default": "Search" },
+    { "type": "range", "id": "per_page", "label": "Results per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "checkbox", "id": "show_types", "label": "Show All / Products / Blog posts / Pages links", "default": true },
+    { "type": "text", "id": "types_label", "label": "Result types label (screen readers)", "default": "Result types" },
+    { "type": "text", "id": "all_label", "label": "All", "default": "All" },
+    { "type": "text", "id": "products_label", "label": "Products", "default": "Products" },
+    { "type": "text", "id": "articles_label", "label": "Blog posts", "default": "Blog posts" },
+    { "type": "text", "id": "pages_label", "label": "Pages", "default": "Pages" },
+    { "type": "text", "id": "count_one", "label": "Result count (1)", "default": "1 result" },
+    { "type": "text", "id": "count_many", "label": "Result count", "info": "[count] = number of results, [terms] = search terms.", "default": "[count] results" },
+    { "type": "text", "id": "quick_add_label", "label": "Quick add button", "default": "Add to bag" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold out" },
+    { "type": "text", "id": "article_kind", "label": "Blog post label", "default": "Blog" },
+    { "type": "text", "id": "page_kind", "label": "Page label", "default": "Page" },
+    { "type": "text", "id": "read_more_label", "label": "Read more label", "default": "Read more" },
+    { "type": "text", "id": "pagination_label", "label": "Pagination label (screen readers)", "default": "Search results pages" },
+    { "type": "header", "content": "No results / before searching" },
+    { "type": "text", "id": "no_results", "label": "No results heading", "info": "[terms] = search terms.", "default": "No results for “[terms]”" },
+    { "type": "text", "id": "no_results_text", "label": "No results text", "default": "Check the spelling or try a different word, like a benefit or an ingredient." },
+    { "type": "text", "id": "popular_title", "label": "Popular searches heading", "default": "Popular searches" },
+    { "type": "text", "id": "products_title", "label": "Suggested products heading", "default": "You might like" },
+    { "type": "product_list", "id": "products", "label": "Suggested products", "limit": 8 }
+  ],
+  "blocks": [
+    { "type": "term", "name": "Popular search", "settings": [ { "type": "text", "id": "term", "label": "Search term", "default": "Debloat" } ] }
+  ],
+  "presets": [ { "name": "Lemme search results" } ],
+  "enabled_on": { "templates": ["search"] }
+}
+{% endschema %}

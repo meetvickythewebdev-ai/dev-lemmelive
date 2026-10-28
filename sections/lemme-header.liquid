@@ -103,7 +103,7 @@
           {%- endform -%}
         </div>
       {%- endif -%}
-      <a class="lm-header__icon" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}">{% render 'lemme-pdp-icon', icon: 'zoom' %}</a>
+      <a class="lm-header__icon" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}" aria-controls="LemmeSearchDrawer" aria-expanded="false" data-lsd-open>{% render 'lemme-pdp-icon', icon: 'zoom' %}</a>
       <a class="lm-header__icon lm-header__desktop-only" href="{{ routes.account_url }}" aria-label="{{ section.settings.account_label | escape }}">{% render 'lemme-pdp-icon', icon: 'account' %}</a>
       <a class="lm-header__icon lm-header__cart" href="{{ routes.cart_url }}" aria-label="{{ section.settings.bag_label | escape }} ({{ cart.item_count }})">
         {% render 'lemme-pdp-icon', icon: 'bag' %}
