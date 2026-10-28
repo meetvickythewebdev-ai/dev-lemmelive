@@ -4,38 +4,43 @@
       "type": "lemme-pdp-main",
       "blocks": {
         "tab_benefits": {
-          "type": "tab",
+          "type": "tab_benefits",
           "settings": {
             "title": "Product benefits",
-            "content": "benefits"
+            "intro": "{{ product.metafields.lemme.benefits_intro.value }}",
+            "bullets": "{{ product.metafields.lemme.benefits.value }}"
           }
         },
         "tab_leave_out": {
-          "type": "tab",
+          "type": "tab_leave_out",
           "settings": {
             "title": "What We Leave Out",
-            "content": "leave_out"
+            "items": "{{ product.metafields.lemme.leave_out.value }}"
           }
         },
         "tab_supplement": {
-          "type": "tab",
+          "type": "tab_supplement",
           "settings": {
             "title": "Supplement Facts",
-            "content": "supplement"
+            "suggested_use": "{{ product.metafields.lemme.suggested_use.value }}",
+            "serving": "{{ product.metafields.lemme.serving_info.value }}",
+            "footnote": "{{ product.metafields.lemme.supplement_footnote.value }}",
+            "other": "{{ product.metafields.lemme.other_ingredients.value }}",
+            "warning": "{{ product.metafields.lemme.warning.value }}"
           }
         },
         "tab_faqs": {
-          "type": "tab",
+          "type": "tab_faqs",
           "settings": {
             "title": "FAQs",
-            "content": "faqs"
+            "faqs": "{{ product.metafields.lemme.faqs.value }}"
           }
         },
         "tab_awards": {
-          "type": "tab",
+          "type": "tab_awards",
           "settings": {
             "title": "Awards",
-            "content": "awards"
+            "awards": "{{ product.metafields.lemme.awards.value }}"
           }
         },
         "gift": {
@@ -51,7 +56,22 @@
         "tab_awards",
         "gift"
       ],
-      "settings": {}
+      "settings": {
+        "title": "{{ product.metafields.lemme.display_title.value }}",
+        "subtitle": "{{ product.metafields.lemme.subtitle.value }}",
+        "description": "{{ product.metafields.lemme.intro.value }}",
+        "badge": "{{ product.metafields.lemme.badge.value }}",
+        "frontrow_id": "{{ product.metafields.lemme.frontrow_id.value }}",
+        "gallery_badge": "{{ product.metafields.lemme.card_badge.value }}",
+        "format_products": "{{ product.metafields.lemme.format_products.value }}",
+        "format_name": "{{ product.metafields.lemme.format_name.value }}",
+        "flavor": "{{ product.metafields.lemme.flavor.value }}",
+        "option_labels": "{{ product.metafields.lemme.option_labels.value }}",
+        "option_descriptions": "{{ product.metafields.lemme.option_descriptions.value }}",
+        "icon_items": "{{ product.metafields.lemme.benefit_icon_items.value }}",
+        "routine_products": "{{ product.metafields.lemme.routine_products.value }}",
+        "sticky_image": "{{ product.metafields.lemme.sticky_image.value }}"
+      }
     },
     "subnav": {
       "type": "lemme-pdp-subnav",
@@ -59,21 +79,34 @@
     },
     "benefits": {
       "type": "lemme-pdp-benefits",
-      "settings": {}
+      "settings": {
+        "eyebrow": "{{ product.metafields.lemme.benefits_eyebrow.value }}",
+        "heading_text": "{{ product.metafields.lemme.benefits_heading.value }}",
+        "items": "{{ product.metafields.lemme.benefit_items.value }}",
+        "video": "{{ product.metafields.lemme.benefits_video.value }}"
+      }
     },
     "data": {
       "type": "lemme-pdp-data",
-      "settings": {}
+      "settings": {
+        "heading": "{{ product.metafields.lemme.data_heading.value }}",
+        "text": "{{ product.metafields.lemme.data_text.value }}"
+      }
     },
     "compare": {
       "type": "lemme-pdp-compare",
       "settings": {
-        "other_image": "shopify://shop_images/Generic_Bottle.jpg"
+        "other_image": "shopify://shop_images/Generic_Bottle.jpg",
+        "heading_text": "{{ product.metafields.lemme.compare_heading.value }}",
+        "rows": "{{ product.metafields.lemme.compare_rows.value }}",
+        "lemme_image": "{{ product.metafields.lemme.compare_image.value }}"
       }
     },
     "ingredients": {
       "type": "lemme-pdp-ingredients",
-      "settings": {}
+      "settings": {
+        "items": "{{ product.metafields.lemme.ingredients.value }}"
+      }
     },
     "difference": {
       "type": "lemme-pdp-difference",
@@ -130,12 +163,18 @@
         "icon_6"
       ],
       "settings": {
-        "nav_label": "Difference"
+        "nav_label": "Difference",
+        "body": "{{ product.metafields.lemme.difference_text.value }}",
+        "product_image": "{{ product.metafields.lemme.difference_image.value }}",
+        "items": "{{ product.metafields.lemme.difference_items.value }}"
       }
     },
     "expert": {
       "type": "lemme-pdp-expert",
-      "settings": {}
+      "settings": {
+        "expert": "{{ product.metafields.lemme.expert.value }}",
+        "quote": "{{ product.metafields.lemme.expert_quote.value }}"
+      }
     },
     "related": {
       "type": "lemme-pdp-related",
@@ -150,7 +189,8 @@
     "faq": {
       "type": "lemme-pdp-faq",
       "settings": {
-        "button_url": "/pages/faq"
+        "button_url": "/pages/faq",
+        "faqs": "{{ product.metafields.lemme.faqs.value }}"
       }
     }
   },

@@ -759,3 +759,8 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
   .lp-faq__copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; gap: 40px; min-width: 0; }
   .lp-faq__cta { width: auto; max-width: 100%; }
 }
+
+/* Rich text from theme editor settings */
+.lp-panel__intro p, .lp-head__description p:only-child, .lp-facts__text p, .lp-data__text p, .lp-diff__text p, .lp-expert__quote p, .lp-compare__copy p { margin: 0; }
+.lp-panel__intro p + p, .lp-facts__text p + p { margin-top: 8px; }
+.lp-facts__text--labeled p { display: inline; }

@@ -2,7 +2,7 @@
 {{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-pdp.js' | asset_url }}" defer></script>
 
-{%- assign faqs = product.metafields.lemme.faqs.value -%}
+{%- assign faqs = section.settings.faqs | default: product.metafields.lemme.faqs.value -%}
 {%- if faqs.size > 0 -%}
 <section class="lm-section lp-faq" id="faq" data-lp-nav="{{ section.settings.nav_label | escape }}" style="--lp-faq-top: {{ section.settings.padding_top }}px;" aria-labelledby="LpFaq-{{ section.id }}">
   <div class="lp-faq__layout">
@@ -34,6 +34,7 @@
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Read all FAQs" },
     { "type": "url", "id": "button_url", "label": "Button link" },
     { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true },
+    { "type": "metaobject_list", "id": "faqs", "metaobject_type": "lemme_faq", "label": "Questions", "limit": 40 },
     { "type": "range", "id": "padding_top", "label": "Space above (desktop)", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
     { "type": "paragraph", "content": "Questions come from the product's \"lemme.faqs\" metafield (a list of FAQ entries). Hidden when a product has none." }
   ],

@@ -236,7 +236,11 @@
     var keys = tabs.map(function (b) { return b.getAttribute('data-lp-open'); });
     var titles = tabs.map(function (b) { return b.getAttribute('data-lp-title'); });
     var panels = $all(el, '[data-lp-panel]');
-    if (keys.indexOf('awards') === -1 && $(el, '[data-lp-panel="awards"]')) { keys.push('awards'); titles.push('Awards'); }
+    // Other openers (the award badge) can open a panel that has no visible tab
+    $all(section, '[data-lp-open]').forEach(function (b) {
+      var k = b.getAttribute('data-lp-open');
+      if (keys.indexOf(k) === -1 && $(el, '[data-lp-panel="' + k + '"]')) { keys.push(k); titles.push(b.getAttribute('data-lp-title') || ''); }
+    });
     var drawer = Drawer(el, {
       count: function () { return keys.length; },
       label: function (i) { return titles[i]; },

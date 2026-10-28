@@ -3,12 +3,15 @@
 
 {%- liquid
   assign m = product.metafields.lemme
-  assign diff_text = section.settings.text
-  if m.difference_text.value != blank
+  assign diff_text = section.settings.body
+  if diff_text == blank and m.difference_text.value != blank
     assign diff_text = m.difference_text.value | newline_to_br
   endif
-  assign diff_image = m.difference_image.value | default: section.settings.image
-  assign items = m.difference_items.value
+  if diff_text == blank
+    assign diff_text = section.settings.text
+  endif
+  assign diff_image = section.settings.product_image | default: m.difference_image.value | default: section.settings.image
+  assign items = section.settings.items | default: m.difference_items.value
 -%}
 
 <section class="lm-section lp-diff" id="difference" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpDiff-{{ section.id }}">
@@ -48,6 +51,9 @@
   "settings": [
     { "type": "text", "id": "nav_label", "label": "Link label", "default": "Difference" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "the lemme difference" },
+    { "type": "richtext", "id": "body", "label": "Text (product)", "info": "Connected to lemme.difference_text. Empty = the text below." },
+    { "type": "image_picker", "id": "product_image", "label": "Image (product)", "info": "Connected to lemme.difference_image. Empty = the image below." },
+    { "type": "metaobject_list", "id": "items", "metaobject_type": "lemme_icon_item", "label": "Icons (product)", "info": "Connected to lemme.difference_items. Empty = the icon blocks.", "limit": 8 },
     { "type": "textarea", "id": "text", "label": "Text", "default": "Lemme is third-party tested and made in NSF and GMP-certified facilities. Plus, the bottle and cap are made from 100% post-consumer recycled material.", "info": "Products with a \"lemme.difference_text\" metafield show that text instead." },
     { "type": "image_picker", "id": "image", "label": "Image", "info": "Products with a \"lemme.difference_image\" metafield show that image instead." },
     { "type": "paragraph", "content": "Icons: products with a \"lemme.difference_items\" metafield (Icon item entries) show those; otherwise the icon blocks below are used." }

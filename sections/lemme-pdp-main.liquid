@@ -4,25 +4,45 @@
 
 {%- liquid
   assign m = product.metafields.lemme
-  assign display_title = m.display_title.value | default: product.title
+  assign st = section.settings
+  assign display_title = st.title | default: m.display_title.value | default: product.title
+  assign subtitle = st.subtitle | default: m.subtitle.value
+  assign description = st.description
+  if description == blank and m.intro != blank
+    assign description = m.intro.value | newline_to_br
+  endif
+  assign badge = st.badge | default: m.badge.value
+  assign frontrow_id = st.frontrow_id | default: m.frontrow_id.value
+  assign gallery_badge = st.gallery_badge | default: m.card_badge.value
+  assign formats = st.format_products | default: m.format_products.value
+  assign format_name = st.format_name | default: m.format_name.value | default: display_title
+  assign flavor = st.flavor | default: m.flavor.value
+  assign icon_items = st.icon_items | default: m.benefit_icon_items.value
+  assign routine = st.routine_products | default: m.routine_products.value
+  assign sticky_image = st.sticky_image | default: m.sticky_image.value | default: product.featured_media.preview_image
+
+  if st.option_labels != blank
+    assign option_labels = st.option_labels | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+  else
+    assign option_labels = m.option_labels.value
+  endif
+  if st.option_descriptions != blank
+    assign option_copy = st.option_descriptions | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+  else
+    assign option_copy = m.option_descriptions.value
+  endif
+
   assign selected_variant = product.selected_or_first_available_variant
   assign has_plans = false
   if product.selling_plan_groups.size > 0
     assign has_plans = true
   endif
-  assign option_labels = m.option_labels.value
-  assign option_copy = m.option_descriptions.value
-  assign faqs = m.faqs.value
-  assign awards = m.awards.value
-  assign leave_out = m.leave_out.value
-  assign benefits = m.benefits.value
-  assign benefit_icons = m.benefit_icons.value
-  assign benefit_icon_labels = m.benefit_icon_labels.value
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value
   assign form_id = 'LpForm-' | append: section.id
   assign drawer_id = 'LpDrawer-' | append: section.id
-  assign highlights = section.settings.highlights | newline_to_br | split: '<br />'
+  assign highlights = st.highlights | newline_to_br | split: '<br />'
+  assign awards_block = section.blocks | where: 'type', 'tab_awards' | first
 -%}
 
 <section class="lm-section lp-main" data-lp-main data-section-id="{{ section.id }}">
@@ -58,15 +78,15 @@
           <button class="lp-gallery__arrow lp-gallery__arrow--next" type="button" aria-label="Next image" data-lp-next>{% render 'lemme-pdp-icon', icon: 'arrow-right' %}</button>
         {%- endif -%}
 
-        {%- if m.frontrow_id != blank -%}
+        {%- if frontrow_id != blank -%}
           <div class="lp-gallery__frontrow">
-            <script async src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=sticker&amp;product_id={{ m.frontrow_id.value | url_encode }}"></script>
-            <iframe data-state="max" class="iframe-frontrow-sticker lp-gallery__frontrow-frame" id="frontrow-sticker" title="FrontrowMD Clinicians' Choice Banner" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=sticker&amp;product_id={{ m.frontrow_id.value | url_encode }}" width="92" height="153"></iframe>
+            <script async src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=sticker&amp;product_id={{ frontrow_id | url_encode }}"></script>
+            <iframe data-state="max" class="iframe-frontrow-sticker lp-gallery__frontrow-frame" id="frontrow-sticker" title="FrontrowMD Clinicians' Choice Banner" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=sticker&amp;product_id={{ frontrow_id | url_encode }}" width="92" height="153"></iframe>
           </div>
         {%- endif -%}
 
-        {%- if m.card_badge != blank -%}
-          <span class="lp-gallery__badge lp-text-badge">{% render 'lemme-pdp-icon', icon: 'badge-shape' %}<span>{{ m.card_badge.value }}</span></span>
+        {%- if gallery_badge != blank -%}
+          <span class="lp-gallery__badge lp-text-badge">{% render 'lemme-pdp-icon', icon: 'badge-shape' %}<span>{{ gallery_badge }}</span></span>
         {%- endif -%}
 
         {%- if product.media.size > 0 -%}
@@ -93,17 +113,17 @@
         <header class="lp-head">
           <div class="lp-head__title-row">
             <h1 class="lp-head__title">{{ display_title }}</h1>
-            {%- if m.badge != blank -%}
-              {%- if awards.size > 0 -%}
-                <button class="lp-head__badge lp-head__badge--button" type="button" aria-label="View awards" aria-controls="{{ drawer_id }}" data-lp-open="awards">
-                  {{ m.badge.value | image_url: width: 240 | image_tag: alt: '', width: 96, height: 96, loading: 'eager' }}
+            {%- if badge != blank -%}
+              {%- if awards_block != blank -%}
+                <button class="lp-head__badge lp-head__badge--button" type="button" aria-label="View awards" aria-controls="{{ drawer_id }}" data-lp-open="{{ awards_block.id }}" data-lp-title="{{ awards_block.settings.title | escape }}">
+                  {{ badge | image_url: width: 240 | image_tag: alt: '', width: 96, height: 96, loading: 'eager' }}
                 </button>
               {%- else -%}
-                <span class="lp-head__badge">{{ m.badge.value | image_url: width: 240 | image_tag: alt: m.badge.value.alt, width: 96, height: 96, loading: 'eager' }}</span>
+                <span class="lp-head__badge">{{ badge | image_url: width: 240 | image_tag: alt: badge.alt, width: 96, height: 96, loading: 'eager' }}</span>
               {%- endif -%}
             {%- endif -%}
           </div>
-          {%- if m.subtitle != blank -%}<p class="lp-head__subtitle">{{ m.subtitle.value }}</p>{%- endif -%}
+          {%- if subtitle != blank -%}<p class="lp-head__subtitle">{{ subtitle }}</p>{%- endif -%}
           {%- if rating != blank -%}
             {%- assign rating_pct = rating.rating | times: 100.0 | divided_by: rating.scale_max -%}
             <a class="lp-rating" href="#reviews" aria-label="Rated {{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }} stars{% if rating_count != blank %}, {{ rating_count }} reviews{% endif %}. Go to reviews">
@@ -123,8 +143,8 @@
               {%- endif -%}
             </a>
           {%- endif -%}
-          {%- if m.intro != blank -%}
-            <div class="lp-head__description">{{ m.intro.value | newline_to_br }}</div>
+          {%- if description != blank -%}
+            <div class="lp-head__description">{{ description }}</div>
           {%- elsif product.description != blank -%}
             <div class="lp-head__description">{{ product.description }}</div>
           {%- endif -%}
@@ -133,38 +153,10 @@
         {%- comment -%} Tabs that open the details drawer {%- endcomment -%}
         {%- capture tab_buttons -%}
           {%- for block in section.blocks -%}
-            {%- if block.type == 'tab' -%}
-              {%- liquid
-                assign show = false
-                case block.settings.content
-                  when 'benefits'
-                    if benefits.size > 0 or m.benefits_intro != blank
-                      assign show = true
-                    endif
-                  when 'leave_out'
-                    if leave_out.size > 0
-                      assign show = true
-                    endif
-                  when 'supplement'
-                    if m.supplement_facts != blank
-                      assign show = true
-                    endif
-                  when 'faqs'
-                    if faqs.size > 0
-                      assign show = true
-                    endif
-                  when 'awards'
-                    if awards.size > 0
-                      assign show = true
-                    endif
-                  when 'details'
-                    if product.description != blank
-                      assign show = true
-                    endif
-                endcase
-              -%}
-              {%- if show -%}
-                <button class="lp-tab" type="button" aria-expanded="false" aria-controls="{{ drawer_id }}" data-lp-open="{{ block.settings.content }}" data-lp-title="{{ block.settings.title | escape }}" {{ block.shopify_attributes }}>
+            {%- if block.type contains 'tab_' -%}
+              {%- capture panel -%}{%- render 'lemme-pdp-panel', block: block, product: product, display_title: display_title -%}{%- endcapture -%}
+              {%- if panel != blank -%}
+                <button class="lp-tab" type="button" aria-expanded="false" aria-controls="{{ drawer_id }}" data-lp-open="{{ block.id }}" data-lp-title="{{ block.settings.title | escape }}" {{ block.shopify_attributes }}>
                   <span>{{ block.settings.title }}</span>
                   <span class="lp-tab__icon">{% render 'lemme-pdp-icon', icon: 'plus', class: 'lp-tab__plus' %}{% render 'lemme-pdp-icon', icon: 'minus', class: 'lp-tab__minus' %}</span>
                 </button>
@@ -183,11 +175,10 @@
         {%- endif -%}
 
         {%- comment -%} Format (sibling products, e.g. gummies / capsules) {%- endcomment -%}
-        {%- assign formats = m.format_products.value -%}
         {%- if formats.size > 0 -%}
           <fieldset class="lp-format">
             <legend class="lm-visually-hidden">{{ section.settings.format_label | remove: ':' }}</legend>
-            <p class="lp-label-row"><span class="lp-label-row__label">{{ section.settings.format_label }}</span><span>{{ m.format_name.value | default: display_title }}</span></p>
+            <p class="lp-label-row"><span class="lp-label-row__label">{{ section.settings.format_label }}</span><span>{{ format_name }}</span></p>
             <div class="lp-format__list">
               {%- for fp in formats -%}
                 {%- liquid
@@ -207,8 +198,8 @@
           </fieldset>
         {%- endif -%}
 
-        {%- if m.flavor != blank -%}
-          <p class="lp-label-row"><span class="lp-label-row__label">{{ section.settings.flavor_label }}</span><span>{{ m.flavor.value }}</span></p>
+        {%- if flavor != blank -%}
+          <p class="lp-label-row"><span class="lp-label-row__label">{{ section.settings.flavor_label }}</span><span>{{ flavor }}</span></p>
         {%- endif -%}
 
         {%- comment -%} Purchase options {%- endcomment -%}
@@ -231,7 +222,7 @@
                     assign opt_compare = allocation.compare_at_price
                   endif
                 endif
-                assign opt_label = option_labels[idx]
+                assign opt_label = option_labels[idx] | strip
                 if opt_label == blank
                   if variant.title == 'Default Title'
                     assign opt_label = section.settings.single_label
@@ -239,7 +230,7 @@
                     assign opt_label = variant.title
                   endif
                 endif
-                assign opt_text = option_copy[idx]
+                assign opt_text = option_copy[idx] | strip
                 assign saving = 0
                 if opt_compare > opt_price
                   assign saving = opt_compare | minus: opt_price | times: 100.0 | divided_by: opt_compare | round
@@ -309,22 +300,30 @@
           {%- endif -%}
         {%- endfor -%}
 
-        {%- if benefit_icons.size > 0 -%}
+        {%- if icon_items.size > 0 or m.benefit_icons != blank -%}
           <div class="lp-icons">
             <ul class="lp-icons__grid">
-              {%- for icon in benefit_icons -%}
-                {%- assign icon_label = benefit_icon_labels[forloop.index0] | default: icon.alt -%}
-                <li class="lp-icons__item">
-                  {{ icon | image_url: width: 180 | image_tag: alt: '', loading: 'lazy', width: 60, height: 60 }}
-                  <p class="lp-icons__label">{{ icon_label }}</p>
-                </li>
-              {%- endfor -%}
+              {%- if icon_items.size > 0 -%}
+                {%- for item in icon_items -%}
+                  <li class="lp-icons__item">
+                    {%- if item.icon.value != blank -%}{{ item.icon.value | image_url: width: 180 | image_tag: alt: '', loading: 'lazy', width: 60, height: 60 }}{%- endif -%}
+                    <p class="lp-icons__label">{{ item.label.value }}</p>
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- assign icon_labels = m.benefit_icon_labels.value -%}
+                {%- for icon in m.benefit_icons.value -%}
+                  <li class="lp-icons__item">
+                    {{ icon | image_url: width: 180 | image_tag: alt: '', loading: 'lazy', width: 60, height: 60 }}
+                    <p class="lp-icons__label">{{ icon_labels[forloop.index0] | default: icon.alt }}</p>
+                  </li>
+                {%- endfor -%}
+              {%- endif -%}
             </ul>
           </div>
         {%- endif -%}
 
         {%- comment -%} "Lemme get the full routine" bundle {%- endcomment -%}
-        {%- assign routine = m.routine_products.value -%}
         {%- if routine.size > 0 -%}
           <section class="lp-upsell" aria-labelledby="LpUpsell-{{ section.id }}" data-lp-upsell>
             <h2 class="lp-upsell__heading" id="LpUpsell-{{ section.id }}">{{ section.settings.routine_heading }}</h2>
@@ -378,96 +377,12 @@
         <button class="lp-drawer__close" type="button" aria-label="Close" data-lp-close>{% render 'lemme-pdp-icon', icon: 'close' %}</button>
       </header>
       <div class="lp-drawer__body" data-lp-drawer-body>
-
-        {%- if benefits.size > 0 or m.benefits_intro != blank -%}
-          <div class="lp-panel" data-lp-panel="benefits" hidden>
-            {%- if m.benefits_intro != blank -%}<div class="lp-panel__intro">{{ m.benefits_intro.value | newline_to_br }}</div>{%- endif -%}
-            <ul class="lp-panel__bullets">
-              {%- for benefit in benefits -%}<li>{% render 'lemme-pdp-icon', icon: 'sparkle' %}<span>{{ benefit }}</span></li>{%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
-
-        {%- if leave_out.size > 0 -%}
-          <div class="lp-panel" data-lp-panel="leave_out" hidden>
-            <p class="lp-panel__intro">{{ section.settings.leave_out_intro | replace: '[product]', display_title }}</p>
-            <ul class="lp-panel__leave">
-              {%- for item in leave_out -%}
-                <li>
-                  <span class="lp-panel__leave-icon">{%- if item.icon.value != blank -%}{{ item.icon.value | image_url: width: 120 | image_tag: alt: '', loading: 'lazy', width: 45, height: 45 }}{%- endif -%}</span>
-                  <span><strong>{{ section.settings.leave_out_prefix }}</strong> {{ item.label.value }}</span>
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
-
-        {%- if m.supplement_facts != blank -%}
-          <div class="lp-panel lp-facts" data-lp-panel="supplement" hidden>
-            {%- if m.suggested_use != blank -%}<p class="lp-facts__use">{{ m.suggested_use.value }}</p>{%- endif -%}
-            <div class="lp-facts__serving">
-              <p class="lp-facts__name">{{ section.settings.facts_heading }}</p>
-              {%- for line in m.serving_info.value -%}<p>{{ line }}</p>{%- endfor -%}
-            </div>
-            <table class="lp-facts__table">
-              <thead><tr><th scope="col">{{ section.settings.facts_amount_label }}</th><th scope="col">{{ section.settings.facts_dv_label }}</th></tr></thead>
-              <tbody>
-                {%- assign rows = m.supplement_facts.value | newline_to_br | split: '<br />' -%}
-                {%- for row in rows -%}
-                  {%- assign row_clean = row | strip -%}
-                  {%- if row_clean != blank -%}
-                    {%- assign cols = row_clean | split: '|' -%}
-                    <tr>
-                      <td>{{ cols[0] | strip }}{%- if cols[2] != blank -%}<br><span>{{ cols[2] | strip }}</span>{%- endif -%}</td>
-                      <td>{{ cols[1] | strip | replace: '†', '<sup>†</sup>' }}</td>
-                    </tr>
-                  {%- endif -%}
-                {%- endfor -%}
-              </tbody>
-            </table>
-            {%- if m.supplement_footnote != blank -%}<p class="lp-facts__text">{{ m.supplement_footnote.value | newline_to_br | replace: '†', '<sup>†</sup>' }}</p>{%- endif -%}
-            {%- if m.other_ingredients != blank -%}<p class="lp-facts__text"><strong>{{ section.settings.other_ingredients_label }}</strong> {{ m.other_ingredients.value }}</p>{%- endif -%}
-            {%- if m.warning != blank -%}<p class="lp-facts__text"><strong>{{ section.settings.warning_label }}</strong> {{ m.warning.value }}</p>{%- endif -%}
-          </div>
-        {%- endif -%}
-
-        {%- if faqs.size > 0 -%}
-          <div class="lp-panel" data-lp-panel="faqs" hidden>
-            <p class="lp-panel__intro">{{ m.faq_intro.value | default: section.settings.faq_intro | replace: '[product]', display_title }}</p>
-            <div class="lp-panel__faqs">
-              {%- for faq in faqs -%}
-                <details class="lp-panel__faq" data-lp-accordion>
-                  <summary class="lp-panel__faq-q"><span>{{ faq.question.value }}</span><span class="lp-panel__faq-icon">{% render 'lemme-pdp-icon', icon: 'plus', class: 'lp-when-closed' %}{% render 'lemme-pdp-icon', icon: 'minus', class: 'lp-when-open' %}</span></summary>
-                  <div class="lp-panel__faq-a" data-lp-accordion-content>{{ faq.answer.value | newline_to_br }}</div>
-                </details>
-              {%- endfor -%}
-            </div>
-          </div>
-        {%- endif -%}
-
-        {%- if awards.size > 0 -%}
-          <div class="lp-panel" data-lp-panel="awards" hidden>
-            <p class="lp-panel__intro">{{ section.settings.awards_intro }}</p>
-            <ul class="lp-panel__awards">
-              {%- for award in awards -%}
-                <li class="lp-award">
-                  <div class="lp-award__top">
-                    <div class="lp-award__media">{%- if award.image.value != blank -%}{{ award.image.value | image_url: width: 176 | image_tag: alt: '', loading: 'lazy', width: 72, height: 72 }}{%- endif -%}</div>
-                    <div class="lp-award__heading">
-                      <p class="lp-award__title">{{ award.title.value }}</p>
-                      {%- if award.subtitle != blank -%}<p class="lp-award__subtitle">{{ award.subtitle.value }}</p>{%- endif -%}
-                    </div>
-                  </div>
-                  {%- if award.description != blank -%}<div class="lp-award__copy">{{ award.description.value | newline_to_br }}</div>{%- endif -%}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
-
-        {%- if product.description != blank -%}
-          <div class="lp-panel lp-panel--rte" data-lp-panel="details" hidden>{{ product.description }}</div>
-        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type contains 'tab_' -%}
+            {%- capture panel -%}{%- render 'lemme-pdp-panel', block: block, product: product, display_title: display_title -%}{%- endcapture -%}
+            {%- if panel != blank -%}<div class="lp-panel{% if block.type == 'tab_supplement' %} lp-facts{% elsif block.type == 'tab_details' %} lp-panel--rte{% endif %}" data-lp-panel="{{ block.id }}" hidden>{{ panel }}</div>{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
       <nav class="lp-drawer__nav" aria-label="Details">
         <button class="lp-drawer__nav-btn" type="button" data-lp-drawer-prev hidden>{% render 'lemme-pdp-icon', icon: 'arrow-left-small' %}<span data-lp-label></span></button>
@@ -479,8 +394,7 @@
   {%- comment -%} ---------- Sticky add to bag ---------- {%- endcomment -%}
   <div class="lm-section lp-satc" data-lp-sticky data-lp-portal="satc-{{ section.id }}">
     <div class="lp-satc__media">
-      {%- assign satc_image = m.sticky_image.value | default: product.featured_media.preview_image -%}
-      {%- if satc_image != blank -%}{{ satc_image | image_url: width: 200 | image_tag: alt: '', loading: 'lazy', width: 88, height: 88 }}{%- endif -%}
+      {%- if sticky_image != blank -%}{{ sticky_image | image_url: width: 200 | image_tag: alt: '', loading: 'lazy', width: 88, height: 88 }}{%- endif -%}
     </div>
     <div class="lp-satc__action">
       <button class="lp-satc__btn" type="button" data-lp-sticky-btn><span data-lp-sticky-label>{{ section.settings.add_label }}</span><span class="lm-visually-hidden">: {{ product.title }}</span></button>
@@ -493,11 +407,26 @@
   "name": "Lemme product",
   "class": "lp-main-section",
   "settings": [
-    { "type": "paragraph", "content": "Most of this section comes from the product's \"lemme\" metafields. See the setup guide." },
+    { "type": "paragraph", "content": "Every content field below is connected to a product metafield (the database icon). Disconnect a field to type text that applies to all products, or leave it connected so each product shows its own content." },
+    { "type": "header", "content": "Product content" },
+    { "type": "text", "id": "title", "label": "Title", "info": "Connected to lemme.display_title. Empty = product title." },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "richtext", "id": "description", "label": "Short description" },
+    { "type": "image_picker", "id": "badge", "label": "Award badge (top right of the title)" },
+    { "type": "text", "id": "frontrow_id", "label": "FrontrowMD product ID", "info": "Shows the \"Clinicians' Choice\" sticker on the first image." },
+    { "type": "text", "id": "gallery_badge", "label": "Gallery badge text", "info": "For example \"Best Seller\"." },
+    { "type": "product_list", "id": "format_products", "label": "Format options", "info": "Products to switch between, for example Gummies and Capsules. Include this product.", "limit": 6 },
+    { "type": "text", "id": "format_name", "label": "Format name of this product" },
+    { "type": "text", "id": "flavor", "label": "Flavor" },
+    { "type": "richtext", "id": "option_labels", "label": "Option names", "info": "One per line or bullet, in variant order. Empty = variant names." },
+    { "type": "richtext", "id": "option_descriptions", "label": "Option descriptions", "info": "One per line or bullet, in variant order." },
+    { "type": "metaobject_list", "id": "icon_items", "metaobject_type": "lemme_icon_item", "label": "Benefit icons", "limit": 8 },
+    { "type": "product_list", "id": "routine_products", "label": "Bundle add-on products", "limit": 4 },
+    { "type": "image_picker", "id": "sticky_image", "label": "Sticky bar image", "info": "Empty = main product image." },
+    { "type": "header", "content": "Labels" },
     { "type": "text", "id": "reviews_label", "label": "Reviews count label", "default": "Reviews" },
-    { "type": "header", "content": "Options" },
     { "type": "text", "id": "format_label", "label": "Format label", "default": "Format:" },
-    { "type": "text", "id": "flavor_label", "label": "Flavour label", "default": "Flavor:" },
+    { "type": "text", "id": "flavor_label", "label": "Flavor label", "default": "Flavor:" },
     { "type": "text", "id": "options_label", "label": "Options label", "default": "Frequency:" },
     { "type": "text", "id": "options_legend", "label": "Options label (screen readers)", "default": "Choose an option" },
     { "type": "text", "id": "single_label", "label": "Option label for products without variants", "default": "One-time purchase" },
@@ -506,36 +435,79 @@
     { "type": "text", "id": "added_label", "label": "Added message", "default": "Added to your bag!" },
     { "type": "text", "id": "sold_out", "label": "Sold out label", "default": "Sold out" },
     { "type": "text", "id": "buy_once_label", "label": "Buy once link (subscription products)", "default": "Buy once for" },
-    { "type": "header", "content": "Bundle", "info": "Shown when the product has a \"lemme.routine_products\" metafield." },
+    { "type": "header", "content": "Bundle" },
     { "type": "text", "id": "routine_heading", "label": "Heading", "default": "Lemme Get the Full Routine:" },
     { "type": "text", "id": "routine_total_label", "label": "Total label", "default": "Total Price:" },
     { "type": "text", "id": "routine_button", "label": "Button", "default": "Add bundle to cart" },
-    { "type": "text", "id": "routine_addons_label", "label": "Add-ons label", "default": "One-time Add-ons:" },
-    { "type": "header", "content": "Drawer" },
-    { "type": "text", "id": "leave_out_intro", "label": "What we leave out intro", "info": "[product] is replaced with the product name.", "default": "Clean formulas, nothing you don’t need. Here’s what we leave out of [product]." },
-    { "type": "text", "id": "leave_out_prefix", "label": "What we leave out prefix", "default": "No" },
-    { "type": "text", "id": "faq_intro", "label": "FAQs intro", "default": "Learn more about [product], from how it works to when to take it and what makes our formula unique." },
-    { "type": "text", "id": "awards_intro", "label": "Awards intro", "default": "Recognized by the best in beauty and wellness. Explore the awards and accolades celebrating our standout formulas." },
-    { "type": "text", "id": "facts_heading", "label": "Facts heading", "default": "Supplement facts" },
-    { "type": "text", "id": "facts_amount_label", "label": "Facts table column 1", "default": "Amount Per Serving" },
-    { "type": "text", "id": "facts_dv_label", "label": "Facts table column 2", "default": "% Daily Value*" },
-    { "type": "text", "id": "other_ingredients_label", "label": "Other ingredients label", "default": "Other Ingredients" },
-    { "type": "text", "id": "warning_label", "label": "Warning label", "default": "WARNING" }
+    { "type": "text", "id": "routine_addons_label", "label": "Add-ons label", "default": "One-time Add-ons:" }
   ],
   "blocks": [
     {
-      "type": "tab",
-      "name": "Tab",
+      "type": "tab_benefits",
+      "name": "Tab: Benefits",
+      "limit": 1,
       "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Product benefits" },
-        { "type": "select", "id": "content", "label": "Opens", "default": "benefits", "options": [
-          { "value": "benefits", "label": "Benefits (lemme.benefits_intro + lemme.benefits)" },
-          { "value": "leave_out", "label": "What we leave out (lemme.leave_out)" },
-          { "value": "supplement", "label": "Supplement facts" },
-          { "value": "faqs", "label": "FAQs (lemme.faqs)" },
-          { "value": "awards", "label": "Awards (lemme.awards)" },
-          { "value": "details", "label": "Product description" }
-        ] }
+        { "type": "text", "id": "title", "label": "Tab title", "default": "Product benefits" },
+        { "type": "richtext", "id": "intro", "label": "Intro" },
+        { "type": "richtext", "id": "bullets", "label": "Benefits", "info": "One per line or bullet." }
+      ]
+    },
+    {
+      "type": "tab_leave_out",
+      "name": "Tab: What we leave out",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tab title", "default": "What We Leave Out" },
+        { "type": "text", "id": "intro", "label": "Intro", "info": "[product] is replaced with the product name.", "default": "Clean formulas, nothing you don’t need. Here’s what we leave out of [product]." },
+        { "type": "text", "id": "prefix", "label": "Prefix", "default": "No" },
+        { "type": "metaobject_list", "id": "items", "metaobject_type": "lemme_icon_item", "label": "Items", "limit": 12 }
+      ]
+    },
+    {
+      "type": "tab_supplement",
+      "name": "Tab: Supplement facts",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tab title", "default": "Supplement Facts" },
+        { "type": "text", "id": "suggested_use", "label": "Suggested use" },
+        { "type": "text", "id": "heading", "label": "Facts heading", "default": "Supplement facts" },
+        { "type": "richtext", "id": "serving", "label": "Serving lines", "info": "One per line or bullet." },
+        { "type": "textarea", "id": "rows", "label": "Facts table", "info": "Optional. One row per line: name | % daily value | small second line. Empty = the product's lemme.supplement_facts metafield." },
+        { "type": "text", "id": "col_amount", "label": "Table column 1", "default": "Amount Per Serving" },
+        { "type": "text", "id": "col_dv", "label": "Table column 2", "default": "% Daily Value*" },
+        { "type": "richtext", "id": "footnote", "label": "Footnote" },
+        { "type": "text", "id": "other_label", "label": "Other ingredients label", "default": "Other Ingredients" },
+        { "type": "richtext", "id": "other", "label": "Other ingredients" },
+        { "type": "text", "id": "warning_label", "label": "Warning label", "default": "WARNING" },
+        { "type": "richtext", "id": "warning", "label": "Warning" }
+      ]
+    },
+    {
+      "type": "tab_faqs",
+      "name": "Tab: FAQs",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tab title", "default": "FAQs" },
+        { "type": "text", "id": "intro", "label": "Intro", "info": "[product] is replaced with the product name.", "default": "Learn more about [product], from how it works to when to take it and what makes our formula unique." },
+        { "type": "metaobject_list", "id": "faqs", "metaobject_type": "lemme_faq", "label": "Questions", "limit": 40 }
+      ]
+    },
+    {
+      "type": "tab_awards",
+      "name": "Tab: Awards",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tab title", "default": "Awards" },
+        { "type": "text", "id": "intro", "label": "Intro", "default": "Recognized by the best in beauty and wellness. Explore the awards and accolades celebrating our standout formulas." },
+        { "type": "metaobject_list", "id": "awards", "metaobject_type": "lemme_award", "label": "Awards", "limit": 12 }
+      ]
+    },
+    {
+      "type": "tab_details",
+      "name": "Tab: Text",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tab title", "default": "Details" },
+        { "type": "richtext", "id": "content", "label": "Content", "info": "Empty = product description." }
       ]
     },
     {

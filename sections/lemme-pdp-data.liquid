@@ -1,12 +1,19 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 {{ 'lemme-pdp.css' | asset_url | stylesheet_tag }}
 
-{%- assign m = product.metafields.lemme -%}
-{%- if m.data_heading != blank -%}
+{%- liquid
+  assign m = product.metafields.lemme
+  assign heading = section.settings.heading | default: m.data_heading.value
+  assign text = section.settings.text
+  if text == blank and m.data_text != blank
+    assign text = m.data_text.value | newline_to_br
+  endif
+-%}
+{%- if heading != blank -%}
 <section class="lm-section lp-data" id="how-it-works" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpData-{{ section.id }}">
   <div class="lp-data__inner">
-    <h2 class="lp-h2 lp-data__heading" id="LpData-{{ section.id }}">{{ m.data_heading.value }}</h2>
-    {%- if m.data_text != blank -%}<div class="lp-data__text">{{ m.data_text.value | newline_to_br }}</div>{%- endif -%}
+    <h2 class="lp-h2 lp-data__heading" id="LpData-{{ section.id }}">{{ heading }}</h2>
+    {%- if text != blank -%}<div class="lp-data__text">{{ text }}</div>{%- endif -%}
   </div>
 </section>
 {%- endif -%}
@@ -17,6 +24,8 @@
   "class": "lp-data-section",
   "settings": [
     { "type": "text", "id": "nav_label", "label": "Link label", "default": "How it works" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "richtext", "id": "text", "label": "Text" },
     { "type": "paragraph", "content": "Uses lemme.data_heading and lemme.data_text. Hidden when the heading is empty." }
   ],
   "enabled_on": { "templates": ["product"] }

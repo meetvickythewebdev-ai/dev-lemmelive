@@ -1,0 +1,130 @@
+{%- comment -%}
+  Content of one product details drawer panel (Lemme product section tab blocks).
+  Prints nothing when the tab has no content, so its tab is hidden.
+  Each block setting is normally connected to a product metafield in the theme editor;
+  the metafield is also used directly when the setting is empty.
+  Params: block, product, display_title
+{%- endcomment -%}
+{%- liquid
+  assign m = product.metafields.lemme
+  assign bs = block.settings
+-%}
+{%- case block.type -%}
+  {%- when 'tab_benefits' -%}
+    {%- liquid
+      assign intro = bs.intro
+      if intro == blank and m.benefits_intro != blank
+        assign intro = m.benefits_intro.value | newline_to_br
+      endif
+      if bs.bullets != blank
+        assign bullets = bs.bullets | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+      else
+        assign bullets = m.benefits.value
+      endif
+    -%}
+    {%- if intro != blank or bullets.size > 0 -%}
+      {%- if intro != blank -%}<div class="lp-panel__intro">{{ intro }}</div>{%- endif -%}
+      <ul class="lp-panel__bullets">
+        {%- for benefit in bullets -%}
+          {%- assign benefit = benefit | strip -%}
+          {%- if benefit != blank -%}<li>{% render 'lemme-pdp-icon', icon: 'sparkle' %}<span>{{ benefit }}</span></li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+  {%- when 'tab_leave_out' -%}
+    {%- assign items = bs.items | default: m.leave_out.value -%}
+    {%- if items.size > 0 -%}
+      {%- if bs.intro != blank -%}<p class="lp-panel__intro">{{ bs.intro | replace: '[product]', display_title }}</p>{%- endif -%}
+      <ul class="lp-panel__leave">
+        {%- for item in items -%}
+          <li>
+            <span class="lp-panel__leave-icon">{%- if item.icon.value != blank -%}{{ item.icon.value | image_url: width: 120 | image_tag: alt: '', loading: 'lazy', width: 45, height: 45 }}{%- endif -%}</span>
+            <span>{%- if bs.prefix != blank -%}<strong>{{ bs.prefix }}</strong> {% endif -%}{{ item.label.value }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+  {%- when 'tab_supplement' -%}
+    {%- liquid
+      assign rows_src = bs.rows | default: m.supplement_facts.value
+      assign use = bs.suggested_use | default: m.suggested_use.value
+      if bs.serving != blank
+        assign serving = bs.serving | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+      else
+        assign serving = m.serving_info.value
+      endif
+      assign footnote = bs.footnote
+      if footnote == blank and m.supplement_footnote != blank
+        assign footnote = m.supplement_footnote.value | newline_to_br
+      endif
+      assign other = bs.other | default: m.other_ingredients.value
+      assign warning = bs.warning | default: m.warning.value
+    -%}
+    {%- if rows_src != blank -%}
+      {%- if use != blank -%}<p class="lp-facts__use">{{ use }}</p>{%- endif -%}
+      <div class="lp-facts__serving">
+        <p class="lp-facts__name">{{ bs.heading }}</p>
+        {%- for line in serving -%}{%- assign line = line | strip -%}{%- if line != blank -%}<p>{{ line }}</p>{%- endif -%}{%- endfor -%}
+      </div>
+      <table class="lp-facts__table">
+        <thead><tr><th scope="col">{{ bs.col_amount }}</th><th scope="col">{{ bs.col_dv }}</th></tr></thead>
+        <tbody>
+          {%- assign rows = rows_src | newline_to_br | split: '<br />' -%}
+          {%- for row in rows -%}
+            {%- assign row_clean = row | strip -%}
+            {%- if row_clean != blank -%}
+              {%- assign cols = row_clean | split: '|' -%}
+              <tr>
+                <td>{{ cols[0] | strip }}{%- if cols[2] != blank -%}<br><span>{{ cols[2] | strip }}</span>{%- endif -%}</td>
+                <td>{{ cols[1] | strip | replace: '†', '<sup>†</sup>' }}</td>
+              </tr>
+            {%- endif -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
+      {%- if footnote != blank -%}<div class="lp-facts__text">{{ footnote | replace: '†', '<sup>†</sup>' }}</div>{%- endif -%}
+      {%- if other != blank -%}<div class="lp-facts__text lp-facts__text--labeled"><strong>{{ bs.other_label }}</strong> {{ other }}</div>{%- endif -%}
+      {%- if warning != blank -%}<div class="lp-facts__text lp-facts__text--labeled"><strong>{{ bs.warning_label }}</strong> {{ warning }}</div>{%- endif -%}
+    {%- endif -%}
+
+  {%- when 'tab_faqs' -%}
+    {%- assign faqs = bs.faqs | default: m.faqs.value -%}
+    {%- if faqs.size > 0 -%}
+      {%- assign faq_intro = m.faq_intro.value | default: bs.intro -%}
+      {%- if faq_intro != blank -%}<p class="lp-panel__intro">{{ faq_intro | replace: '[product]', display_title }}</p>{%- endif -%}
+      <div class="lp-panel__faqs">
+        {%- for faq in faqs -%}
+          <details class="lp-panel__faq" data-lp-accordion>
+            <summary class="lp-panel__faq-q"><span>{{ faq.question.value }}</span><span class="lp-panel__faq-icon">{% render 'lemme-pdp-icon', icon: 'plus', class: 'lp-when-closed' %}{% render 'lemme-pdp-icon', icon: 'minus', class: 'lp-when-open' %}</span></summary>
+            <div class="lp-panel__faq-a" data-lp-accordion-content>{{ faq.answer.value | newline_to_br }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  {%- when 'tab_awards' -%}
+    {%- assign awards = bs.awards | default: m.awards.value -%}
+    {%- if awards.size > 0 -%}
+      {%- if bs.intro != blank -%}<p class="lp-panel__intro">{{ bs.intro }}</p>{%- endif -%}
+      <ul class="lp-panel__awards">
+        {%- for award in awards -%}
+          <li class="lp-award">
+            <div class="lp-award__top">
+              <div class="lp-award__media">{%- if award.image.value != blank -%}{{ award.image.value | image_url: width: 176 | image_tag: alt: '', loading: 'lazy', width: 72, height: 72 }}{%- endif -%}</div>
+              <div class="lp-award__heading">
+                <p class="lp-award__title">{{ award.title.value }}</p>
+                {%- if award.subtitle != blank -%}<p class="lp-award__subtitle">{{ award.subtitle.value }}</p>{%- endif -%}
+              </div>
+            </div>
+            {%- if award.description != blank -%}<div class="lp-award__copy">{{ award.description.value | newline_to_br }}</div>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+  {%- when 'tab_details' -%}
+    {%- assign content = bs.content | default: product.description -%}
+    {%- if content != blank -%}{{ content }}{%- endif -%}
+{%- endcase -%}

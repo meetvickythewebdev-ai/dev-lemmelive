@@ -3,8 +3,11 @@
 
 {%- liquid
   assign m = product.metafields.lemme
-  assign expert = m.expert.value
-  assign quote = m.expert_quote.value
+  assign expert = section.settings.expert | default: m.expert.value
+  assign quote = section.settings.quote
+  if quote == blank and m.expert_quote != blank
+    assign quote = m.expert_quote.value | newline_to_br
+  endif
 -%}
 {%- if expert != blank and quote != blank -%}
 <section class="lm-section lp-expert" id="experts" data-lp-nav="{{ section.settings.nav_label | escape }}" aria-labelledby="LpExpert-{{ section.id }}">
@@ -20,7 +23,7 @@
         </div>
       {%- endif -%}
       <div class="lp-expert__body">
-        <blockquote class="lp-expert__quote">{{ quote | newline_to_br }}</blockquote>
+        <blockquote class="lp-expert__quote">{{ quote }}</blockquote>
         <div class="lp-expert__meta">
           <p class="lp-expert__name">{{ expert.name.value }}</p>
           {%- if expert.title != blank -%}<p class="lp-expert__label">{{ expert.title.value }}</p>{%- endif -%}
@@ -38,6 +41,8 @@
   "settings": [
     { "type": "text", "id": "nav_label", "label": "Link label", "default": "Experts" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "doctor recommended" },
+    { "type": "metaobject", "id": "expert", "metaobject_type": "lemme_expert", "label": "Expert" },
+    { "type": "richtext", "id": "quote", "label": "Quote" },
     { "type": "paragraph", "content": "Uses lemme.expert (an Expert entry: name, title, photo, link) and lemme.expert_quote. Hidden when either is empty." }
   ],
   "enabled_on": { "templates": ["product"] }
