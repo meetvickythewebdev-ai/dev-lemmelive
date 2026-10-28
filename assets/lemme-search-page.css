@@ -1,5 +1,5 @@
 /* Lemme search results page (sections/lemme-search.liquid). Product cards and pagination come from lemme-collection.css. */
-.lse { position: relative; padding: 40px 0 80px; color: #000; font-family: var(--lm-font-body); font-size: 16px; line-height: 1.6; }
+.lse { position: relative; overflow-x: clip; padding: 40px 0 80px; color: #000; font-family: var(--lm-font-body); font-size: 16px; line-height: 1.6; }
 @media (min-width: 1025px) { .lse { padding: 96px 0 96px; } }
 
 .lse__head { text-align: center; }
