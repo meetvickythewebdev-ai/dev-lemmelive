@@ -6,7 +6,7 @@
 .lco-hero--no-image { padding-bottom: 0; }
 .lco-hero__content { width: 100%; padding: 40px 0; }
 .lco-hero:not(.lco-hero--no-image) .lco-hero__content { position: absolute; z-index: 2; left: 0; top: 50%; transform: translateY(-50%); }
-.lco-hero__inner { text-align: center; }
+.lco-hero__inner { display: flow-root; text-align: center; }
 .lco-hero__title {
   margin: 0 auto 6vw; font-family: var(--lm-font-display); font-weight: 500;
   font-size: 9.6vw; line-height: 9.6vw; letter-spacing: 0; text-wrap: balance;
@@ -37,12 +37,12 @@
 .lco-benefits { position: relative; z-index: 11; width: 100%; margin: -10vw 0 42px; }
 .lco-benefits__container { width: 100%; max-width: 78.75vw; margin: 0 auto; }
 .lco-benefits__heading {
-  display: inline-flex; gap: 4px; margin: 0; padding: 0; border: 0; background: none; color: #000; cursor: pointer;
+  display: inline-flex; gap: 4px; margin: 0; padding: 7px 0 5px; border: 0; background: none; color: #000; cursor: pointer;
   font-family: var(--lm-font-body); font-size: 14px; font-weight: 700; line-height: 1; text-transform: uppercase;
 }
 .lco-benefits__nav { max-height: 0; overflow: hidden; transition: max-height .4s; }
 .lco-benefits.is-open .lco-benefits__nav { max-height: 400px; }
-.lco-benefits__list { display: flex; flex-wrap: nowrap; align-items: center; gap: 14px; width: max-content; max-width: 100%; margin: 0; padding: 8px 0 2px; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.lco-benefits__list { display: flex; flex-wrap: nowrap; align-items: center; gap: 14px; width: max-content; max-width: 100%; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
 .lco-benefits__list::-webkit-scrollbar { display: none; }
 .lco-benefits__list li { flex: 0 0 auto; margin: 0; padding: 0; }
 .lco-pill {
