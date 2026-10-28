@@ -14,7 +14,10 @@
   assign all_url = routes.all_products_collection_url
 -%}
 {%- if st.page_gradient -%}
-  <style>body { background: linear-gradient(180deg, {{ st.gradient_top }} 0%, {{ st.gradient_bottom }} 100%); }</style>
+  <style>
+    body { background: linear-gradient(180deg, {{ st.gradient_top }} 0%, {{ st.gradient_bottom }} 100%); }
+    .page-wrapper { background: linear-gradient(180deg, {{ st.gradient_top }} 0%, {{ st.gradient_bottom }} 100%) local; }
+  </style>
 {%- endif -%}
 
 <section class="lco" aria-label="{{ collection.title | escape }}" data-lco data-section-id="{{ section.id }}">

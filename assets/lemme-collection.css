@@ -256,4 +256,4 @@
 .lco-filters__clear { border: 2px solid #000; background: #fff; color: #000; }
 .lco-filters__apply { border: 0; background: #000; color: #fff; }
 .lco-filters__clear:focus-visible, .lco-filters__apply:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
-html.lco-locked { overflow: hidden; }
+html.lco-locked, html.lco-locked .page-wrapper { overflow: hidden; }

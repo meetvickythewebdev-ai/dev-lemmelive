@@ -38,7 +38,7 @@
 @media (prefers-reduced-motion: reduce) {
   .lc, .lc::backdrop { transition: none; }
 }
-html.lc-locked { overflow: hidden; }
+html.lc-locked, html.lc-locked .page-wrapper { overflow: hidden; }
 
 .lc__panel { display: flex; flex-direction: column; height: 100%; }
 :where(.lc) button { font: inherit; color: inherit; cursor: pointer; }
