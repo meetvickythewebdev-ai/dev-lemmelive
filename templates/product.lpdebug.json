@@ -12,9 +12,9 @@
     "d": {
       "type": "lp-debug",
       "settings": {
-        "a": "<p>{{ product.metafields.lemme.option_labels.value }}</p>",
-        "b": "<ul><li>{{ product.metafields.lemme.option_labels.value }}</li></ul>",
-        "c": "{{ product.metafields.lemme.option_labels.value }}"
+        "a": "<p>{{ product.metafields.lemme.supplement_facts.value }}</p>",
+        "b": "<p>{{ product.metafields.lemme.supplement_footnote.value }}</p>",
+        "c": "{{ product.metafields.lemme.flavor.value }}"
       }
     }
   },
