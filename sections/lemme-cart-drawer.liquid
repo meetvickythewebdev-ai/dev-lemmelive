@@ -1,0 +1,236 @@
+{{ 'lemme-cart.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-cart.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign st = section.settings
+  assign round = st.round_prices
+
+  assign compare_total = 0
+  assign has_plans = false
+  assign cart_product_ids = ','
+  for item in cart.items
+    assign unit_compare = item.variant.compare_at_price | default: 0
+    if item.variant.price > unit_compare
+      assign unit_compare = item.variant.price
+    endif
+    assign line_compare = unit_compare | times: item.quantity
+    if line_compare < item.final_line_price
+      assign line_compare = item.final_line_price
+    endif
+    assign compare_total = compare_total | plus: line_compare
+    if item.selling_plan_allocation
+      assign has_plans = true
+    endif
+    assign cart_product_ids = cart_product_ids | append: item.product_id | append: ','
+  endfor
+  assign savings = compare_total | minus: cart.total_price
+  assign savings_pct = 0
+  if savings > 0 and compare_total > 0
+    assign savings_pct = savings | times: 100.0 | divided_by: compare_total | round
+  endif
+-%}
+
+<dialog class="lc" id="LemmeCart" data-lc data-section-id="{{ section.id }}" data-open-on-add="{{ st.open_on_add }}" aria-labelledby="LemmeCartTitle-{{ section.id }}">
+  <div class="lc__panel" data-lc-inner data-count="{{ cart.item_count }}">
+    <div class="lc__header">
+      <div class="lc__heading">
+        <span class="lc__count" aria-hidden="true">{{ cart.item_count }}</span>
+        <h2 class="lc__title" id="LemmeCartTitle-{{ section.id }}">{{ st.title }}<span class="lm-visually-hidden"> ({{ cart.item_count }})</span></h2>
+      </div>
+      <button class="lc__close" type="button" data-lc-close aria-label="{{ st.close_label | escape }}">{% render 'lemme-pdp-icon', icon: 'close' %}</button>
+    </div>
+
+    <div class="lc__body" data-lc-scroll>
+      {%- if cart.item_count > 0 -%}
+        <ul class="lc__items" role="list" aria-label="{{ st.title | escape }}">
+          {%- for item in cart.items -%}
+            {%- liquid
+              assign unit_compare = item.variant.compare_at_price | default: 0
+              if item.variant.price > unit_compare
+                assign unit_compare = item.variant.price
+              endif
+              assign line_compare = unit_compare | times: item.quantity
+              assign is_free = false
+              if item.final_line_price == 0
+                assign is_free = true
+              endif
+              assign title_id = 'LcItem-' | append: section.id | append: '-' | append: forloop.index
+            -%}
+            <li class="lc-item{% if is_free %} lc-item--free{% endif %}" data-lc-item data-key="{{ item.key }}" data-qty="{{ item.quantity }}">
+              <a class="lc-item__media" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                {%- if item.image -%}{{ item.image | image_url: width: 240 | image_tag: alt: '', loading: 'lazy', width: 105, height: 105 }}{%- endif -%}
+              </a>
+              <div class="lc-item__info">
+                <a class="lc-item__title" id="{{ title_id }}" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- if item.selling_plan_allocation -%}<b class="lc-item__plan">{{ st.subscribe_label }}</b>{%- endif -%}
+                <div class="lc-item__row">
+                  <span class="lc-item__price">
+                    {%- if line_compare > item.final_line_price -%}
+                      <span class="lm-visually-hidden">Sale price</span><span class="lc-item__sale">{% render 'lemme-money', cents: item.final_line_price, round: round %}</span>
+                      <span class="lm-visually-hidden">Original price</span><s class="lc-item__compare">{% render 'lemme-money', cents: line_compare, round: round %}</s>
+                    {%- else -%}
+                      <span class="lc-item__sale{% if is_free %} lc-item__sale--free{% else %} lc-item__sale--full{% endif %}">{% render 'lemme-money', cents: item.final_line_price, round: round %}</span>
+                    {%- endif -%}
+                  </span>
+                  {%- unless item.product.has_only_default_variant -%}<span class="lc-item__variant">{{ item.variant.title }}</span>{%- endunless -%}
+                  <button class="lc-item__remove" type="button" data-lc-remove aria-describedby="{{ title_id }}">{{ st.remove_label }}</button>
+                </div>
+                {%- for allocation in item.line_level_discount_allocations -%}
+                  {%- unless allocation.discount_application.type == 'automatic' and allocation.discount_application.title == blank -%}
+                    <p class="lc-item__discount">{{ allocation.discount_application.title }}</p>
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- if is_free and st.free_label != blank -%}<p class="lc-item__free">{{ st.free_label }}</p>{%- endif -%}
+                {%- for property in item.properties -%}
+                  {%- assign first_char = property.first | slice: 0 -%}
+                  {%- if property.last != blank and first_char != '_' -%}
+                    <p class="lc-item__prop">{{ property.first }} : {{ property.last }}</p>
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- unless is_free -%}
+                  <div class="lc-item__qty">
+                    <div class="lc-qty" role="group" aria-label="Quantity of {{ item.product.title | escape }}">
+                      <button class="lc-qty__btn" type="button" data-lc-qty="-1" aria-label="Decrease quantity of {{ item.product.title | escape }}">{% render 'lemme-pdp-icon', icon: 'minus' %}</button>
+                      <span class="lc-qty__value" aria-live="polite">{{ item.quantity }}</span>
+                      <button class="lc-qty__btn" type="button" data-lc-qty="1" aria-label="Increase quantity of {{ item.product.title | escape }}">{% render 'lemme-pdp-icon', icon: 'plus' %}</button>
+                    </div>
+                  </div>
+                  {%- if item.variant.selling_plan_allocations.size > 0 -%}
+                    <div class="lc-item__plan-select">
+                      <label class="lm-visually-hidden" for="LcPlan-{{ section.id }}-{{ forloop.index }}">Delivery for {{ item.product.title | escape }}</label>
+                      <select class="lc-select" id="LcPlan-{{ section.id }}-{{ forloop.index }}" data-lc-plan>
+                        {%- unless item.product.requires_selling_plan -%}
+                          <option value=""{% unless item.selling_plan_allocation %} selected{% endunless %}>{{ st.one_time_label }}</option>
+                        {%- endunless -%}
+                        {%- for allocation in item.variant.selling_plan_allocations -%}
+                          <option value="{{ allocation.selling_plan.id }}"{% if item.selling_plan_allocation.selling_plan.id == allocation.selling_plan.id %} selected{% endif %}>{{ allocation.selling_plan.name }}</option>
+                        {%- endfor -%}
+                      </select>
+                      {% render 'lemme-pdp-icon', icon: 'chevron-down', class: 'lc-select__icon' %}
+                    </div>
+                  {%- endif -%}
+                {%- endunless -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <div class="lc__empty">
+          <p class="lc__empty-text">{{ st.empty_text }}</p>
+          {%- if st.empty_button_label != blank -%}
+            <a class="lc__button" href="{{ st.empty_button_link | default: routes.all_products_collection_url }}">{{ st.empty_button_label }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if st.promo_image != blank -%}
+        <div class="lc__promo">
+          {%- if st.promo_link != blank -%}<a href="{{ st.promo_link }}">{%- endif -%}
+          {{ st.promo_image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 425px) 365px, 90vw', widths: '400, 600, 800' }}
+          {%- if st.promo_link != blank -%}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign shown = 0 -%}
+      {%- capture upsell_cards -%}
+        {%- for p in st.upsell_products -%}
+          {%- if shown >= st.upsell_count -%}{%- break -%}{%- endif -%}
+          {%- assign needle = ',' | append: p.id | append: ',' -%}
+          {%- if cart_product_ids contains needle or p.available == false -%}{%- continue -%}{%- endif -%}
+          {%- assign v = p.selected_or_first_available_variant -%}
+          {%- assign shown = shown | plus: 1 -%}
+          <li class="lc-up">
+            <a class="lc-up__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">{%- if p.featured_media -%}{{ p.featured_media.preview_image | image_url: width: 200 | image_tag: alt: '', loading: 'lazy', width: 90, height: 90 }}{%- endif -%}</a>
+            <a class="lc-up__title" href="{{ p.url }}">{{ p.title }}</a>
+            <span class="lc-up__price">{% render 'lemme-money', cents: v.price, round: round %}</span>
+            <button class="lc-up__add" type="button" data-lc-add="{{ v.id }}" aria-label="{{ st.add_label | escape }} {{ p.title | escape }}">{{ st.add_label }}</button>
+          </li>
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- if shown > 0 -%}
+        <div class="lc__upsell">
+          {%- if st.upsell_heading != blank -%}<h3 class="lc__upsell-title">{{ st.upsell_heading }}</h3>{%- endif -%}
+          <ul class="lc__upsell-list" role="list">{{ upsell_cards }}</ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="lc__footer">
+        <div class="lc__totals">
+          <div class="lc__breakdown" id="LcBreakdown-{{ section.id }}" hidden data-lc-breakdown>
+            <p class="lc__line"><span>{{ st.subtotal_label }}</span><span class="lc__line-val">{% render 'lemme-money', cents: compare_total, round: round %}</span></p>
+            {%- if savings > 0 -%}
+              <p class="lc__line"><span>{{ st.savings_label }}</span><span class="lc__line-val lc__line-val--save">-{% render 'lemme-money', cents: savings, round: round %}</span></p>
+            {%- endif -%}
+          </div>
+          <div class="lc__subtotal">
+            <button class="lc__subtotal-toggle" type="button" aria-expanded="false" aria-controls="LcBreakdown-{{ section.id }}" data-lc-toggle>{{ st.subtotal_label }}<span class="lc__chevron" aria-hidden="true">▾</span></button>
+            <span class="lc__subtotal-prices">
+              {%- if savings_pct > 0 -%}<span class="lc__pill">{{ savings_pct }}% {{ st.off_label }}</span>{%- endif -%}
+              <span class="lm-visually-hidden">Total</span><span class="lc__total">{% render 'lemme-money', cents: cart.total_price, round: round %}</span>
+              {%- if savings > 0 -%}<span class="lm-visually-hidden">Original price</span><s class="lc__total-compare">{% render 'lemme-money', cents: compare_total, round: round %}</s>{%- endif -%}
+            </span>
+          </div>
+        </div>
+        <form class="lc__checkout" action="{{ routes.cart_url }}" method="post">
+          <button class="lc__button lc__button--checkout" type="submit" name="checkout">{{ st.checkout_label }}</button>
+        </form>
+        {%- if st.benefit_1 != blank or st.benefit_2 != blank or st.benefit_3 != blank -%}
+          <ul class="lc__benefits" role="list">
+            {%- if st.benefit_1 != blank -%}<li class="lc__benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6l-5 8a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-8V3"/></svg>{{ st.benefit_1 }}</li>{%- endif -%}
+            {%- if st.benefit_2 != blank -%}<li class="lc__benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7"/><path d="M15 15l5 5"/></svg>{{ st.benefit_2 }}</li>{%- endif -%}
+            {%- if st.benefit_3 != blank -%}<li class="lc__benefit"><span class="lc__stars" aria-hidden="true">★★★★★</span>{{ st.benefit_3 }}</li>{%- endif -%}
+          </ul>
+        {%- endif -%}
+        {%- if st.info != blank -%}<p class="lc__info">{{ st.info }}</p>{%- endif -%}
+        {%- if has_plans and st.subscription_note != blank -%}<p class="lc__note">{{ st.subscription_note }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <p class="lm-visually-hidden" role="status" data-lc-status></p>
+  </div>
+</dialog>
+
+{% schema %}
+{
+  "name": "Lemme cart drawer",
+  "class": "lc-section",
+  "limit": 1,
+  "settings": [
+    { "type": "paragraph", "content": "The bag that slides in from the right. It opens from the bag icon in the header and after adding a product." },
+    { "type": "checkbox", "id": "open_on_add", "label": "Open after adding a product", "default": true },
+    { "type": "checkbox", "id": "round_prices", "label": "Show prices rounded to whole dollars", "info": "Matches the live site ($19.13 shows as $19). Checkout still charges the exact price.", "default": true },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "title", "label": "Title", "default": "your bag" },
+    { "type": "text", "id": "close_label", "label": "Close button label (screen readers)", "default": "Close bag" },
+    { "type": "text", "id": "subscribe_label", "label": "Subscription item label", "default": "Subscribe & Save" },
+    { "type": "text", "id": "one_time_label", "label": "One-time option", "default": "One-time only" },
+    { "type": "text", "id": "remove_label", "label": "Remove", "default": "Remove" },
+    { "type": "text", "id": "free_label", "label": "Free item label", "default": "Free Gift" },
+    { "type": "header", "content": "Empty bag" },
+    { "type": "text", "id": "empty_text", "label": "Message", "default": "Your bag is empty" },
+    { "type": "text", "id": "empty_button_label", "label": "Button label", "default": "Shop all" },
+    { "type": "url", "id": "empty_button_link", "label": "Button link" },
+    { "type": "header", "content": "Promo image" },
+    { "type": "image_picker", "id": "promo_image", "label": "Image", "info": "Shown under the items. Leave empty to hide." },
+    { "type": "url", "id": "promo_link", "label": "Link" },
+    { "type": "header", "content": "Upsell" },
+    { "type": "text", "id": "upsell_heading", "label": "Heading", "default": "Throw In One Of Our Bestsellers" },
+    { "type": "product_list", "id": "upsell_products", "label": "Products", "limit": 12, "info": "Products already in the bag are skipped." },
+    { "type": "range", "id": "upsell_count", "label": "Products to show", "min": 1, "max": 4, "step": 1, "default": 1 },
+    { "type": "text", "id": "add_label", "label": "Add button", "default": "Add" },
+    { "type": "header", "content": "Totals and checkout" },
+    { "type": "text", "id": "subtotal_label", "label": "Subtotal", "default": "Subtotal" },
+    { "type": "text", "id": "savings_label", "label": "Savings", "default": "Total savings" },
+    { "type": "text", "id": "off_label", "label": "Savings badge suffix", "default": "OFF" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button", "default": "Checkout" },
+    { "type": "text", "id": "benefit_1", "label": "Benefit 1", "default": "Expert formulated" },
+    { "type": "text", "id": "benefit_2", "label": "Benefit 2", "default": "3rd-party tested" },
+    { "type": "text", "id": "benefit_3", "label": "Benefit 3 (with stars)", "default": "5-star reviews" },
+    { "type": "text", "id": "info", "label": "Note under checkout", "default": "Taxes and discount codes calculated at checkout." },
+    { "type": "textarea", "id": "subscription_note", "label": "Subscription note", "info": "Shown when the bag has a subscription item.", "default": "Each Subscribe & Save item will be billed at the Subscribe & Save Price shown on a recurring basis at the frequency you choose today, unless you pause, update the frequency, or cancel your shipments by logging into your account and clicking ‘Manage Subscriptions’ under ‘Account Details.’" }
+  ],
+  "enabled_on": { "groups": ["header"] },
+  "presets": [ { "name": "Lemme cart drawer" } ]
+}
+{% endschema %}

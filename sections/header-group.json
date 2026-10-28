@@ -159,9 +159,26 @@
         "featured_14",
         "featured_15"
       ]
+    },
+    "lemme_cart_drawer": {
+      "type": "lemme-cart-drawer",
+      "settings": {
+        "promo_image": "shopify://shop_images/lemme-cart-maelys-gift.png",
+        "upsell_products": [
+          "purr",
+          "lemme-burn-gummies",
+          "lemme-multi-gummies",
+          "lemme-relax-soft-chews",
+          "lemme-creatine-gummies",
+          "lemme-skin-firming-hydrating-gummy-rings"
+        ],
+        "upsell_count": 1,
+        "empty_button_link": "/collections/all"
+      }
     }
   },
   "order": [
-    "lemme_header"
+    "lemme_header",
+    "lemme_cart_drawer"
   ]
 }
