@@ -736,7 +736,7 @@ html.lp-locked, html.lp-locked body { overflow: hidden; }
 .lp-reviews__empty { padding: 24px; border: 2px dashed #000; border-radius: 16px; }
 @media (min-width: 1024px) {
   .lm-section.lp-reviews { padding-bottom: 80px; }
-  .lp-reviews__container { padding: 0 60px; }
+  .lp-reviews__container { max-width: none; padding: 0 60px; }
   .lp-reviews__col { width: 83.333%; margin: 0 auto; }
 }
 @media (min-width: 1280px) {
