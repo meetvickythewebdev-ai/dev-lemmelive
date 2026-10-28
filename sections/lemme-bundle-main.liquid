@@ -47,13 +47,20 @@
     assign sub_percent = compare | minus: allocation.price | times: 100.0 | divided_by: compare | floor
   endif
   assign rating = product.metafields.reviews.rating.value
+  assign card_media_id = m.collection_image.value.id | default: 0
+  assign gallery_count = 0
+  for media in product.media
+    unless media.id == card_media_id
+      assign gallery_count = gallery_count | plus: 1
+    endunless
+  endfor
   assign drawer_id = 'LbDrawer-' | append: section.id
   assign highlights = st.highlights | newline_to_br | split: '<br />'
 -%}
 
 <style>
   :root { --lb-top: {{ top_color }}; --lb-page: {{ page_color }}; --lb-bg: {{ top_color }}; }
-  body, .page-wrapper { background-color: var(--lb-bg); }
+  html body:has([data-lb-main]), html body:has([data-lb-main]) .page-wrapper { background-color: var(--lb-bg); }
 </style>
 
 <section class="lm-section lb-main" data-lp-main data-lb-main data-section-id="{{ section.id }}" data-lb-top="{{ top_color }}" data-lb-page="{{ page_color }}">
@@ -61,21 +68,25 @@
 
     {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
     <div class="lb-gallery" data-lp-gallery>
-      {%- if product.media.size > 1 -%}
+      {%- if gallery_count > 1 -%}
         <div class="lb-gallery__thumbs" role="tablist" aria-label="{{ product.title | escape }} images">
-          {%- for media in product.media -%}
-            <button class="lb-gallery__thumb{% if forloop.first %} is-active{% endif %}" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show image {{ forloop.index }}" data-lp-thumb="{{ forloop.index0 }}">
+          {%- assign gi = 0 -%}
+          {%- for media in product.media -%}{%- if media.id == card_media_id -%}{%- continue -%}{%- endif -%}
+            <button class="lb-gallery__thumb{% if gi == 0 %} is-active{% endif %}" type="button" role="tab" aria-selected="{% if gi == 0 %}true{% else %}false{% endif %}" aria-label="Show image {{ gi | plus: 1 }}" data-lp-thumb="{{ gi }}">
               {{ media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', width: 88, height: 88 }}
             </button>
+            {%- assign gi = gi | plus: 1 -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
       <div class="lb-gallery__main">
         <div class="lb-gallery__stage">
           <div class="lb-gallery__track" data-lp-track tabindex="0" aria-label="{{ 'Product images, use arrow keys to browse' | escape }}">
-            {%- for media in product.media -%}
+            {%- assign gi = 0 -%}
+            {%- for media in product.media -%}{%- if media.id == card_media_id -%}{%- continue -%}{%- endif -%}
               {%- liquid
-                if forloop.first
+                assign gi = gi | plus: 1
+                if gi == 1
                   assign img_loading = 'eager'
                   assign img_priority = 'high'
                 else
@@ -90,16 +101,16 @@
               <div class="lb-gallery__slide">{{ 'product-1' | placeholder_svg_tag: 'lb-gallery__img' }}</div>
             {%- endfor -%}
           </div>
-          {%- if product.media.size > 0 -%}
+          {%- if gallery_count > 0 -%}
             <button class="lb-gallery__zoom" type="button" aria-label="Zoom image" aria-pressed="false" data-lp-zoom>{% render 'lemme-pdp-icon', icon: 'zoom' %}</button>
           {%- endif -%}
         </div>
-        {%- if product.media.size > 1 -%}
+        {%- if gallery_count > 1 -%}
           <div class="lb-gallery__nav">
             <button class="lb-gallery__arrow" type="button" aria-label="Previous image" data-lp-prev disabled>{% render 'lemme-pdp-icon', icon: 'arrow-left-small' %}</button>
             <div class="lb-gallery__dots">
-              {%- for media in product.media -%}
-                <button class="lb-gallery__dot{% if forloop.first %} is-active{% endif %}" type="button" tabindex="-1" aria-label="Show image {{ forloop.index }}" data-lp-thumb="{{ forloop.index0 }}"></button>
+              {%- for gi in (1..gallery_count) -%}
+                <button class="lb-gallery__dot{% if gi == 1 %} is-active{% endif %}" type="button" tabindex="-1" aria-label="Show image {{ gi }}" data-lp-thumb="{{ gi | minus: 1 }}"></button>
               {%- endfor -%}
             </div>
             <button class="lb-gallery__arrow" type="button" aria-label="Next image" data-lp-next>{% render 'lemme-pdp-icon', icon: 'arrow-right-small' %}</button>
