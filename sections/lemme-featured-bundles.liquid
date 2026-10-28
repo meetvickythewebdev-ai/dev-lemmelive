@@ -1,0 +1,47 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-byob.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-collection.js' | asset_url }}" defer></script>
+
+{%- comment -%} "not sure where to start?" ready-made bundles. Add to bag uses the collection quick add (lemme-collection.js). {%- endcomment -%}
+{%- assign st = section.settings -%}
+{%- if st.products.size > 0 -%}
+<section class="lm-section lfb" aria-labelledby="LfbTitle-{{ section.id }}">
+  <div class="lfb__inner">
+    <h2 class="lfb__title" id="LfbTitle-{{ section.id }}">{{ st.heading }}</h2>
+    <ul class="lfb__grid" role="list">
+      {%- for p in st.products -%}
+        {%- liquid
+          assign pm = p.metafields.lemme
+          assign v = p.selected_or_first_available_variant
+          assign img = pm.collection_image.value | default: p.featured_media.preview_image
+        -%}
+        <li class="lfb-card">
+          <a class="lfb-card__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+            {%- if img != blank -%}{{ img | image_url: width: 400 | image_tag: alt: '', loading: 'lazy', widths: '200, 300, 400', sizes: '(min-width: 750px) 130px, 40vw' }}{%- endif -%}
+          </a>
+          <h3 class="lfb-card__title"><a href="{{ p.url }}">{{ p.title }}</a></h3>
+          {%- if pm.subtitle != blank -%}<p class="lfb-card__copy">{{ pm.subtitle.value }}</p>{%- endif -%}
+          <p class="lfb-card__price">
+            {% render 'lemme-money', cents: v.price, round: true %}
+            {%- if v.compare_at_price > v.price -%} <s><span class="lm-visually-hidden">Regular price </span>{% render 'lemme-money', cents: v.compare_at_price, round: true %}</s>{%- endif -%}
+          </p>
+          <button class="lfb-card__add" type="button" data-lco-add="{{ v.id }}" aria-label="{{ st.button_label | escape }}: {{ p.title | escape }}"{% unless v.available %} disabled{% endunless %}><span class="lm-btn__text-inner">{{ st.button_label }}</span></button>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lemme featured bundles",
+  "class": "lfb-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "not sure where to start?" },
+    { "type": "product_list", "id": "products", "label": "Bundles", "limit": 4, "info": "Image: lemme.collection_image (or main image); text: lemme.subtitle." },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Add to bag" }
+  ],
+  "presets": [ { "name": "Lemme featured bundles" } ]
+}
+{% endschema %}

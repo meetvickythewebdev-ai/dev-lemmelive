@@ -23,6 +23,13 @@
     endif
     assign cart_product_ids = cart_product_ids | append: item.product_id | append: ','
   endfor
+  assign bundle_parents = ','
+  for item in cart.items
+    if item.properties._bundle_parent and item.properties._bundle_id != blank
+      assign bundle_parents = bundle_parents | append: item.properties._bundle_id | append: ','
+    endif
+  endfor
+  assign byob_group = settings.lemme_byob_group_name | default: 'Subscribe & Save Bundle'
   assign savings = compare_total | minus: cart.total_price
   assign savings_pct = 0
   if savings > 0 and compare_total > 0
@@ -46,6 +53,67 @@
       {%- if cart.item_count > 0 -%}
         <ul class="lc__items" role="list" aria-label="{{ st.title | escape }}">
           {%- for item in cart.items -%}
+            {%- liquid
+              assign bid = item.properties._bundle_id
+              assign bneedle = ',' | append: bid | append: ','
+            -%}
+            {%- if bid != blank and item.properties._bundle_parent -%}
+              {%- comment -%} Build your bundle: one card for the whole bundle (its $0 parent line + the chosen products) {%- endcomment -%}
+              {%- liquid
+                assign b_total = 0
+                assign b_compare = 0
+                assign b_keys = item.key
+                assign b_count = 0
+                for child in cart.items
+                  if child.properties._bundle_id == bid and child.key != item.key
+                    assign b_total = b_total | plus: child.final_line_price
+                    assign c_unit = child.variant.compare_at_price | default: 0
+                    if child.variant.price > c_unit
+                      assign c_unit = child.variant.price
+                    endif
+                    assign b_compare = c_unit | times: child.quantity | plus: b_compare
+                    assign b_keys = b_keys | append: ',' | append: child.key
+                    assign b_count = b_count | plus: child.quantity
+                  endif
+                endfor
+                assign title_id = 'LcItem-' | append: section.id | append: '-' | append: forloop.index
+              -%}
+              <li class="lc-item lc-item--bundle" data-lc-item data-key="{{ item.key }}" data-qty="{{ item.quantity }}">
+                <span class="lc-item__media lc-item__media--bundle" aria-hidden="true">
+                  {%- for child in cart.items -%}
+                    {%- if child.properties._bundle_id == bid and child.key != item.key and child.image -%}
+                      {{ child.image | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 52, height: 52 }}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </span>
+                <div class="lc-item__info">
+                  <span class="lc-item__title" id="{{ title_id }}">{{ item.product.title }}</span>
+                  {%- if item.selling_plan_allocation -%}<b class="lc-item__plan">{{ st.subscribe_label }}</b>{%- endif -%}
+                  <div class="lc-item__row">
+                    <span class="lc-item__price">
+                      {%- if b_compare > b_total -%}
+                        <span class="lm-visually-hidden">Sale price</span><span class="lc-item__sale">{% render 'lemme-money', cents: b_total, round: round %}</span>
+                        <span class="lm-visually-hidden">Original price</span><s class="lc-item__compare">{% render 'lemme-money', cents: b_compare, round: round %}</s>
+                      {%- else -%}
+                        <span class="lc-item__sale lc-item__sale--full">{% render 'lemme-money', cents: b_total, round: round %}</span>
+                      {%- endif -%}
+                    </span>
+                    <span class="lc-item__variant">{{ b_count }} items</span>
+                    <button class="lc-item__remove" type="button" data-lc-remove-bundle="{{ b_keys }}" aria-describedby="{{ title_id }}">{{ st.remove_label }}</button>
+                  </div>
+                  <ul class="lc-item__bundle" role="list">
+                    {%- for child in cart.items -%}
+                      {%- if child.properties._bundle_id == bid and child.key != item.key -%}
+                        <li>{% if child.quantity > 1 %}{{ child.quantity }} × {% endif %}{{ child.product.title }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </li>
+              {%- continue -%}
+            {%- elsif bid != blank and bundle_parents contains bneedle -%}
+              {%- continue -%}
+            {%- endif -%}
             {%- liquid
               assign unit_compare = item.variant.compare_at_price | default: 0
               if item.variant.price > unit_compare
@@ -97,7 +165,16 @@
                       <button class="lc-qty__btn" type="button" data-lc-qty="1" aria-label="Increase quantity of {{ item.product.title | escape }}">{% render 'lemme-pdp-icon', icon: 'plus' %}</button>
                     </div>
                   </div>
-                  {%- if item.variant.selling_plan_allocations.size > 0 -%}
+                  {%- liquid
+                    assign plan_options = 0
+                    for allocation in item.variant.selling_plan_allocations
+                      assign alloc_group = item.product.selling_plan_groups | where: 'id', allocation.selling_plan_group_id | first
+                      if alloc_group.name != byob_group or item.selling_plan_allocation.selling_plan.id == allocation.selling_plan.id
+                        assign plan_options = plan_options | plus: 1
+                      endif
+                    endfor
+                  -%}
+                  {%- if plan_options > 0 -%}
                     <div class="lc-item__plan-select">
                       <label class="lm-visually-hidden" for="LcPlan-{{ section.id }}-{{ forloop.index }}">Delivery for {{ item.product.title | escape }}</label>
                       <select class="lc-select" id="LcPlan-{{ section.id }}-{{ forloop.index }}" data-lc-plan>
@@ -105,6 +182,8 @@
                           <option value=""{% unless item.selling_plan_allocation %} selected{% endunless %}>{{ st.one_time_label }}</option>
                         {%- endunless -%}
                         {%- for allocation in item.variant.selling_plan_allocations -%}
+                          {%- assign alloc_group = item.product.selling_plan_groups | where: 'id', allocation.selling_plan_group_id | first -%}
+                          {%- if alloc_group.name == byob_group and item.selling_plan_allocation.selling_plan.id != allocation.selling_plan.id -%}{%- continue -%}{%- endif -%}
                           <option value="{{ allocation.selling_plan.id }}"{% if item.selling_plan_allocation.selling_plan.id == allocation.selling_plan.id %} selected{% endif %}>{{ allocation.selling_plan.name }}</option>
                         {%- endfor -%}
                       </select>

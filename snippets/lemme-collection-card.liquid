@@ -15,9 +15,14 @@
   assign shape = pm.collection_shape.value
   assign variant = product.selected_or_first_available_variant
   assign plan_id = ''
-  if variant.selling_plan_allocations.size > 0
-    assign plan_id = variant.selling_plan_allocations.first.selling_plan.id
-  endif
+  assign byob_group = settings.lemme_byob_group_name | default: 'Subscribe & Save Bundle'
+  for alloc in variant.selling_plan_allocations
+    assign alloc_group = product.selling_plan_groups | where: 'id', alloc.selling_plan_group_id | first
+    if alloc_group.name != byob_group
+      assign plan_id = alloc.selling_plan.id
+      break
+    endif
+  endfor
 
   assign badge_style = pm.card_badge_style.value | default: 'lime'
   assign rating = product.metafields.reviews.rating.value

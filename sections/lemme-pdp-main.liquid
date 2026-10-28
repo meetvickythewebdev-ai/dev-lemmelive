@@ -39,10 +39,16 @@
   endif
 
   assign selected_variant = product.selected_or_first_available_variant
+  comment
+    Plans in the "Build your bundle" group (Theme settings > Build your bundle) are only for bundles, so they are ignored here.
+  endcomment
+  assign byob_group = settings.lemme_byob_group_name | default: 'Subscribe & Save Bundle'
   assign has_plans = false
-  if product.selling_plan_groups.size > 0
-    assign has_plans = true
-  endif
+  for group in product.selling_plan_groups
+    if group.name != byob_group
+      assign has_plans = true
+    endif
+  endfor
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value
   assign form_id = 'LpForm-' | append: section.id
@@ -219,8 +225,15 @@
                 assign plan_id = ''
                 assign opt_price = variant.price
                 assign opt_compare = variant.compare_at_price
-                if has_plans and variant.selling_plan_allocations.size > 0
-                  assign allocation = variant.selling_plan_allocations.first
+                assign allocation = nil
+                for alloc in variant.selling_plan_allocations
+                  assign alloc_group = product.selling_plan_groups | where: 'id', alloc.selling_plan_group_id | first
+                  if alloc_group.name != byob_group
+                    assign allocation = alloc
+                    break
+                  endif
+                endfor
+                if has_plans and allocation
                   assign plan_id = allocation.selling_plan.id
                   assign opt_price = allocation.price
                   assign opt_compare = variant.price

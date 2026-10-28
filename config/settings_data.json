@@ -124,7 +124,10 @@
     "lemme_popup_product_1": "lemme-relax-soft-chews",
     "lemme_popup_product_2": "purr",
     "lemme_popup_button": "Add to Bag",
-    "lemme_popup_hide_in_bag": true
+    "lemme_popup_hide_in_bag": true,
+    "lemme_byob_group_name": "Subscribe & Save Bundle",
+    "lemme_byob_code": "BYOB10",
+    "lemme_byob_code_amount": 10
   },
   "presets": {
     "Horizon": {

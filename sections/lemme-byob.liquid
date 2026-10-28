@@ -1,0 +1,244 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-collection.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-byob.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+<script src="{{ 'lemme-byob.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  Build your bundle (lemmelive.com/products/byob-4-pack). Used on the BYOB pack products (template product.byob).
+  The page's product is the pack ($0, e.g. "BYOB 4-Pack"): its size comes from lemme.bundle_size (or the number in its title).
+  Adding to the bag sends the pack line plus every chosen product, all with the same _bundle_id property.
+  Subscription: the pack's plan group named as in Theme settings > Build your bundle (Shopify Subscriptions) — every
+  bundle product must be in that same plan group. One-time: the discount code from Theme settings is applied to the bag.
+{%- endcomment -%}
+{%- liquid
+  assign st = section.settings
+  assign byob_group = settings.lemme_byob_group_name | default: 'Subscribe & Save Bundle'
+  assign code = settings.lemme_byob_code | strip
+  assign code_cents = settings.lemme_byob_code_amount | default: 0 | times: 100
+  if code == blank
+    assign code_cents = 0
+  endif
+
+  assign size = product.metafields.lemme.bundle_size.value | plus: 0
+  if size == 0
+    assign digits = product.title | remove: 'BYOB' | remove: '-Pack' | remove: ' Pack' | strip | plus: 0
+    assign size = digits
+  endif
+  if size < 2
+    assign size = st.default_size
+  endif
+
+  assign group = product.selling_plan_groups | where: 'name', byob_group | first
+  assign sub_percent = 0
+  if group
+    assign first_plan = group.selling_plans | first
+    assign adj = first_plan.price_adjustments | first
+    if adj.value_type == 'percentage'
+      assign sub_percent = adj.value
+    endif
+  endif
+  assign choices = st.collection.products
+  if st.products.size > 0
+    assign choices = st.products
+  endif
+  assign perks = st.perks | newline_to_br | split: '<br />'
+  assign variant = product.selected_or_first_available_variant
+-%}
+<section class="lm-section lbb" data-lbb data-size="{{ size }}" data-variant="{{ variant.id }}" data-title="{{ product.title | escape }}" data-percent="{{ sub_percent }}" data-code="{{ code | escape }}" data-code-cents="{{ code_cents }}" data-max="{{ st.max_per_product }}" data-has-plan="{% if group %}true{% else %}false{% endif %}" aria-labelledby="LbbTitle-{{ section.id }}">
+  <div class="lm-container">
+    <h2 class="lbb__title" id="LbbTitle-{{ section.id }}">{{ st.heading }}</h2>
+    <div class="lbb__layout">
+      <ul class="lbb__grid" role="list">
+        {%- for p in choices -%}
+          {%- liquid
+            if p.handle contains 'byob' or p.id == product.id
+              continue
+            endif
+            assign pm = p.metafields.lemme
+            assign pv = p.selected_or_first_available_variant
+            assign img = pm.collection_image.value | default: pm.card_image.value | default: p.featured_media.preview_image
+            assign shape = pm.collection_shape.value
+            assign short = pm.bundle_name.value | default: p.title | remove: 'Lemme ' | remove: ' Gummies' | remove: ' Capsules'
+            assign badge_style = pm.card_badge_style.value | default: 'lime'
+            assign plan_ok = false
+            if group
+              for g in p.selling_plan_groups
+                if g.id == group.id
+                  assign plan_ok = true
+                endif
+              endfor
+            endif
+          -%}
+          <li class="lbb-card lco-item{% if shape != blank %} lco-item--shape{% endif %}" data-lbb-card data-id="{{ pv.id }}" data-product="{{ p.id }}" data-price="{{ pv.price }}" data-compare="{{ pv.compare_at_price | default: pv.price }}" data-name="{{ short | escape }}" data-title="{{ p.title | escape }}" data-image="{% if img != blank %}{{ img | image_url: width: 300 }}{% endif %}" data-plan-ok="{{ plan_ok }}"{% unless pv.available %} data-sold-out{% endunless %} style="--lco-rotation: 4deg;{% if shape != blank %} --lco-shape: url('{{ shape | image_url: width: 624 }}');{% endif %}">
+            {%- if pm.card_badge != blank -%}
+              <span class="lco-badge lco-badge--{{ badge_style }}" aria-hidden="true">
+                {%- if badge_style == 'blue' -%}
+                  <svg viewBox="0 0 88 87" fill="none"><path d="M44 0L53.793 10.648L67.7882 6.98484L70.2699 21.237L84.0238 25.7217L78.4062 39.0531L87.5521 50.2619L75.6188 58.4398L77.253 72.8139L62.7927 73.242L56.3962 86.2177L44 78.76L31.6038 86.2177L25.2073 73.242L10.747 72.8139L12.3812 58.4398L0.447857 50.2619L9.59381 39.0531L3.97619 25.7217L17.7301 21.237L20.2118 6.98484L34.207 10.648L44 0Z"/></svg>
+                {%- else -%}
+                  <svg viewBox="0 0 78 77" fill="none"><path d="M31.4793 4.12758C35.5351 -0.255558 42.4649 -0.25556 46.5207 4.12758L50.1941 8.09739C51.9563 10.0018 54.3754 11.1668 56.963 11.3571L62.3571 11.754C68.3128 12.1921 72.6334 17.61 71.7353 23.5139L70.9219 28.861C70.5317 31.4261 71.1291 34.0437 72.5937 36.1855L75.6465 40.6502C79.0173 45.5797 77.4753 52.3357 72.2995 55.3145L67.6118 58.0125C65.363 59.3067 63.689 61.4059 62.9276 63.8863L61.3404 69.0568C59.588 74.7657 53.3445 77.7724 47.7885 75.5831L42.7565 73.6002C40.3425 72.649 37.6575 72.649 35.2435 73.6002L30.2115 75.5831C24.6555 77.7723 18.412 74.7657 16.6596 69.0568L15.0724 63.8863C14.311 61.4059 12.637 59.3067 10.3882 58.0125L5.7005 55.3145C0.524736 52.3357 -1.01727 45.5797 2.35346 40.6502L5.40633 36.1855C6.87085 34.0437 7.46832 31.4261 7.07811 28.861L6.26472 23.5139C5.36663 17.61 9.68724 12.1921 15.6429 11.754L21.037 11.3571C23.6246 11.1668 26.0437 10.0018 27.8059 8.09739L31.4793 4.12758Z"/></svg>
+                {%- endif -%}
+                <span>{{ pm.card_badge.value }}</span>
+              </span>
+            {%- endif -%}
+            <div class="lco-item__image">
+              {%- if shape != blank -%}<span class="lco-item__shape"></span>{%- endif -%}
+              <span class="lco-item__product">
+                {%- if img != blank -%}
+                  {{ img | image_url: width: 920 | image_tag: loading: 'lazy', alt: '', widths: '300, 460, 620, 920', sizes: '(min-width: 1025px) 25vw, 45vw' }}
+                {%- endif -%}
+              </span>
+            </div>
+            <div class="lco-item__content">
+              <h3 class="lco-item__title">{{ p.title }}</h3>
+              {%- if pm.subtitle != blank -%}<p class="lco-item__details"><span>{{ pm.subtitle.value }}</span></p>{%- endif -%}
+            </div>
+            <div class="lbb-card__actions">
+              <button class="lm-btn lm-btn--light lm-btn--md lbb-card__add" type="button" data-lm-button data-lbb-add aria-label="{{ st.add_label | escape }}: {{ p.title | escape }}"{% unless pv.available %} disabled{% endunless %}>
+                <span class="lm-btn__filler" aria-hidden="true"></span>
+                <span class="lm-btn__text"><span class="lm-btn__text-inner">{% if pv.available %}{{ st.add_label }}{% else %}{{ st.sold_out_label }}{% endif %}</span></span>
+              </button>
+              <div class="lbb-qty" role="group" aria-label="{{ p.title | escape }} quantity" hidden data-lbb-qty>
+                <button class="lbb-qty__btn" type="button" data-lbb-step="-1" aria-label="Remove one {{ p.title | escape }}">{% render 'lemme-pdp-icon', icon: 'minus' %}</button>
+                <span class="lbb-qty__value" aria-live="polite" data-lbb-count>0</span>
+                <button class="lbb-qty__btn" type="button" data-lbb-step="1" aria-label="Add one more {{ p.title | escape }}">{% render 'lemme-pdp-icon', icon: 'plus' %}</button>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="lbb__aside">
+        <div class="lbb-form" data-lbb-form>
+          <button class="lbb-form__toggle" type="button" aria-expanded="false" aria-controls="LbbFormBody-{{ section.id }}" data-lbb-toggle>
+            <span class="lm-visually-hidden">{{ st.toggle_label }}</span>
+            <span class="lbb-form__toggle-icon" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="14" fill="#fff" stroke="#000" stroke-width="2"/><path d="M10 13l5 5 5-5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <div class="lbb-form__body" id="LbbFormBody-{{ section.id }}">
+            <h3 class="lbb-form__heading">{{ st.panel_heading }} <span>(<span data-lbb-current>0</span>/{{ size }})</span></h3>
+
+            <p class="lbb-step"><span class="lbb-step__number" aria-hidden="true">1</span><span class="lbb-step__label">{{ st.step_1 }}</span></p>
+            {%- if st.packs.size > 0 -%}
+              <nav class="lbb-packs" aria-label="{{ st.packs_label | escape }}">
+                {%- for pack in st.packs -%}
+                  {%- liquid
+                    assign pack_size = pack.metafields.lemme.bundle_size.value | plus: 0
+                    if pack_size == 0
+                      assign pack_size = pack.title | remove: 'BYOB' | remove: '-Pack' | remove: ' Pack' | strip | plus: 0
+                    endif
+                    assign pgroup = pack.selling_plan_groups | where: 'name', byob_group | first
+                    assign ppct = 0
+                    if pgroup
+                      assign pplan = pgroup.selling_plans | first
+                      assign padj = pplan.price_adjustments | first
+                      assign ppct = padj.value
+                    endif
+                  -%}
+                  <a class="lbb-pack{% if pack.id == product.id %} is-active{% endif %}" href="{{ pack.url }}" data-lbb-pack data-size="{{ pack_size }}"{% if pack.id == product.id %} aria-current="page"{% endif %}>
+                    <span>{{ pack_size }} {{ st.pack_label }}</span>
+                    {%- if ppct > 0 or code_cents > 0 -%}
+                      <span class="lbb-pack__badge" data-sub="{{ st.badge_subscribe | replace: '[percent]', ppct | escape }}" data-once="{{ st.badge_one_time | replace: '[amount]', code_cents | escape }}" aria-hidden="true"></span>
+                    {%- endif -%}
+                  </a>
+                {%- endfor -%}
+              </nav>
+            {%- endif -%}
+
+            <p class="lbb-step"><span class="lbb-step__number" aria-hidden="true">2</span><span class="lbb-step__label">{{ st.step_2 }}</span></p>
+            <ol class="lbb-slots" role="list" data-lbb-slots>
+              {%- for i in (1..size) -%}
+                <li class="lbb-slot" data-lbb-slot>
+                  <span class="lbb-slot__bg" aria-hidden="true"><svg width="82" height="139" viewBox="0 0 82 139" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M30.5766 1.96382C38.8606 1.24593 58.8957 0.162601 61.5239 4.70908C62.6208 6.60187 62.2957 13.6824 62.5015 16.6252L63.1144 25.3902C62.3417 26.068 61.5751 26.7511 60.8023 27.4289C61.1701 28.5584 61.5379 29.6878 61.9056 30.8172C66.2606 31.3155 64.772 34.4749 66.588 35.8322C67.7152 36.6717 69.1731 36.7893 70.0536 37.9002C70.6936 38.7102 70.6022 40.2933 71.2905 41.1347C72.3764 42.4564 74.7129 42.501 75.4113 44.3119L79.3198 100.207C79.729 106.058 81.8862 120.554 80.4632 124.818C77.9319 132.393 62.0574 136.068 50.821 136.853C48.0679 137.046 43.685 137.387 40.6382 137.427C30.5115 137.563 12.299 136.463 7.65372 130.492C5.6482 127.912 5.28725 109.04 4.89257 103.396C3.60068 85.5813 2.30304 67.7676 1.01115 49.9534C1.46308 47.496 4.31599 47.2446 5.02037 45.3413C5.46756 44.1376 4.99747 43.3619 5.53786 42.4173C6.19104 41.2685 8.45336 40.6656 8.94922 39.5797C8.99669 38.8544 9.03841 38.1296 9.08588 37.4043C9.73331 35.43 11.5368 35.2865 12.8881 33.9618C13.0006 32.845 13.1193 31.7336 13.2318 30.6168C12.3686 30.0014 11.5116 29.3913 10.6484 28.776C10.399 25.3742 8.91363 9.00594 9.75619 7.75724C12.137 4.22355 20.7527 3.78857 25.7117 2.59857C27.3314 2.38712 28.9573 2.18102 30.577 1.96957L30.5766 1.96382Z" fill="#EDE1F2" stroke="#DFC8E7" stroke-width="2" stroke-dasharray="4 4"/></svg></span>
+                  <span class="lbb-slot__fill" data-lbb-slot-fill></span>
+                  <button class="lbb-slot__remove" type="button" hidden data-lbb-remove>{% render 'lemme-pdp-icon', icon: 'close' %}</button>
+                </li>
+              {%- endfor -%}
+            </ol>
+
+            <fieldset class="lbb-options">
+              <legend class="lm-visually-hidden">{{ st.options_legend }}</legend>
+              <div class="lbb-option">
+                <input class="lbb-option__radio" type="radio" name="lbb-plan-{{ section.id }}" id="LbbOnce-{{ section.id }}" value="once" data-lbb-mode{% unless group %} checked{% endunless %}>
+                <label class="lbb-option__label" for="LbbOnce-{{ section.id }}">
+                  <span class="lbb-option__name">{{ st.one_time_label }}</span>
+                  <span class="lbb-option__prices" data-lbb-prices="once" hidden><span data-lbb-price></span> <s data-lbb-compare></s></span>
+                </label>
+              </div>
+              {%- if group -%}
+                <div class="lbb-option lbb-option--sub">
+                  <input class="lbb-option__radio" type="radio" name="lbb-plan-{{ section.id }}" id="LbbSub-{{ section.id }}" value="sub" data-lbb-mode checked>
+                  <label class="lbb-option__label" for="LbbSub-{{ section.id }}">
+                    <span class="lbb-option__name">{{ st.subscribe_label }}</span>
+                    <span class="lbb-option__prices lbb-option__prices--sale" data-lbb-prices="sub" hidden><span data-lbb-price></span> <s data-lbb-compare></s></span>
+                  </label>
+                  <div class="lbb-option__more" data-lbb-sub-more>
+                    <div class="lbb-select">
+                      <label class="lm-visually-hidden" for="LbbFreq-{{ section.id }}">{{ st.frequency_label }}</label>
+                      <select id="LbbFreq-{{ section.id }}" data-lbb-plan>
+                        {%- for plan in group.selling_plans -%}
+                          {%- assign plan_label = plan.options.first.value | default: plan.name -%}
+                          <option value="{{ plan.id }}">{{ plan_label }}{{ st.frequency_suffix }}</option>
+                        {%- endfor -%}
+                      </select>
+                      {% render 'lemme-pdp-icon', icon: 'chevron-down', class: 'lbb-select__icon' %}
+                    </div>
+                    {%- if st.perks != blank -%}
+                      <ul class="lbb-perks" role="list">
+                        {%- for line in perks -%}
+                          {%- assign line = line | strip -%}
+                          {%- if line != blank -%}<li>{% render 'lemme-pdp-icon', icon: 'check' %}<span>{{ line }}</span></li>{%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+            </fieldset>
+
+            <button class="lbb-submit" type="button" disabled data-lbb-submit data-label="{{ st.button_label | escape }}">
+              <span data-lbb-submit-label>{{ product.title }} — {{ st.button_label }}</span>
+            </button>
+            <p class="lbb-status" role="status" aria-live="polite" data-lbb-status></p>
+            {%- if st.disclaimer != blank -%}<p class="lbb-disclaimer">{{ st.disclaimer }}</p>{%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme build your bundle",
+  "class": "lbb-section",
+  "settings": [
+    { "type": "paragraph", "content": "Use on the BYOB pack products (template \"byob\"). Subscription savings come from the pack's plan in Shopify Subscriptions; the one-time code is set in Theme settings > Build your bundle." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "what would you like in your bundle?" },
+    { "type": "collection", "id": "collection", "label": "Products to choose from" },
+    { "type": "product_list", "id": "products", "label": "Or pick products", "info": "Used instead of the collection when set.", "limit": 50 },
+    { "type": "range", "id": "max_per_product", "label": "Max of the same product", "min": 1, "max": 5, "step": 1, "default": 3 },
+    { "type": "range", "id": "default_size", "label": "Pack size when the product has none", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "header", "content": "Bundle panel" },
+    { "type": "text", "id": "panel_heading", "label": "Heading", "default": "your bundle" },
+    { "type": "text", "id": "toggle_label", "label": "Mobile toggle label (screen readers)", "default": "Show or hide your bundle" },
+    { "type": "text", "id": "step_1", "label": "Step 1 (mobile)", "default": "Build Your Bundle" },
+    { "type": "text", "id": "step_2", "label": "Step 2 (mobile)", "default": "Choose Your Products" },
+    { "type": "product_list", "id": "packs", "label": "Pack sizes", "info": "The BYOB pack products, smallest first.", "limit": 4 },
+    { "type": "text", "id": "packs_label", "label": "Pack sizes label (screen readers)", "default": "Select pack size" },
+    { "type": "text", "id": "pack_label", "label": "Pack label", "default": "Pack" },
+    { "type": "text", "id": "badge_subscribe", "label": "Pack badge (subscription)", "info": "[percent] = the pack's subscription saving.", "default": "Save [percent]%" },
+    { "type": "text", "id": "badge_one_time", "label": "Pack badge (one-time)", "default": "Save $10" },
+    { "type": "text", "id": "options_legend", "label": "Options label (screen readers)", "default": "Delivery options" },
+    { "type": "text", "id": "one_time_label", "label": "One-time option", "default": "One-time purchase" },
+    { "type": "text", "id": "subscribe_label", "label": "Subscription option", "default": "Subscribe & Save Bundle" },
+    { "type": "text", "id": "frequency_label", "label": "Frequency label (screen readers)", "default": "Delivery frequency" },
+    { "type": "text", "id": "frequency_suffix", "label": "Text after each frequency", "default": "*" },
+    { "type": "textarea", "id": "perks", "label": "Subscription perks", "info": "One per line.", "default": "VIP access to exclusive drops\nGuaranteed delivery during sell-outs\nGift or swap items\nEarn loyalty points for free products & discounts\nPause, update frequency or cancel anytime" },
+    { "type": "text", "id": "add_label", "label": "Card button", "default": "Add" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out", "default": "Sold out" },
+    { "type": "text", "id": "button_label", "label": "Add to bag button", "default": "Add to Bag" },
+    { "type": "text", "id": "disclaimer", "label": "Small print", "default": "* These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease." }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

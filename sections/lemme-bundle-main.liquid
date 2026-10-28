@@ -31,9 +31,13 @@
 
   assign plan_group = nil
   assign allocation = nil
+  assign byob_group = settings.lemme_byob_group_name | default: 'Subscribe & Save Bundle'
   for alloc in variant.selling_plan_allocations
-    assign allocation = alloc
-    break
+    assign alloc_group = product.selling_plan_groups | where: 'id', alloc.selling_plan_group_id | first
+    if alloc_group.name != byob_group
+      assign allocation = alloc
+      break
+    endif
   endfor
   if allocation
     for group in product.selling_plan_groups

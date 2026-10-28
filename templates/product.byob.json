@@ -1,0 +1,125 @@
+{
+  "sections": {
+    "hero": {
+      "type": "lemme-byob-hero",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "text": "Get $10 Off One-Time & up to 30% off Subscription Bundles",
+            "icon": "shopify://shop_images/byob-Group_2.svg"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "text": "Free Vitamin Case with any BYOB Subscription",
+            "icon": "shopify://shop_images/byob-star-thick_1.svg"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "text": "Custom Bundles Ship Free",
+            "icon": "shopify://shop_images/byob-Group_1_1.svg"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "heading": "build your custom bundle",
+        "image": "shopify://shop_images/byob-75261_1.png",
+        "image_mobile": "shopify://shop_images/byob-Frame_5.png"
+      }
+    },
+    "main": {
+      "type": "lemme-byob",
+      "settings": {
+        "heading": "what would you like in your bundle?",
+        "collection": "build-your-bundle",
+        "max_per_product": 3,
+        "packs": [
+          "byob-3-pack",
+          "byob-4-pack",
+          "byob-5-pack"
+        ],
+        "badge_subscribe": "Save [percent]%",
+        "badge_one_time": "Save $10"
+      }
+    },
+    "featured": {
+      "type": "lemme-featured-bundles",
+      "settings": {
+        "heading": "not sure where to start?",
+        "products": [
+          "daily-digestive-bundle"
+        ],
+        "button_label": "Add to bag"
+      }
+    },
+    "ticker": {
+      "type": "lemme-ticker",
+      "settings": {
+        "text": "OHMYGOSHWAGANDHA",
+        "bottom_space": false,
+        "speed": 10
+      }
+    },
+    "benefits": {
+      "type": "lemme-benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Expert formulated",
+            "bundled_image": "lemme-benefit-expert-formulated.webp"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Validated by 3rd party testing",
+            "bundled_image": "lemme-benefit-third-party-tested.webp"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Science-backed innovation",
+            "bundled_image": "lemme-benefit-tastes-like-heaven.webp"
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Thousands of 5-star testimonials ⭐⭐⭐⭐⭐",
+            "bundled_image": "lemme-benefit-bioavailable.webp"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "lemme get real results",
+        "subheading": "The twist? So delicious you won't believe they're good for you.",
+        "background": "#f7f1f9",
+        "layout": "trust"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "main",
+    "featured",
+    "ticker",
+    "benefits"
+  ]
+}

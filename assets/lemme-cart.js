@@ -187,6 +187,18 @@
     var toggle = e.target.closest('[data-lc-toggle]');
     if (toggle) { toggleBreakdown(toggle); return; }
 
+    var rmBundle = e.target.closest('[data-lc-remove-bundle]');
+    if (rmBundle) {
+      var bundleRow = rmBundle.closest('[data-lc-item]');
+      if (bundleRow) bundleRow.classList.add('is-busy');
+      var updates = {};
+      rmBundle.getAttribute('data-lc-remove-bundle').split(',').forEach(function (k) { if (k) updates[k] = 0; });
+      post('cart/update.js', { updates: updates })
+        .then(function (cart) { emit(cart); return refresh(); })
+        .catch(function (err) { if (bundleRow) bundleRow.classList.remove('is-busy'); announce(err.message); return refresh(); });
+      return;
+    }
+
     var row = e.target.closest('[data-lc-item]');
     var rm = e.target.closest('[data-lc-remove]');
     if (rm && row) { change(row, { quantity: 0 }); return; }

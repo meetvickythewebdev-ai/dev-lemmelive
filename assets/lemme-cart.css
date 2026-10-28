@@ -218,3 +218,10 @@ html.lc-locked, html.lc-locked .page-wrapper { overflow: hidden; }
 .lc-pop__sparkle--1 { left: -14%; bottom: -4%; width: 60px; }
 .lc-pop__sparkle--2 { left: 5%; bottom: -9%; width: 36px; }
 @media (min-width: 1400px) { .lc-pop__sparkle--1 { bottom: -6%; width: 85px; } }
+
+/* Build your bundle card */
+.lc-item__media--bundle { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; align-content: center; }
+.lc-item__media--bundle img { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.lc-item--bundle .lc-item__title:hover { text-decoration: none; }
+.lc-item__bundle { margin: 6px 0 0; padding: 0; list-style: none; font-size: 12px; line-height: 1.4; color: #333; }
+.lc-item__bundle li::before { content: "• "; }

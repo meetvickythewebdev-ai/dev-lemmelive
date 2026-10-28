@@ -2179,5 +2179,33 @@
         "content": "Cards use each product's Lemme metafields: Collection image (falls back to the main image), Collection shape (shown on hover) and Subtitle. Like the live site, the popup shows on screens 1025px and wider."
       }
     ]
+  },
+  {
+    "name": "Build your bundle",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Subscriptions for Build your bundle use their own plan group in Shopify Subscriptions (one plan per pack size, e.g. 3-pack 20% off). Plans in this group are hidden on normal product pages, collection quick add and the bag's frequency picker."
+      },
+      {
+        "type": "text",
+        "id": "lemme_byob_group_name",
+        "label": "Bundle plan title in Shopify Subscriptions",
+        "default": "Subscribe & Save Bundle"
+      },
+      {
+        "type": "text",
+        "id": "lemme_byob_code",
+        "label": "One-time bundle discount code",
+        "info": "Applied automatically when a one-time bundle is added to the bag. Leave empty for no one-time discount.",
+        "default": "BYOB10"
+      },
+      {
+        "type": "number",
+        "id": "lemme_byob_code_amount",
+        "label": "Code value in dollars (for the prices shown)",
+        "default": 10
+      }
+    ]
   }
 ]
