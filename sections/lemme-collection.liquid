@@ -170,7 +170,7 @@
                     -%}
                     <button class="lco-type" type="button" aria-pressed="false" data-lco-type="{{ k }}">
                       <span>{{ st[label_key] | default: k }}</span>
-                      {%- if pill_img != blank -%}{{ pill_img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '', width: 40, height: 40, class: 'lco-type__img' }}{%- endif -%}
+                      {%- if pill_img != blank -%}{{ pill_img | image_url: width: 120 | image_tag: loading: 'eager', alt: '', width: 40, height: 40, class: 'lco-type__img' }}{%- endif -%}
                     </button>
                   {%- endfor -%}
                 </div>
