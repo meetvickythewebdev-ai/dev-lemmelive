@@ -1,0 +1,1956 @@
+{
+ "data": {
+  "productByHandle": {
+   "id": "gid://shopify/Product/15453550182720",
+   "title": "Lemme Debloat Gummies",
+   "metafields": {
+    "nodes": [
+     {
+      "namespace": "lemme",
+      "key": "background_color",
+      "type": "color",
+      "value": "#f57eb6",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "subtitle",
+      "type": "single_line_text_field",
+      "value": "Gut Health & Digestion*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "display_title",
+      "type": "single_line_text_field",
+      "value": "Debloat Gummies",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "badge",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46440481784128",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/CLP_Purity_Award-02.png?v=1793119762"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "card_background",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46440481816896",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Debloat_Letter_Background_8cb53887-34b0-49f3-891b-b0798f02a175.png?v=1793119761"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "intro",
+      "type": "multi_line_text_field",
+      "value": "Go with your gut: Reduce bloating with clinically-studied probiotics that help support digestion, fuel a healthy gut and support your immune system.*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefits",
+      "type": "list.single_line_text_field",
+      "value": "[\"Relieves bloating symptoms and supports debloating*\",\"Supports occasional gas relief*\",\"Aids digestion and contributes to a healthy gut microbiome*\",\"Helps you feel your best after meals*\",\"Just 2 gummies a day for simple bloat relief*\"]",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefit_icons",
+      "type": "list.file_reference",
+      "value": "[\"gid://shopify/MediaImage/46440481849664\",\"gid://shopify/MediaImage/46440481882432\",\"gid://shopify/MediaImage/46440481915200\",\"gid://shopify/MediaImage/46440481947968\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "image": {
+          "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Bloating.png?v=1793119763"
+         }
+        },
+        {
+         "image": {
+          "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Digestion.png?v=1793119762"
+         }
+        },
+        {
+         "image": {
+          "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Gut_Health.png?v=1793119762"
+         }
+        },
+        {
+         "image": {
+          "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Occasional_Gas.png?v=1793119762"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefit_icon_labels",
+      "type": "list.single_line_text_field",
+      "value": "[\"BLOATING RELIEF*\",\"DIGESTIVE SUPPORT*\",\"HEALTHY GUT*\",\"OCCASIONAL GAS*\"]",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "flavor",
+      "type": "single_line_text_field",
+      "value": "Blackberry",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "option_labels",
+      "type": "list.single_line_text_field",
+      "value": "[\"Monthly Delivery\",\"2-month delivery\",\"3-month delivery\"]",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "option_descriptions",
+      "type": "list.single_line_text_field",
+      "value": "[\"A 1-bottle supply delivered each month.\",\"A 2-bottle supply delivery every 2 months.\",\"A 3-bottle supply delivered every 3 months.\"]",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "suggested_use",
+      "type": "single_line_text_field",
+      "value": "Suggested Use: Adults, take 2 gummies daily or as recommended by a physician.",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "serving_info",
+      "type": "list.single_line_text_field",
+      "value": "[\"Serving Size: 2 Gummies\",\"Servings Per Container: 30\"]",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "supplement_facts",
+      "type": "multi_line_text_field",
+      "value": "Calories 15 | \nTotal Carbohydrate 4 g | 1%†\nTotal Sugars 3 g | 6%† | Includes 3 g Added Sugars\nXylooligosaccharides (XOS) 80 mg | **\nDigestive Probiotic Blend | ** | <em>Bacillus coagulans</em> (MTCC 5856 LactoSpore®), <em>Bacillus Subtilis</em> (DE111®)",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "supplement_footnote",
+      "type": "multi_line_text_field",
+      "value": "†Percent Daily Values are based on a 2,000 calorie diet\n**Daily Value not established",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "other_ingredients",
+      "type": "multi_line_text_field",
+      "value": "Tapioca Syrup, Organic Cane Sugar, Water, Pectin, Citric Acid, Natural Flavors, Fruit Juice (Color), Sodium Citrate, Coconut Oil, Carnauba Wax.",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "warning",
+      "type": "multi_line_text_field",
+      "value": "If you are pregnant, nursing, have a medical condition or are taking any medication, consult your physician before use. Keep out of reach of children. Take only as directed. Gummies can be a choking hazard. Store in a cool, dry place after opening. Refrigeration not required. Manufactured in a facility that processes soy, dairy, eggs, wheat, tree nuts, peanuts, fish and shellfish ingredients.",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "difference_text",
+      "type": "multi_line_text_field",
+      "value": "Lemme Debloat is third-party tested, made in NSF and GMP-certified facilities, and Halal certified. It also earned the Clean Label Project Purity Award, meaning it was screened and certified to be free from 400+ contaminants. Plus, the bottle and cap are made from 100% post-consumer recycled material.",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "ingredients",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447160484160\",\"gid://shopify/Metaobject/447160516928\",\"gid://shopify/Metaobject/447160549696\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447160484160",
+         "type": "lemme_ingredient",
+         "handle": "debloat-lactospore",
+         "fields": [
+          {
+           "key": "name",
+           "value": "LactoSpore<sup>®</sup> (Bacillus coagulans)",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Clinically-studied probiotic shown to support bloating, digestion, occasional gas relief and gut health.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46440481980736",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--debloat-1-e78de3.png?v=1793119761"
+            }
+           }
+          },
+          {
+           "key": "details",
+           "value": "A patented, clinically-studied probiotic strain shown to support bloating, digestion, occasional gas relief and gut health. This strain of probiotics is tested to survive the harsh, acidic stomach environment and make it to your digestive tract where they are most effective.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160516928",
+         "type": "lemme_ingredient",
+         "handle": "debloat-de111",
+         "fields": [
+          {
+           "key": "name",
+           "value": "DE111<sup>®</sup> (Bacillus subtilis)",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Highly researched probiotic shown to support gut and immune system health.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46440482013504",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--debloat-2-dba9ec.png?v=1793119762"
+            }
+           }
+          },
+          {
+           "key": "details",
+           "value": "A highly researched probiotic shown to support gut and immune system health. This spore-forming probiotic is also shown to survive the harsh stomach environment and make it to your digestive tract.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160549696",
+         "type": "lemme_ingredient",
+         "handle": "debloat-xos",
+         "fields": [
+          {
+           "key": "name",
+           "value": "XOS (Xylooligosaccharides)",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Prebiotics to help feed the good bacteria in your gut.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46440482046272",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--debloat-3-5c8a3f.png?v=1793119762"
+            }
+           }
+          },
+          {
+           "key": "details",
+           "value": "Prebiotics sourced from non-GMO plant fibers to help feed the good bacteria in your gut. Beneficial bacteria can be impacted by stress, low-fiber diets, high meat diets and travel.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "faqs",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447160648000\",\"gid://shopify/Metaobject/447160680768\",\"gid://shopify/Metaobject/447160713536\",\"gid://shopify/Metaobject/447160746304\",\"gid://shopify/Metaobject/447160779072\",\"gid://shopify/Metaobject/447160811840\",\"gid://shopify/Metaobject/447160844608\",\"gid://shopify/Metaobject/447160877376\",\"gid://shopify/Metaobject/447160910144\",\"gid://shopify/Metaobject/447160942912\",\"gid://shopify/Metaobject/447160975680\",\"gid://shopify/Metaobject/447161008448\",\"gid://shopify/Metaobject/447161041216\",\"gid://shopify/Metaobject/447161073984\",\"gid://shopify/Metaobject/447161106752\",\"gid://shopify/Metaobject/447161172288\",\"gid://shopify/Metaobject/447161205056\",\"gid://shopify/Metaobject/447161237824\",\"gid://shopify/Metaobject/447161270592\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447160648000",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-1",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Do Lemme Debloat Gummies work?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is formulated with clinically-studied probiotics to help reduce bloating, support digestion and reduce occasional gas. It also contains XOS prebiotics which help feed beneficial bacteria in the gut. Customer reviews frequently share that they have less belly bloat, feel less bloated overall, are more comfortable after meals and are better supported in their daily digestion.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160680768",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-2",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat clinically studied?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is scientifically formulated with clinically-studied probiotic strains: LactoSpore<sup>®</sup> Bacillus coagulans MTCC 5856 and DE111<sup>®</sup> Bacillus subtilis. The formula also contains XOS prebiotics to help nourish beneficial gut bacteria.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160713536",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-3",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Do medical experts recommend Lemme Debloat?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is reviewed by Dr. Kathleen Valenton, board-certified OB/GYN and Chief Medical Officer at Lemme. Lemme Debloat is also shared by hundreds of clinicians and medical experts on Clinicians’ Choice, an independent, third-party platform for clinicians and medical experts to share their selection of health products to help their patients.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160746304",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-4",
+         "fields": [
+          {
+           "key": "question",
+           "value": "What makes Lemme Debloat different?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is different than other supplements because it takes a daily, microbiome and gut-health focused approach. Instead of using an unidentified, generic probiotic blend, Lemme Debloat uses named, strain-specific probiotics and prebiotic. Specifically, its formula combines:\n• Two live, clinically studied and strain-specific probiotics\n• LactoSpore<sup>®</sup> for bloating, digestion and occasional gas support*\n• DE111<sup>®</sup> for gut and immune-system support*\n• XOS prebiotics to feed beneficial gut bacteria*\n• Stable strains designed to survive the stomach environment*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160779072",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-5",
+         "fields": [
+          {
+           "key": "question",
+           "value": "What are the benefits of Lemme Debloat?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is scientifically formulated to help support:\n• Relieve bloating symptoms and support debloating*\n• Provide relief from occasional gas*\n• Aid digestion*\n• Comfort after meals*\n• Contribute to a healthy gut microbiome*\n• Nourish beneficial gut bacteria*\n• Support gut health*\n• Belly bloat*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160811840",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-6",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Does Lemme Debloat also help with gas?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Yes, Lemme Debloat relieves occasional gas.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160844608",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-7",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat a probiotic or a prebiotic?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is both a probiotic and a prebiotic. Lemme Debloat contains two probiotic strains, LactoSpore<sup>®</sup> Bacillus coagulans and DE111<sup>®</sup> Bacillus subtilis, as well as XOS prebiotics. Probiotics supply beneficial microorganisms, while prebiotics help feed beneficial bacteria already in the gut.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160877376",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-8",
+         "fields": [
+          {
+           "key": "question",
+           "value": "What probiotic strains are in Lemme Debloat, and what makes them special?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat contains two named, clinically-studied probiotics:\n• LactoSpore<sup>®</sup> Bacillus coagulans MTCC 5856: Studied for bloating, gas and digestive comfort*\n• DE111<sup>®</sup> Bacillus subtilis: Studied for digestive health and gut health*\n• Lemme Debloat’s probiotics are specially selected for their ability to survive the acidic environment and reach the digestive tract where they can best support gut health.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160910144",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-9",
+         "fields": [
+          {
+           "key": "question",
+           "value": "How does Lemme Debloat work?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Unlike other supplements, Lemme Debloat uses a combined probiotic-and-prebiotic approach to support daily digestive health:\n• 1. LactoSpore<sup>®</sup> probiotic supports relief from bloating, occasional gas and digestive discomfort*\n• 2. DE111<sup>®</sup> probiotic supports digestive health and gut health*\n• 3. XOS prebiotics help nourish beneficial bacteria*\n• Together, the powerful, science-backed ingredients in Lemme Debloat support digestive comfort while helping maintain a healthy gut environment.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160942912",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-10",
+         "fields": [
+          {
+           "key": "question",
+           "value": "How and when should I take Lemme Debloat?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Adults should take two Lemme Debloat Gummies daily, or as recommended by a physician.",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447160975680",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-11",
+         "fields": [
+          {
+           "key": "question",
+           "value": "How long does it take Lemme Debloat to work?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat is designed to provide daily digestive and bloating support. For best results, take two gummies daily.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161008448",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-12",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Who should take Lemme Debloat?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat may be a fit for adults who experience:\n• Occasional bloating*\n• Mild or occasional gas*\n• Discomfort after meals*\n• Digestive changes during routine disruptions*\n• Digestive discomfort*\n• Bloating when traveling or flying on planes*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161041216",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-13",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat third-party tested?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Yes, Lemme Debloat is third-party tested, made in NSF and GMP-certified facilities, and is certified by the Clean Label Project which independently evaluates products for contaminants. It’s also vegetarian, gluten-free, gelatin-free, and made without synthetic dyes or sugar alcohols.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161073984",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-14",
+         "fields": [
+          {
+           "key": "question",
+           "value": "What do reviews say about Lemme Debloat?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat has thousands of verified 5-star reviews. Customers frequently say the gummies have a delicious flavor and:\n• Help them feel less bloated\n• Help them feel more comfortable after meals\n• Improved daily digestion",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161106752",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-15",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat vegetarian?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Yes, Lemme Debloat Gummies are vegetarian.",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161172288",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-16",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat gluten-free?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Yes, Lemme Debloat is gluten-free.",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161205056",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-17",
+         "fields": [
+          {
+           "key": "question",
+           "value": "What do Lemme Debloat gummies taste like?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Lemme Debloat gummies are a delicious Blackberry flavor. They are fruity, sweet and easy to take as part of a daily digestive-wellness routine.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161237824",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-18",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat Halal certified?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "Yes, Lemme Debloat is Halal certified by the ISA.",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447161270592",
+         "type": "lemme_faq",
+         "handle": "debloat-faq-19",
+         "fields": [
+          {
+           "key": "question",
+           "value": "Is Lemme Debloat safe to take during pregnancy or breastfeeding?",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "answer",
+           "value": "We recommend consulting your healthcare provider before taking any supplement if you are pregnant, nursing, or planning to become pregnant.",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "app--3890849--eligibility",
+      "key": "eligibility_details",
+      "type": "json_string",
+      "value": "{\"product_discovery_ineligible_reasons\":[\"product_not_published_to_shop_sales_channel\"],\"moderation_outcomes\":[],\"product_prohibited_categories\":[]}",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "reviews",
+      "key": "rating",
+      "type": "rating",
+      "value": "{\"scale_min\":\"1.0\",\"scale_max\":\"5.0\",\"value\":\"4.5\"}",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "reviews",
+      "key": "rating_count",
+      "type": "number_integer",
+      "value": "30",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefits_intro",
+      "type": "multi_line_text_field",
+      "value": "Go with your gut: Reduce bloating with clinically-studied probiotics that help support digestion, fuel a healthy gut and support your immune system.* Scientifically-formulated with clinically-studied probiotics to help:",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "leave_out",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447485444416\",\"gid://shopify/Metaobject/447485477184\",\"gid://shopify/Metaobject/447485509952\",\"gid://shopify/Metaobject/447485542720\",\"gid://shopify/Metaobject/447485575488\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447485444416",
+         "type": "lemme_icon_item",
+         "handle": "no-gelatin",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Gelatin",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964142912",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--Gelatin-Free-5ba2b0.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485477184",
+         "type": "lemme_icon_item",
+         "handle": "no-gluten",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Gluten",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964110144",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--Gluten-Free-bc2091.png?v=1793137018"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485509952",
+         "type": "lemme_icon_item",
+         "handle": "no-synthetic-dyes",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Synthetic dyes or flavors",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964175680",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--No-Artificial-Color-8ac65f.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485542720",
+         "type": "lemme_icon_item",
+         "handle": "no-sugar-alcohols",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Sugar alcohols",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964208448",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--new-heart-4ae540.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485575488",
+         "type": "lemme_icon_item",
+         "handle": "no-animal-derived",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Animal-derived ingredients (vegetarian)",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964077376",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--Vegan-d0e68e.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "awards",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447485804864\",\"gid://shopify/Metaobject/447485837632\",\"gid://shopify/Metaobject/447485870400\",\"gid://shopify/Metaobject/447485903168\",\"gid://shopify/Metaobject/447485968704\",\"gid://shopify/Metaobject/447486001472\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447485804864",
+         "type": "lemme_award",
+         "handle": "clean-label-purity-award",
+         "fields": [
+          {
+           "key": "title",
+           "value": "Purity Award",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "subtitle",
+           "value": "Clean Label Project",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "The Clean Label Project is a national non-profit organization focused on consumer product safety and truth in labeling. Its Purity Award recognizes products that have undergone independent, third-party laboratory testing for environmental and industrial contaminants.",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46441964273984",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/b7abb46ea4179adee895d8c5367e19cb21379edc.png?v=1793137018"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485837632",
+         "type": "lemme_award",
+         "handle": "trustscore",
+         "fields": [
+          {
+           "key": "title",
+           "value": "TRUSTSCORE<sup>®</sup> (9.38 TrustScore)",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "subtitle",
+           "value": "SuppCo Verified",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Our TrustScore reflects an independent assessment of product quality, transparency, and trust, helping give you added confidence in what’s inside.",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46441964306752",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/TrustScore_9.38.png?v=1793137018"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485870400",
+         "type": "lemme_award",
+         "handle": "third-party-tested",
+         "fields": [
+          {
+           "key": "title",
+           "value": "THIRD-PARTY TESTED",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "subtitle",
+           "value": "THIRD-PARTY TESTED",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Independently tested by third-party laboratories to help verify product quality, purity, and that what’s on the label matches what’s inside.",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46441964339520",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Third_Party_Tested_Logo_Transparent.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485903168",
+         "type": "lemme_award",
+         "handle": "cgmp",
+         "fields": [
+          {
+           "key": "title",
+           "value": "GOOD MANUFACTURING PRACTICES",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "subtitle",
+           "value": "cGMP Certified",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Made in facilities that follow Current Good Manufacturing Practices (cGMP), established to help ensure supplements are consistently manufactured according to quality standards.",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46441964372288",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/GMP2.svg?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485968704",
+         "type": "lemme_award",
+         "handle": "non-gmo-tested",
+         "fields": [
+          {
+           "key": "title",
+           "value": "NON-GMO TESTED",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "subtitle",
+           "value": "NON-GMO TESTED",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Tested to verify that the product meets established standards for non-GMO ingredients, giving you added confidence in what goes into every serving.",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46441964405056",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/non_gmo_1.png?v=1793137018"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447486001472",
+         "type": "lemme_award",
+         "handle": "halal-certified",
+         "fields": [
+          {
+           "key": "title",
+           "value": "HALAL CERTIFIED",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "subtitle",
+           "value": "ISA",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "description",
+           "value": "Officially Halal certified by the ISA. This means we’ve been independently reviewed and verified to meet Halal standards from ingredients through manufacturing.",
+           "type": "multi_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "image",
+           "value": "gid://shopify/MediaImage/46441964437824",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Triangle_H_ISA_Halal.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "frontrow_id",
+      "type": "single_line_text_field",
+      "value": "4872",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "sticky_image",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46441964568896",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Open-bottle-debloat.png?v=1793137019"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "compare_image",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46441964568896",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Open-bottle-debloat.png?v=1793137019"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "format_name",
+      "type": "single_line_text_field",
+      "value": "Debloat Gummies",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "format_swatch",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46441964601664",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/KK_DEBLOAT_GUMMY_nobkgrd_2000x2000_b6adf531-d96f-46e0-96f5-78833b57058b.png?v=1793137019"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "format_products",
+      "type": "list.product_reference",
+      "value": "[\"gid://shopify/Product/15453550182720\",\"gid://shopify/Product/15454015357248\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {},
+        {}
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefits_eyebrow",
+      "type": "single_line_text_field",
+      "value": "debloat benefits",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefits_heading",
+      "type": "single_line_text_field",
+      "value": "beat the bloat*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefit_items",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447486034240\",\"gid://shopify/Metaobject/447486067008\",\"gid://shopify/Metaobject/447486099776\",\"gid://shopify/Metaobject/447486132544\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447486034240",
+         "type": "lemme_accordion",
+         "handle": "debloat-relieve-bloating",
+         "fields": [
+          {
+           "key": "title",
+           "value": "Helps relieve bloating*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "body",
+           "value": "Formulated with LactoSpore<sup>®</sup>, a probiotic strain clinically studied for bloating and digestive comfort.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447486067008",
+         "type": "lemme_accordion",
+         "handle": "debloat-after-meals",
+         "fields": [
+          {
+           "key": "title",
+           "value": "Helps you feel your best after meals*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "body",
+           "value": "Daily probiotic support for digestive comfort, so your gut stays on your side.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447486099776",
+         "type": "lemme_accordion",
+         "handle": "debloat-digestion",
+         "fields": [
+          {
+           "key": "title",
+           "value": "Aids digestion & supports a healthy gut microbiome*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "body",
+           "value": "Two probiotic strains plus XOS prebiotics, which help feed the good bacteria already in your gut.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447486132544",
+         "type": "lemme_accordion",
+         "handle": "debloat-immune",
+         "fields": [
+          {
+           "key": "title",
+           "value": "Supports gut health & immune system*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "body",
+           "value": "DE111<sup>®</sup> is a highly researched probiotic strain shown to support both gut and immune system health.*",
+           "type": "multi_line_text_field",
+           "reference": null
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefits_media",
+      "type": "file_reference",
+      "value": "gid://shopify/Video/46441975349568",
+      "reference": {},
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "data_heading",
+      "type": "single_line_text_field",
+      "value": "probiotics that keep bloating at bay*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "data_text",
+      "type": "multi_line_text_field",
+      "value": "Clinically-studied probiotics combat bloating, aid digestion, fuel a healthy gut and support your immune system. Lemme Debloat is also formulated with XOS prebiotics to support beneficial bacteria in the gut.*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "compare_heading",
+      "type": "single_line_text_field",
+      "value": "how Lemme Debloat stacks up",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "compare_rows",
+      "type": "list.single_line_text_field",
+      "value": "[\"Clinically-studied probiotic strains LactoSpore® and DE111®\",\"XOS prebiotic*\",\"No refrigeration needed\",\"Clean Label Project Purity Award\",\"Reviewed by board-certified medical professional\"]",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "difference_image",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46441964470592",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/20260223_LEMME_DEBLOAT0559.jpg?v=1793137018"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "difference_items",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447485608256\",\"gid://shopify/Metaobject/447485641024\",\"gid://shopify/Metaobject/447485673792\",\"gid://shopify/Metaobject/447485706560\",\"gid://shopify/Metaobject/447485739328\",\"gid://shopify/Metaobject/447485772096\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447485608256",
+         "type": "lemme_icon_item",
+         "handle": "vegetarian",
+         "fields": [
+          {
+           "key": "label",
+           "value": "vegetarian",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964077376",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--Vegan-d0e68e.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485641024",
+         "type": "lemme_icon_item",
+         "handle": "gluten-free",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Gluten-Free",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964110144",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--Gluten-Free-bc2091.png?v=1793137018"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485673792",
+         "type": "lemme_icon_item",
+         "handle": "gelatin-free",
+         "fields": [
+          {
+           "key": "label",
+           "value": "Gelatin-free",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964142912",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--Gelatin-Free-5ba2b0.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485706560",
+         "type": "lemme_icon_item",
+         "handle": "no-synthetic-dyes-or-flavors",
+         "fields": [
+          {
+           "key": "label",
+           "value": "No synthetic dyes or flavors",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964175680",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--No-Artificial-Color-8ac65f.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485739328",
+         "type": "lemme_icon_item",
+         "handle": "no-sugar-alcohols-label",
+         "fields": [
+          {
+           "key": "label",
+           "value": "No Sugar Alcohols",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964208448",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--new-heart-4ae540.png?v=1793137017"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447485772096",
+         "type": "lemme_icon_item",
+         "handle": "clinically-studied-ingredients",
+         "fields": [
+          {
+           "key": "label",
+           "value": "CLINICALLY-STUDIED INGREDIENTS",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46441964241216",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/f448653b4ce3--sheild-f8e02b.png?v=1793137018"
+            }
+           }
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "expert",
+      "type": "metaobject_reference",
+      "value": "gid://shopify/Metaobject/447486165312",
+      "reference": {
+       "type": "lemme_expert",
+       "fields": [
+        {
+         "key": "name",
+         "value": "Dr. Kathleen Valenton",
+         "type": "single_line_text_field"
+        },
+        {
+         "key": "title",
+         "value": "MD, OBGYN",
+         "type": "single_line_text_field"
+        },
+        {
+         "key": "image",
+         "value": "gid://shopify/MediaImage/46441964503360",
+         "type": "file_reference"
+        },
+        {
+         "key": "url",
+         "value": "https://lemmelive.com/pages/dr-kathleen-valenton-1",
+         "type": "url"
+        }
+       ]
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "expert_quote",
+      "type": "multi_line_text_field",
+      "value": "\"Bloating is one of the most common concerns I hear from patients. We formulated Lemme Debloat with clinically-studied probiotic strains plus a prebiotic fiber to support everyday bloat relief and digestion.*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "routine_products",
+      "type": "list.product_reference",
+      "value": "[\"gid://shopify/Product/15454015291712\",\"gid://shopify/Product/15454015324480\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {},
+        {}
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefit_icon_items",
+      "type": "list.metaobject_reference",
+      "value": "[\"gid://shopify/Metaobject/447863095616\",\"gid://shopify/Metaobject/447863161152\",\"gid://shopify/Metaobject/447863193920\",\"gid://shopify/Metaobject/447863226688\"]",
+      "reference": null,
+      "references": {
+       "nodes": [
+        {
+         "id": "gid://shopify/Metaobject/447863095616",
+         "type": "lemme_icon_item",
+         "handle": "benefit-bloating-relief",
+         "fields": [
+          {
+           "key": "label",
+           "value": "BLOATING RELIEF*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46440481849664",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Bloating.png?v=1793119763"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447863161152",
+         "type": "lemme_icon_item",
+         "handle": "benefit-digestive-support",
+         "fields": [
+          {
+           "key": "label",
+           "value": "DIGESTIVE SUPPORT*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46440481882432",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Digestion.png?v=1793119762"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447863193920",
+         "type": "lemme_icon_item",
+         "handle": "benefit-healthy-gut",
+         "fields": [
+          {
+           "key": "label",
+           "value": "HEALTHY GUT*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46440481915200",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Gut_Health.png?v=1793119762"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "id": "gid://shopify/Metaobject/447863226688",
+         "type": "lemme_icon_item",
+         "handle": "benefit-occasional-gas",
+         "fields": [
+          {
+           "key": "label",
+           "value": "OCCASIONAL GAS*",
+           "type": "single_line_text_field",
+           "reference": null
+          },
+          {
+           "key": "icon",
+           "value": "gid://shopify/MediaImage/46440481947968",
+           "type": "file_reference",
+           "reference": {
+            "image": {
+             "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/icon_debloat_Occasional_Gas.png?v=1793119762"
+            }
+           }
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefits_video",
+      "type": "file_reference",
+      "value": "gid://shopify/Video/46441975349568",
+      "reference": {},
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "option_names",
+      "type": "multi_line_text_field",
+      "value": "Monthly Delivery\n2-month delivery\n3-month delivery",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "option_details",
+      "type": "multi_line_text_field",
+      "value": "A 1-bottle supply delivered each month.\nA 2-bottle supply delivery every 2 months.\nA 3-bottle supply delivered every 3 months.",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "benefit_bullets",
+      "type": "multi_line_text_field",
+      "value": "Relieves bloating symptoms and supports debloating*\nSupports occasional gas relief*\nAids digestion and contributes to a healthy gut microbiome*\nHelps you feel your best after meals*\nJust 2 gummies a day for simple bloat relief*",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "serving_lines",
+      "type": "multi_line_text_field",
+      "value": "Serving Size: 2 Gummies\nServings Per Container: 30",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "compare_list",
+      "type": "multi_line_text_field",
+      "value": "Clinically-studied probiotic strains LactoSpore® and DE111®\nXOS prebiotic*\nNo refrigeration needed\nClean Label Project Purity Award\nReviewed by board-certified medical professional",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "okendo",
+      "key": "ReviewsWidgetSnippet",
+      "type": "string",
+      "value": "<div data-oke-reviews-version=\"0.107.1\" aria-label=\"Rated 4.5 out of 5 stars Based on 30 reviews\" data-oke-container=\"\" tabindex=\"-1\" role=\"region\" class=\"okeReviews oke-w\"><div class=\"js-oke-widgetSize oke-is-medium\"><div class=\"oke-w-header\"><div class=\"oke-w-header-content oke-w-header-content--verticalAlignTop oke-w-header-content--spaceBetween\"><div class=\"oke-w-header-content-block oke-w-header-content-block--oneThird oke-w-header-content-block--left\"><div class=\"oke-w-header-content-module oke-w-header-content-module--left\"><div class=\"oke-w-ratingAverageModule oke-w-ratingAverageModule--oneLine oke-w-ratingAverageModule--left\"><div class=\"oke-w-ratingAverageModule-rating\"><span class=\"oke-w-ratingAverageModule-rating-average\"> 4.5 </span><span class=\"oke-w-ratingAverageModule-rating-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.155555555555555\" href=\"#oke-star-empty\"></use><use x=\"32.31111111111111\" href=\"#oke-star-empty\"></use><use x=\"48.46666666666667\" href=\"#oke-star-empty\"></use><use x=\"64.62222222222222\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 90.7854%;\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.155555555555555\" href=\"#oke-star-filled\"></use><use x=\"32.31111111111111\" href=\"#oke-star-filled\"></use><use x=\"48.46666666666667\" href=\"#oke-star-filled\"></use><use x=\"64.62222222222222\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 4.5 out of 5 stars</span></div></span></div><div class=\"oke-w-ratingAverageModule-count\"> Based on 30 reviews </div></div><!----><!----><!----><!----><!----><!----><!----><!----></div><div class=\"oke-w-header-content-module oke-w-header-content-module--left\"><!----><div class=\"oke-w-breakdownModule oke-w-breakdownModule--contain\"><div class=\"oke-w-breakdownModule-distribution\"><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-label\" style=\"grid-row: 1;\"><span class=\"oke-w-breakdownModule-distribution-label-number\"> 5 </span><span class=\"oke-w-breakdownModule-distribution-label-star\"><div class=\"oke-stars\"><svg height=\"14\" viewBox=\"0 0 14.6 14\" aria-hidden=\"true\" style=\"overflow: visible;\"><use href=\"#oke-star-filled\"></use></svg><!----><span class=\"oke-a11yText\">Rated  out of 5 stars</span></div></span></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-bar\" style=\"grid-row: 1; background-color: rgb(244, 244, 246);\"><div class=\"oke-w-breakdownModule-distribution-bar-fill\" style=\"width: 73.3333%; background-color: rgb(223, 200, 239);\"></div></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-count\" style=\"grid-row: 1;\"> 22 </div><div tabindex=\"0\" role=\"button\" aria-label=\"Total 5 star reviews: 22. Filter by 5 star reviews\" class=\"oke-w-breakdownModule-distribution-highlight oke-is-clickable\" style=\"grid-row: 1;\"></div><!----><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-label\" style=\"grid-row: 2;\"><span class=\"oke-w-breakdownModule-distribution-label-number\"> 4 </span><span class=\"oke-w-breakdownModule-distribution-label-star\"><div class=\"oke-stars\"><svg height=\"14\" viewBox=\"0 0 14.6 14\" aria-hidden=\"true\" style=\"overflow: visible;\"><use href=\"#oke-star-filled\"></use></svg><!----><span class=\"oke-a11yText\">Rated  out of 5 stars</span></div></span></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-bar\" style=\"grid-row: 2; background-color: rgb(244, 244, 246);\"><div class=\"oke-w-breakdownModule-distribution-bar-fill\" style=\"width: 13.3333%; background-color: rgb(223, 200, 239);\"></div></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-count\" style=\"grid-row: 2;\"> 4 </div><div tabindex=\"0\" role=\"button\" aria-label=\"Total 4 star reviews: 4. Filter by 4 star reviews\" class=\"oke-w-breakdownModule-distribution-highlight oke-is-clickable\" style=\"grid-row: 2;\"></div><!----><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-label\" style=\"grid-row: 3;\"><span class=\"oke-w-breakdownModule-distribution-label-number\"> 3 </span><span class=\"oke-w-breakdownModule-distribution-label-star\"><div class=\"oke-stars\"><svg height=\"14\" viewBox=\"0 0 14.6 14\" aria-hidden=\"true\" style=\"overflow: visible;\"><use href=\"#oke-star-filled\"></use></svg><!----><span class=\"oke-a11yText\">Rated  out of 5 stars</span></div></span></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-bar\" style=\"grid-row: 3; background-color: rgb(244, 244, 246);\"><div class=\"oke-w-breakdownModule-distribution-bar-fill\" style=\"width: 6.66667%; background-color: rgb(223, 200, 239);\"></div></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-count\" style=\"grid-row: 3;\"> 2 </div><div tabindex=\"0\" role=\"button\" aria-label=\"Total 3 star reviews: 2. Filter by 3 star reviews\" class=\"oke-w-breakdownModule-distribution-highlight oke-is-clickable\" style=\"grid-row: 3;\"></div><!----><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-label\" style=\"grid-row: 4;\"><span class=\"oke-w-breakdownModule-distribution-label-number\"> 2 </span><span class=\"oke-w-breakdownModule-distribution-label-star\"><div class=\"oke-stars\"><svg height=\"14\" viewBox=\"0 0 14.6 14\" aria-hidden=\"true\" style=\"overflow: visible;\"><use href=\"#oke-star-filled\"></use></svg><!----><span class=\"oke-a11yText\">Rated  out of 5 stars</span></div></span></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-bar\" style=\"grid-row: 4; background-color: rgb(244, 244, 246);\"><div class=\"oke-w-breakdownModule-distribution-bar-fill\" style=\"width: 3.33333%; background-color: rgb(223, 200, 239);\"></div></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-count\" style=\"grid-row: 4;\"> 1 </div><div tabindex=\"0\" role=\"button\" aria-label=\"Total 2 star reviews: 1. Filter by 2 star reviews\" class=\"oke-w-breakdownModule-distribution-highlight oke-is-clickable\" style=\"grid-row: 4;\"></div><!----><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-label\" style=\"grid-row: 5;\"><span class=\"oke-w-breakdownModule-distribution-label-number\"> 1 </span><span class=\"oke-w-breakdownModule-distribution-label-star\"><div class=\"oke-stars\"><svg height=\"14\" viewBox=\"0 0 14.6 14\" aria-hidden=\"true\" style=\"overflow: visible;\"><use href=\"#oke-star-filled\"></use></svg><!----><span class=\"oke-a11yText\">Rated  out of 5 stars</span></div></span></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-bar\" style=\"grid-row: 5; background-color: rgb(244, 244, 246);\"><div class=\"oke-w-breakdownModule-distribution-bar-fill\" style=\"width: 3.33333%; background-color: rgb(223, 200, 239);\"></div></div><div aria-hidden=\"true\" class=\"oke-w-breakdownModule-distribution-count\" style=\"grid-row: 5;\"> 1 </div><div tabindex=\"0\" role=\"button\" aria-label=\"Total 1 star reviews: 1. Filter by 1 star reviews\" class=\"oke-w-breakdownModule-distribution-highlight oke-is-clickable\" style=\"grid-row: 5;\"></div><!----></div><span role=\"status\" aria-live=\"polite\" class=\"oke-a11yText\"></span></div><!----><!----><!----><!----><!----><!----><!----></div></div><div class=\"oke-w-header-content-block oke-w-header-content-block--oneThird oke-w-header-content-block--left\"></div></div></div><!----><div class=\"oke-w-main\"><div id=\"reviews-panel-f3c96020-3fc2-4779-be1c-cc7fc20a34bf\" class=\"oke-w-panel\"><div class=\"oke-w-reviewsTab\"><div class=\"oke-w-reviews\"><div class=\"oke-w-reviews-head\"><button aria-expanded=\"false\" aria-controls=\"filter-options\" id=\"filter-toggle\" type=\"button\" class=\"oke-button oke-w-reviews-filterToggle\"><span class=\"oke-icon\"></span><span class=\"oke-button-text\"> Filters <!----></span></button><div id=\"filter-options\" aria-labelledby=\"filter-toggle\" role=\"region\" class=\"oke-w-reviews-filters\"><!----></div><div class=\"oke-w-reviews-writeReview\"><a href=\"https://okendo.reviews/?subscriberId=2791456d-65d0-45a1-ae6e-dbc2c58f9b8f&amp;productId=shopify-15453550182720&amp;locale=en&amp;okeChannel=reviews-widget-write-review-button\" target=\"_blank\" rel=\"noopener\" class=\"oke-w-writeReview oke-button\"> Write a Review <span class=\"oke-a11yText\">(Opens in a new tab)</span></a></div></div><div class=\"oke-w-reviews-controls\"><div class=\"oke-w-reviews-count\"> 30 reviews </div><div class=\"oke-w-reviews-sort\"><div class=\"oke-sortSelect\" medialayout=\"featured\"><label for=\"oke-sortSelect--reviews\" class=\"oke-sortSelect-label\"> Sort </label><select id=\"oke-sortSelect--reviews\" class=\"oke-sortSelect-sort oke-select\"><!----><option value=\"rating desc\" selected=\"true\">Highest Rating</option><option value=\"date desc\">Most Recent</option><option value=\"has_media desc\">Photos &amp; Videos</option><option value=\"helpful desc\">Most Helpful</option><option value=\"date asc\">Oldest</option><option value=\"rating asc\">Lowest Rating</option><option value=\"unhelpful desc\">Least Helpful</option></select></div></div></div><div class=\"oke-w-reviews-main oke-w-reviews-main--nav-divider\"><ul class=\"oke-w-reviews-list\" widgetwidth=\"784\" canloadmore=\"true\"><li class=\"oke-w-reviews-list-item\"><div class=\"oke-w-review\"><div class=\"oke-w-review-side\"><div class=\"oke-w-review-reviewer\"><div class=\"oke-w-reviewer\"><!----><div><div class=\"oke-w-reviewer-identity\"><strong class=\"oke-w-reviewer-name\"> Jourdan B. </strong><!----></div><div class=\"oke-w-reviewer-verified\"> Verified Buyer <span class=\"oke-w-reviewer-verified-icon\"></span></div><!----></div></div><!----></div><!----><div class=\"oke-w-review-side-expandContent\"><!----><div class=\"oke-w-review-recommendation\"><div class=\"oke-w-reviewerRecommendation oke-w-reviewerRecommendation--yes\"><span class=\"oke-w-reviewerRecommendation-text\">I recommend this product</span></div></div><div class=\"oke-w-review-selectAttributes\"><div class=\"oke-w-selectAttr\"><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Age Range </strong><span class=\"oke-w-selectAttr-item-value\"> 25 - 34 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Gender </strong><span class=\"oke-w-selectAttr-item-value\"> Female </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> How many times have you purchased? </strong><span class=\"oke-w-selectAttr-item-value\"> 2 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Top Wellness Concerns </strong><span class=\"oke-w-selectAttr-item-value\"><span> Sleep,</span><span> Beauty,</span><span> Stress,</span><span> Skin,</span><span> Aging<!----></span></span></div></div></div></div></div><div class=\"oke-w-review-main\"><div class=\"oke-w-review-content\"><div class=\"oke-reviewContainer\"><div class=\"oke-reviewContent oke-reviewContent--left\"><div class=\"oke-reviewContent-top\"><div class=\"oke-reviewContent-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.155555555555555\" href=\"#oke-star-empty\"></use><use x=\"32.31111111111111\" href=\"#oke-star-empty\"></use><use x=\"48.46666666666667\" href=\"#oke-star-empty\"></use><use x=\"64.62222222222222\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 100%;\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.155555555555555\" href=\"#oke-star-filled\"></use><use x=\"32.31111111111111\" href=\"#oke-star-filled\"></use><use x=\"48.46666666666667\" href=\"#oke-star-filled\"></use><use x=\"64.62222222222222\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 5 out of 5 stars</span></div></div><div class=\"oke-reviewContent-date\"><span>4 days ago</span></div></div><div role=\"heading\" aria-level=\"2\" class=\"oke-reviewContent-title oke-title\">Really great</div><div class=\"oke-reviewContent-body oke-bodyText\"><p>Helps me go to the bathroom regularly. Which I’ve never been able to do. If you actually keep up with taking the vitamins it’s crazy how great they really do work.</p></div><!----><button type=\"button\" class=\"oke-reviewContent-readMore oke-readMore\"><span aria-hidden=\"true\" class=\"oke-reviewContent-readMore-text oke-bodyText\">Read More</span><span class=\"oke-a11yText\">Read more about this review</span><!----></button></div><!----></div></div><!----><!----><div class=\"oke-w-review-footer\"><div class=\"oke-footerBadges\"><!----><!----><!----></div><div class=\"oke-w-review-helpful\"><div class=\"oke-helpful\"><span class=\"oke-helpful-label\">Was this helpful?</span><div class=\"oke-helpful-vote\"><button aria-pressed=\"false\" aria-label=\"Yes, this review from Jourdan B. was helpful. 0 people voted yes\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--positive\"><span id=\"oke-helpful-vote-counter-positive-10a63397-db7d-456e-a38a-427c538896bb\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button><button aria-pressed=\"false\" aria-label=\"No, this review from Jourdan B. was not helpful. 0 people voted no\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--negative\"><span id=\"oke-helpful-vote-counter-negative-10a63397-db7d-456e-a38a-427c538896bb\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button></div></div></div></div><!----></div></div></li><li class=\"oke-w-reviews-list-item\"><div class=\"oke-w-review\"><div class=\"oke-w-review-side\"><div class=\"oke-w-review-reviewer\"><div class=\"oke-w-reviewer\"><!----><div><div class=\"oke-w-reviewer-identity\"><strong class=\"oke-w-reviewer-name\"> Jourdan B. </strong><!----></div><div class=\"oke-w-reviewer-verified\"> Verified Buyer <span class=\"oke-w-reviewer-verified-icon\"></span></div><!----></div></div><!----></div><!----><div class=\"oke-w-review-side-expandContent\"><!----><div class=\"oke-w-review-recommendation\"><div class=\"oke-w-reviewerRecommendation oke-w-reviewerRecommendation--yes\"><span class=\"oke-w-reviewerRecommendation-text\">I recommend this product</span></div></div><div class=\"oke-w-review-selectAttributes\"><div class=\"oke-w-selectAttr\"><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Age Range </strong><span class=\"oke-w-selectAttr-item-value\"> 25 - 34 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Gender </strong><span class=\"oke-w-selectAttr-item-value\"> Female </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> How many times have you purchased? </strong><span class=\"oke-w-selectAttr-item-value\"> 2 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Top Wellness Concerns </strong><span class=\"oke-w-selectAttr-item-value\"><span> Metabolism,</span><span> Beauty,</span><span> Stress,</span><span> Skin<!----></span></span></div></div></div></div></div><div class=\"oke-w-review-main\"><div class=\"oke-w-review-content\"><div class=\"oke-reviewContainer\"><div class=\"oke-reviewContent oke-reviewContent--left\"><div class=\"oke-reviewContent-top\"><div class=\"oke-reviewContent-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.155555555555555\" href=\"#oke-star-empty\"></use><use x=\"32.31111111111111\" href=\"#oke-star-empty\"></use><use x=\"48.46666666666667\" href=\"#oke-star-empty\"></use><use x=\"64.62222222222222\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 100%;\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.155555555555555\" href=\"#oke-star-filled\"></use><use x=\"32.31111111111111\" href=\"#oke-star-filled\"></use><use x=\"48.46666666666667\" href=\"#oke-star-filled\"></use><use x=\"64.62222222222222\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 5 out of 5 stars</span></div></div><div class=\"oke-reviewContent-date\"><span>4 days ago</span></div></div><div role=\"heading\" aria-level=\"2\" class=\"oke-reviewContent-title oke-title\">Soo good it’s crazy</div><div class=\"oke-reviewContent-body oke-bodyText\"><p>I’ve never been able to go to the bathroom regularly ever. Now I’m able to go every day.. TMI but it’s the truth.</p></div><!----><button type=\"button\" class=\"oke-reviewContent-readMore oke-readMore\"><span aria-hidden=\"true\" class=\"oke-reviewContent-readMore-text oke-bodyText\">Read More</span><span class=\"oke-a11yText\">Read more about this review</span><!----></button></div><!----></div></div><!----><!----><div class=\"oke-w-review-footer\"><div class=\"oke-footerBadges\"><!----><!----><!----></div><div class=\"oke-w-review-helpful\"><div class=\"oke-helpful\"><span class=\"oke-helpful-label\">Was this helpful?</span><div class=\"oke-helpful-vote\"><button aria-pressed=\"false\" aria-label=\"Yes, this review from Jourdan B. was helpful. 0 people voted yes\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--positive\"><span id=\"oke-helpful-vote-counter-positive-4b6a902c-5e66-4707-be8a-e74db8a21b87\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button><button aria-pressed=\"false\" aria-label=\"No, this review from Jourdan B. was not helpful. 0 people voted no\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--negative\"><span id=\"oke-helpful-vote-counter-negative-4b6a902c-5e66-4707-be8a-e74db8a21b87\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button></div></div></div></div><!----></div></div></li><li class=\"oke-w-reviews-list-item\"><div class=\"oke-w-review\"><div class=\"oke-w-review-side\"><div class=\"oke-w-review-reviewer\"><div class=\"oke-w-reviewer\"><!----><div><div class=\"oke-w-reviewer-identity\"><strong class=\"oke-w-reviewer-name\"> Krista F. </strong><!----></div><div class=\"oke-w-reviewer-verified\"> Verified Buyer <span class=\"oke-w-reviewer-verified-icon\"></span></div><!----></div></div><!----></div><!----><div class=\"oke-w-review-side-expandContent\"><!----><div class=\"oke-w-review-recommendation\"><div class=\"oke-w-reviewerRecommendation oke-w-reviewerRecommendation--yes\"><span class=\"oke-w-reviewerRecommendation-text\">I recommend this product</span></div></div><div class=\"oke-w-review-selectAttributes\"><div class=\"oke-w-selectAttr\"><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Age Range </strong><span class=\"oke-w-selectAttr-item-value\"> 35 - 44 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Gender </strong><span class=\"oke-w-selectAttr-item-value\"> Female </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> How many times have you purchased? </strong><span class=\"oke-w-selectAttr-item-value\"> 1 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Top Wellness Concerns </strong><span class=\"oke-w-selectAttr-item-value\"><span> Metabolism,</span><span> Digestion,</span><span> Women's Health,</span><span> Beauty,</span><span> Stress<!----></span></span></div></div></div></div></div><div class=\"oke-w-review-main\"><div class=\"oke-w-review-content\"><div class=\"oke-reviewContainer\"><div class=\"oke-reviewContent oke-reviewContent--left\"><div class=\"oke-reviewContent-top\"><div class=\"oke-reviewContent-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.155555555555555\" href=\"#oke-star-empty\"></use><use x=\"32.31111111111111\" href=\"#oke-star-empty\"></use><use x=\"48.46666666666667\" href=\"#oke-star-empty\"></use><use x=\"64.62222222222222\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 100%;\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.155555555555555\" href=\"#oke-star-filled\"></use><use x=\"32.31111111111111\" href=\"#oke-star-filled\"></use><use x=\"48.46666666666667\" href=\"#oke-star-filled\"></use><use x=\"64.62222222222222\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 5 out of 5 stars</span></div></div><div class=\"oke-reviewContent-date\"><span>6 days ago</span></div></div><div role=\"heading\" aria-level=\"2\" class=\"oke-reviewContent-title oke-title\">They work!</div><div class=\"oke-reviewContent-body oke-bodyText\"><p>LOVE!! I have tried other brands and they don’t work! These actually help with bloat and digestion</p></div><!----><button type=\"button\" class=\"oke-reviewContent-readMore oke-readMore\"><span aria-hidden=\"true\" class=\"oke-reviewContent-readMore-text oke-bodyText\">Read More</span><span class=\"oke-a11yText\">Read more about this review</span><!----></button></div><!----></div></div><!----><!----><div class=\"oke-w-review-footer\"><div class=\"oke-footerBadges\"><!----><!----><!----></div><div class=\"oke-w-review-helpful\"><div class=\"oke-helpful\"><span class=\"oke-helpful-label\">Was this helpful?</span><div class=\"oke-helpful-vote\"><button aria-pressed=\"false\" aria-label=\"Yes, this review from Krista F. was helpful. 0 people voted yes\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--positive\"><span id=\"oke-helpful-vote-counter-positive-d5c1b3c5-27da-4d21-96d7-6f4d49d9b24d\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button><button aria-pressed=\"false\" aria-label=\"No, this review from Krista F. was not helpful. 0 people voted no\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--negative\"><span id=\"oke-helpful-vote-counter-negative-d5c1b3c5-27da-4d21-96d7-6f4d49d9b24d\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button></div></div></div></div><!----></div></div></li><li class=\"oke-w-reviews-list-item\"><div class=\"oke-w-review\"><div class=\"oke-w-review-side\"><div class=\"oke-w-review-reviewer\"><div class=\"oke-w-reviewer\"><!----><div><div class=\"oke-w-reviewer-identity\"><strong class=\"oke-w-reviewer-name\"> Eve M. </strong><!----></div><div class=\"oke-w-reviewer-verified\"> Verified Buyer <span class=\"oke-w-reviewer-verified-icon\"></span></div><!----></div></div><!----></div><!----><div class=\"oke-w-review-side-expandContent\"><!----><div class=\"oke-w-review-recommendation\"><div class=\"oke-w-reviewerRecommendation oke-w-reviewerRecommendation--yes\"><span class=\"oke-w-reviewerRecommendation-text\">I recommend this product</span></div></div><div class=\"oke-w-review-selectAttributes\"><div class=\"oke-w-selectAttr\"><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Age Range </strong><span class=\"oke-w-selectAttr-item-value\"> 25 - 34 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Gender </strong><span class=\"oke-w-selectAttr-item-value\"> Female </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> How many times have you purchased? </strong><span class=\"oke-w-selectAttr-item-value\"> 1 </span></div><div class=\"oke-w-selectAttr-item\"><strong class=\"oke-w-selectAttr-item-title\"> Top Wellness Concerns </strong><span class=\"oke-w-selectAttr-item-value\"><span> Digestion,</span><span> Women's Health<!----></span></span></div></div></div></div></div><div class=\"oke-w-review-main\"><div class=\"oke-w-review-content\"><div class=\"oke-reviewContainer\"><div class=\"oke-reviewContent oke-reviewContent--left\"><div class=\"oke-reviewContent-top\"><div class=\"oke-reviewContent-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.155555555555555\" href=\"#oke-star-empty\"></use><use x=\"32.31111111111111\" href=\"#oke-star-empty\"></use><use x=\"48.46666666666667\" href=\"#oke-star-empty\"></use><use x=\"64.62222222222222\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 100%;\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.155555555555555\" href=\"#oke-star-filled\"></use><use x=\"32.31111111111111\" href=\"#oke-star-filled\"></use><use x=\"48.46666666666667\" href=\"#oke-star-filled\"></use><use x=\"64.62222222222222\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 5 out of 5 stars</span></div></div><div class=\"oke-reviewContent-date\"><span>1 week ago</span></div></div><div role=\"heading\" aria-level=\"2\" class=\"oke-reviewContent-title oke-title\">Less bloating and feeling more comfortable</div><div class=\"oke-reviewContent-body oke-bodyText\"><p>I've noticed less bloating since taking these, which is a nice change. I'm happy with my experience so far and like having them as part of my daily routine.</p></div><!----><button type=\"button\" class=\"oke-reviewContent-readMore oke-readMore\"><span aria-hidden=\"true\" class=\"oke-reviewContent-readMore-text oke-bodyText\">Read More</span><span class=\"oke-a11yText\">Read more about this review</span><!----></button></div><!----></div></div><!----><!----><div class=\"oke-w-review-footer\"><div class=\"oke-footerBadges\"><!----><!----><!----></div><div class=\"oke-w-review-helpful\"><div class=\"oke-helpful\"><span class=\"oke-helpful-label\">Was this helpful?</span><div class=\"oke-helpful-vote\"><button aria-pressed=\"false\" aria-label=\"Yes, this review from Eve M. was helpful. 0 people voted yes\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--positive\"><span id=\"oke-helpful-vote-counter-positive-918833db-5b09-4ca7-93b7-cbf60bbb4e06\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button><button aria-pressed=\"false\" aria-label=\"No, this review from Eve M. was not helpful. 0 people voted no\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--negative\"><span id=\"oke-helpful-vote-counter-negative-918833db-5b09-4ca7-93b7-cbf60bbb4e06\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button></div></div></div></div><!----></div></div></li><li class=\"oke-w-reviews-list-item\"><div class=\"oke-w-review\"><div class=\"oke-w-review-side\"><div class=\"oke-w-review-reviewer\"><div class=\"oke-w-reviewer\"><!----><div><div class=\"oke-w-reviewer-identity\"><strong class=\"oke-w-reviewer-name\"> Makayla </strong><!----></div><!----><!----></div></div><!----></div><!----><div class=\"oke-w-review-side-expandContent\"><!----><div class=\"oke-w-review-recommendation\"><div class=\"oke-w-reviewerRecommendation oke-w-reviewerRecommendation--yes\"><span class=\"oke-w-reviewerRecommendation-text\">I recommend this product</span></div></div><!----></div></div><div class=\"oke-w-review-main\"><div class=\"oke-w-review-content\"><div class=\"oke-reviewContainer\"><div class=\"oke-reviewContent oke-reviewContent--left\"><div class=\"oke-reviewContent-top\"><div class=\"oke-reviewContent-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.155555555555555\" href=\"#oke-star-empty\"></use><use x=\"32.31111111111111\" href=\"#oke-star-empty\"></use><use x=\"48.46666666666667\" href=\"#oke-star-empty\"></use><use x=\"64.62222222222222\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 100%;\"><svg height=\"18\" viewBox=\"0 0 79.22222222222221 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.155555555555555\" href=\"#oke-star-filled\"></use><use x=\"32.31111111111111\" href=\"#oke-star-filled\"></use><use x=\"48.46666666666667\" href=\"#oke-star-filled\"></use><use x=\"64.62222222222222\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 5 out of 5 stars</span></div></div><div class=\"oke-reviewContent-date\"><span>1 week ago</span></div></div><div role=\"heading\" aria-level=\"2\" class=\"oke-reviewContent-title oke-title\">5 Stars</div><div class=\"oke-reviewContent-body oke-bodyText\"><p>25/10 works so well, amazing taste! no complaints!!!!</p></div><!----><button type=\"button\" class=\"oke-reviewContent-readMore oke-readMore\"><span aria-hidden=\"true\" class=\"oke-reviewContent-readMore-text oke-bodyText\">Read More</span><span class=\"oke-a11yText\">Read more about this review</span><!----></button></div><!----></div></div><!----><!----><div class=\"oke-w-review-footer\"><div class=\"oke-footerBadges\"><!----><!----><!----></div><div class=\"oke-w-review-helpful\"><div class=\"oke-helpful\"><span class=\"oke-helpful-label\">Was this helpful?</span><div class=\"oke-helpful-vote\"><button aria-pressed=\"false\" aria-label=\"Yes, this review from Makayla was helpful. 0 people voted yes\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--positive\"><span id=\"oke-helpful-vote-counter-positive-cf170ff8-7b97-4bdc-9cec-549be050e1b9\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button><button aria-pressed=\"false\" aria-label=\"No, this review from Makayla was not helpful. 0 people voted no\" type=\"button\" tabindex=\"0\" class=\"oke-helpful-vote-button oke-helpful-vote-button--negative\"><span id=\"oke-helpful-vote-counter-negative-cf170ff8-7b97-4bdc-9cec-549be050e1b9\" aria-hidden=\"true\" class=\"oke-helpful-vote-counter\"> 0 </span></button></div></div></div></div><!----></div></div></li></ul><!----><div class=\"oke-w-reviews-alerts\"><div aria-hidden=\"true\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" class=\"oke-alert oke-alert--bottom\"><div class=\"oke-alert-inner\"> Loading... </div></div><div aria-hidden=\"true\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" class=\"oke-alert oke-alert--top\"><div class=\"oke-alert-inner\"> Loading... </div></div></div></div><div class=\"oke-w-reviews-footer\"><div class=\"oke-showMore\"><button type=\"button\" aria-label=\"Show more reviews\" tabindex=\"0\" class=\"oke-showMore-button oke-button\"><span class=\"oke-showMore-button-text oke-button-text\"> Show More </span></button></div></div><span role=\"status\" aria-live=\"polite\" class=\"oke-a11yText\"></span></div></div><!----></div></div></div><script type=\"application/json\" data-oke-metafield-data=\"\"> {\"areReviewsGrouped\":false,\"chatAssistant\":{\"reviewCount\":30},\"media\":[],\"productAttributes\":[],\"questionCount\":0,\"reviewAggregate\":{\"customerAttributeCount\":[{\"title\":\"Age Range\",\"type\":\"single-value\",\"options\":[{\"title\":\"18 - 24\",\"count\":8},{\"title\":\"25 - 34\",\"count\":6},{\"title\":\"35 - 44\",\"count\":5},{\"title\":\"45 - 54\",\"count\":3},{\"title\":\"55 - 64\",\"count\":2}]},{\"title\":\"Gender\",\"type\":\"single-value\",\"options\":[{\"title\":\"Female\",\"count\":22},{\"title\":\"Prefer not to share\",\"count\":2}]}],\"dateUpdated\":\"2026-10-28T11:09:39.764Z\",\"mediaCount\":2,\"productAttributeCount\":[{\"title\":\"How many times have you purchased?\",\"type\":\"single-value\",\"options\":[{\"title\":\"Subscription Customer\",\"count\":10},{\"title\":\"2\",\"count\":7},{\"title\":\"1\",\"count\":5},{\"title\":\"3+\",\"count\":2}]},{\"title\":\"Top Wellness Concerns\",\"type\":\"multi-value\",\"options\":[{\"title\":\"Digestion\",\"count\":17},{\"title\":\"Metabolism\",\"count\":12},{\"title\":\"Women's Health\",\"count\":8},{\"title\":\"Beauty\",\"count\":7},{\"title\":\"Stress\",\"count\":7},{\"title\":\"Energy\",\"count\":6},{\"title\":\"Immunity\",\"count\":5},{\"title\":\"Sleep\",\"count\":4},{\"title\":\"Aging\",\"count\":4},{\"title\":\"Skin\",\"count\":3},{\"title\":\"Mood\",\"count\":2},{\"title\":\"Focus\",\"count\":1}]}],\"productId\":\"shopify-15453550182720\",\"productName\":\"Lemme Debloat Gummies\",\"ratingAndReviewCount\":30,\"ratingAndReviewCountByLevel\":{\"level1Count\":1,\"level2Count\":1,\"level3Count\":2,\"level4Count\":4,\"level5Count\":22},\"ratingAndReviewValuesTotal\":135,\"ratingCount\":0,\"ratingCountByLevel\":{},\"ratingValuesTotal\":0,\"recommendationCount\":26,\"replyCount\":0,\"replyWordsTotal\":0,\"reviewCount\":30,\"reviewCountByLevel\":{\"level1Count\":1,\"level2Count\":1,\"level3Count\":2,\"level4Count\":4,\"level5Count\":22},\"reviewRatingValuesTotal\":135,\"reviewWordsTotal\":666,\"subscriberId_productId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f:shopify-15453550182720\",\"subscriberId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f\"},\"reviews\":[{\"subscriberId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f\",\"reviewId\":\"10a63397-db7d-456e-a38a-427c538896bb\",\"subscriberId_productId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f:shopify-15453550182720\",\"productId\":\"shopify-15453550182720\",\"body\":\"Helps me go to the bathroom regularly. Which I’ve never been able to do. If you actually keep up with taking the vitamins it’s crazy how great they really do work.\",\"dateCreated\":\"2026-10-23T20:13:25.000Z\",\"dateUpdated\":\"2026-10-23T20:13:25.000Z\",\"helpfulCount\":0,\"isRecommended\":true,\"languageCode\":\"en\",\"productAttributes\":[{\"title\":\"How many times have you purchased?\",\"type\":\"single-value\",\"value\":\"2\"},{\"title\":\"Top Wellness Concerns\",\"type\":\"multi-value\",\"value\":[\"Sleep\",\"Beauty\",\"Stress\",\"Skin\",\"Aging\"]}],\"productHandle\":\"debloat\",\"productImageUrl\":\"https://cdn.shopify.com/s/files/1/1006/8905/1968/files/PDP_Debloat_1_Primary_9e1991eb-beec-4828-b600-fc6bbc9190a1_x280.png?v=1793119857\",\"productName\":\"Lemme Debloat Gummies\",\"productUrl\":\"//dev-lemmelive.myshopify.com/products/debloat\",\"rating\":5,\"reviewer\":{\"attributes\":[{\"title\":\"Age Range\",\"type\":\"single-value\",\"value\":\"25 - 34\"},{\"title\":\"Gender\",\"type\":\"single-value\",\"value\":\"Female\"}],\"displayName\":\"Jourdan B.\",\"isVerified\":true},\"isIncentivized\":false,\"status\":\"approved\",\"title\":\"Really great\",\"unhelpfulCount\":0},{\"subscriberId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f\",\"reviewId\":\"4b6a902c-5e66-4707-be8a-e74db8a21b87\",\"subscriberId_productId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f:shopify-15453550182720\",\"productId\":\"shopify-15453550182720\",\"body\":\"I’ve never been able to go to the bathroom regularly ever. Now I’m able to go every day.. TMI but it’s the truth.\",\"dateCreated\":\"2026-10-23T20:04:28.000Z\",\"dateUpdated\":\"2026-10-23T20:04:28.000Z\",\"helpfulCount\":0,\"isRecommended\":true,\"languageCode\":\"en\",\"productAttributes\":[{\"title\":\"How many times have you purchased?\",\"type\":\"single-value\",\"value\":\"2\"},{\"title\":\"Top Wellness Concerns\",\"type\":\"multi-value\",\"value\":[\"Metabolism\",\"Beauty\",\"Stress\",\"Skin\"]}],\"productHandle\":\"debloat\",\"productImageUrl\":\"https://cdn.shopify.com/s/files/1/1006/8905/1968/files/PDP_Debloat_1_Primary_9e1991eb-beec-4828-b600-fc6bbc9190a1_x280.png?v=1793119857\",\"productName\":\"Lemme Debloat Gummies\",\"productUrl\":\"//dev-lemmelive.myshopify.com/products/debloat\",\"rating\":5,\"reviewer\":{\"attributes\":[{\"title\":\"Age Range\",\"type\":\"single-value\",\"value\":\"25 - 34\"},{\"title\":\"Gender\",\"type\":\"single-value\",\"value\":\"Female\"}],\"displayName\":\"Jourdan B.\",\"isVerified\":true},\"isIncentivized\":false,\"status\":\"approved\",\"title\":\"Soo good it’s crazy\",\"unhelpfulCount\":0},{\"subscriberId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f\",\"reviewId\":\"d5c1b3c5-27da-4d21-96d7-6f4d49d9b24d\",\"subscriberId_productId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f:shopify-15453550182720\",\"productId\":\"shopify-15453550182720\",\"body\":\"LOVE!! I have tried other brands and they don’t work! These actually help with bloat and digestion\",\"dateCreated\":\"2026-10-21T18:34:09.000Z\",\"dateUpdated\":\"2026-10-21T18:34:09.000Z\",\"helpfulCount\":0,\"isRecommended\":true,\"languageCode\":\"en\",\"productAttributes\":[{\"title\":\"How many times have you purchased?\",\"type\":\"single-value\",\"value\":\"1\"},{\"title\":\"Top Wellness Concerns\",\"type\":\"multi-value\",\"value\":[\"Metabolism\",\"Digestion\",\"Women's Health\",\"Beauty\",\"Stress\"]}],\"productHandle\":\"debloat\",\"productImageUrl\":\"https://cdn.shopify.com/s/files/1/1006/8905/1968/files/PDP_Debloat_1_Primary_9e1991eb-beec-4828-b600-fc6bbc9190a1_x280.png?v=1793119857\",\"productName\":\"Lemme Debloat Gummies\",\"productUrl\":\"//dev-lemmelive.myshopify.com/products/debloat\",\"rating\":5,\"reviewer\":{\"attributes\":[{\"title\":\"Age Range\",\"type\":\"single-value\",\"value\":\"35 - 44\"},{\"title\":\"Gender\",\"type\":\"single-value\",\"value\":\"Female\"}],\"displayName\":\"Krista F.\",\"isVerified\":true},\"isIncentivized\":false,\"status\":\"approved\",\"title\":\"They work!\",\"unhelpfulCount\":0},{\"subscriberId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f\",\"reviewId\":\"918833db-5b09-4ca7-93b7-cbf60bbb4e06\",\"subscriberId_productId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f:shopify-15453550182720\",\"productId\":\"shopify-15453550182720\",\"body\":\"I've noticed less bloating since taking these, which is a nice change. I'm happy with my experience so far and like having them as part of my daily routine.\",\"dateCreated\":\"2026-10-21T12:23:28.000Z\",\"dateUpdated\":\"2026-10-21T12:23:28.000Z\",\"helpfulCount\":0,\"isRecommended\":true,\"languageCode\":\"en\",\"productAttributes\":[{\"title\":\"How many times have you purchased?\",\"type\":\"single-value\",\"value\":\"1\"},{\"title\":\"Top Wellness Concerns\",\"type\":\"multi-value\",\"value\":[\"Digestion\",\"Women's Health\"]}],\"productHandle\":\"debloat\",\"productImageUrl\":\"https://cdn.shopify.com/s/files/1/1006/8905/1968/files/PDP_Debloat_1_Primary_9e1991eb-beec-4828-b600-fc6bbc9190a1_x280.png?v=1793119857\",\"productName\":\"Lemme Debloat Gummies\",\"productUrl\":\"//dev-lemmelive.myshopify.com/products/debloat\",\"rating\":5,\"reviewer\":{\"attributes\":[{\"title\":\"Age Range\",\"type\":\"single-value\",\"value\":\"25 - 34\"},{\"title\":\"Gender\",\"type\":\"single-value\",\"value\":\"Female\"}],\"displayName\":\"Eve M.\",\"isVerified\":true},\"isIncentivized\":false,\"status\":\"approved\",\"title\":\"Less bloating and feeling more comfortable\",\"unhelpfulCount\":0},{\"subscriberId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f\",\"reviewId\":\"cf170ff8-7b97-4bdc-9cec-549be050e1b9\",\"subscriberId_productId\":\"2791456d-65d0-45a1-ae6e-dbc2c58f9b8f:shopify-15453550182720\",\"productId\":\"shopify-15453550182720\",\"body\":\"25/10 works so well, amazing taste! no complaints!!!!\",\"dateCreated\":\"2026-10-20T16:50:16.000Z\",\"dateUpdated\":\"2026-10-20T16:50:16.000Z\",\"helpfulCount\":0,\"isRecommended\":true,\"languageCode\":\"en\",\"productHandle\":\"debloat\",\"productImageUrl\":\"https://cdn.shopify.com/s/files/1/1006/8905/1968/files/PDP_Debloat_1_Primary_9e1991eb-beec-4828-b600-fc6bbc9190a1_x280.png?v=1793119857\",\"productName\":\"Lemme Debloat Gummies\",\"productUrl\":\"//dev-lemmelive.myshopify.com/products/debloat\",\"rating\":5,\"reviewer\":{\"displayName\":\"Makayla\",\"isVerified\":false},\"isIncentivized\":false,\"status\":\"approved\",\"title\":\"5 Stars\",\"unhelpfulCount\":0}],\"reviewsNextUrl\":\"https://api.okendo.io/v1/stores/2791456d-65d0-45a1-ae6e-dbc2c58f9b8f/products/shopify-15453550182720/reviews?limit=5&orderBy=rating%20desc&lastEvaluated=%7B%22subscriberId_productId%22%3A%222791456d-65d0-45a1-ae6e-dbc2c58f9b8f%3Ashopify-15453550182720%22%2C%22_rating_dateCreated%22%3A%225%3A2026-10-20T16%3A50%3A16.000Z%22%2C%22subscriberId%22%3A%222791456d-65d0-45a1-ae6e-dbc2c58f9b8f%22%2C%22reviewId%22%3A%22cf170ff8-7b97-4bdc-9cec-549be050e1b9%22%7D\",\"sort\":{\"defaultSort\":\"rating desc\"}} </script></div><script id=\"oke-widget-resize\">!(function() { const widgets = document.querySelectorAll('.js-oke-widgetSize'); if (widgets && widgets.length) { if (!window.okeSetWidgetSizes) { window.okeSetWidgetSizes = (allWidgets) => { if (allWidgets) { allWidgets.forEach(widget => { const width = widget.getBoundingClientRect().width; widget.classList.remove('oke-is-small', 'oke-is-medium', 'oke-is-large'); widget.classList.add(width > 960 ? 'oke-is-large' : width > 640 ? 'oke-is-medium' : 'oke-is-small'); }); }  }; } if (!window.okeResizeObserver) { let okeMetafieldResizerTimer; window.okeResizeObserver = new ResizeObserver(entries => { if (entries && entries.length) { if (okeMetafieldResizerTimer) { clearTimeout(okeMetafieldResizerTimer); } okeMetafieldResizerTimer = window.setTimeout(() => { window.okeSetWidgetSizes(entries.map(e => e.target)); }, 100); } }); } window.okeSetWidgetSizes(document.querySelectorAll('.js-oke-widgetSize')); widgets.forEach((widget) => { window.okeResizeObserver.observe(widget); }); } })();</script>",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "okendo",
+      "key": "StarRatingSnippet",
+      "type": "multi_line_text_field",
+      "value": "<div data-oke-reviews-version=\"0.107.1\" data-oke-container=\"\" class=\"okeReviews oke-sr\"><div class=\"\"><div class=\"oke-sr-rating\"> 4.5 </div><div class=\"oke-sr-stars\"><div class=\"oke-stars\"><!----><div class=\"oke-stars-background\"><svg height=\"15\" viewBox=\"0 0 80.46666666666667 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-empty\"></use><use x=\"16.466666666666665\" href=\"#oke-star-empty\"></use><use x=\"32.93333333333333\" href=\"#oke-star-empty\"></use><use x=\"49.39999999999999\" href=\"#oke-star-empty\"></use><use x=\"65.86666666666666\" href=\"#oke-star-empty\"></use></svg></div><div class=\"oke-stars-foreground\" style=\"width: 90.9279%;\"><svg height=\"15\" viewBox=\"0 0 80.46666666666667 14\" aria-hidden=\"true\" role=\"none\"><use x=\"0\" href=\"#oke-star-filled\"></use><use x=\"16.466666666666665\" href=\"#oke-star-filled\"></use><use x=\"32.93333333333333\" href=\"#oke-star-filled\"></use><use x=\"49.39999999999999\" href=\"#oke-star-filled\"></use><use x=\"65.86666666666666\" href=\"#oke-star-filled\"></use></svg></div><span class=\"oke-a11yText\">Rated 4.5 out of 5 stars</span></div></div><div class=\"oke-sr-count oke-sr-count--brackets\"><span class=\"oke-sr-count-number\">30</span><span class=\"oke-sr-label-text\"> Reviews</span><!----></div><!----></div><script type=\"application/json\" data-oke-metafield-data=\"\"> {\"averageRating\":\"4.5\",\"reviewCount\":30} </script></div>",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "okendo",
+      "key": "summaryData",
+      "type": "json_string",
+      "value": "{\"attributeRatings\":[],\"fiveStarReviewCount\":22,\"mediaCount\":2,\"percentageRecommended\":87,\"reviewAverageValue\":\"4.5\",\"reviewCount\":30}",
+      "reference": null,
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "collection_image",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46448248750400",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Collection_debloat_1.png?v=1793191675"
+       }
+      },
+      "references": null
+     },
+     {
+      "namespace": "lemme",
+      "key": "collection_shape",
+      "type": "file_reference",
+      "value": "gid://shopify/MediaImage/46448248783168",
+      "reference": {
+       "image": {
+        "url": "https://cdn.shopify.com/s/files/1/1006/8905/1968/files/Debloat_Letter_Background_18a95aef-7108-47fb-8c55-c10ec2b5080c.png?v=1793191674"
+       }
+      },
+      "references": null
+     }
+    ]
+   }
+  },
+  "metaobjectDefinitions": {
+   "nodes": [
+    {
+     "type": "shopify--knowledge-base-fact",
+     "name": "Knowledge Base Facts",
+     "fieldDefinitions": [
+      {
+       "key": "external_id",
+       "type": {
+        "name": "id"
+       }
+      },
+      {
+       "key": "published",
+       "type": {
+        "name": "boolean"
+       }
+      },
+      {
+       "key": "category",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "source",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "title",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "value_string",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      },
+      {
+       "key": "value_string_list",
+       "type": {
+        "name": "list.single_line_text_field"
+       }
+      },
+      {
+       "key": "value_boolean",
+       "type": {
+        "name": "boolean"
+       }
+      },
+      {
+       "key": "value_number",
+       "type": {
+        "name": "number_decimal"
+       }
+      },
+      {
+       "key": "value_reference",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "references",
+       "type": {
+        "name": "list.single_line_text_field"
+       }
+      },
+      {
+       "key": "suggested_value_string",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      },
+      {
+       "key": "suggested_value_string_list",
+       "type": {
+        "name": "list.single_line_text_field"
+       }
+      },
+      {
+       "key": "suggested_value_boolean",
+       "type": {
+        "name": "boolean"
+       }
+      },
+      {
+       "key": "suggested_value_number",
+       "type": {
+        "name": "number_decimal"
+       }
+      },
+      {
+       "key": "suggested_value_reference",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "suggested_references",
+       "type": {
+        "name": "list.single_line_text_field"
+       }
+      },
+      {
+       "key": "suggestion_state",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      }
+     ]
+    },
+    {
+     "type": "lemme_ingredient",
+     "name": "Ingredient",
+     "fieldDefinitions": [
+      {
+       "key": "name",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "description",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      },
+      {
+       "key": "image",
+       "type": {
+        "name": "file_reference"
+       }
+      },
+      {
+       "key": "details",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      }
+     ]
+    },
+    {
+     "type": "lemme_faq",
+     "name": "FAQ",
+     "fieldDefinitions": [
+      {
+       "key": "question",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "answer",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      }
+     ]
+    },
+    {
+     "type": "lemme_icon_item",
+     "name": "Lemme icon item",
+     "fieldDefinitions": [
+      {
+       "key": "label",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "icon",
+       "type": {
+        "name": "file_reference"
+       }
+      }
+     ]
+    },
+    {
+     "type": "lemme_award",
+     "name": "Lemme award",
+     "fieldDefinitions": [
+      {
+       "key": "title",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "subtitle",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "description",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      },
+      {
+       "key": "image",
+       "type": {
+        "name": "file_reference"
+       }
+      }
+     ]
+    },
+    {
+     "type": "lemme_accordion",
+     "name": "Lemme accordion item",
+     "fieldDefinitions": [
+      {
+       "key": "title",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "body",
+       "type": {
+        "name": "multi_line_text_field"
+       }
+      }
+     ]
+    },
+    {
+     "type": "lemme_expert",
+     "name": "Lemme expert",
+     "fieldDefinitions": [
+      {
+       "key": "name",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "title",
+       "type": {
+        "name": "single_line_text_field"
+       }
+      },
+      {
+       "key": "image",
+       "type": {
+        "name": "file_reference"
+       }
+      },
+      {
+       "key": "url",
+       "type": {
+        "name": "url"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "extensions": {
+  "cost": {
+   "requestedQueryCost": 255,
+   "actualQueryCost": 37,
+   "throttleStatus": {
+    "maximumAvailable": 40000,
+    "currentlyAvailable": 39963,
+    "restoreRate": 2000
+   }
+  }
+ }
+}
