@@ -1,0 +1,80 @@
+{%- comment -%}
+  Product card for the Lemme collection grid (matches lemmelive.com/collections).
+  Params:
+    product, index (for the sparkle position), quick_add_label, sold_out_label, rotation (deg)
+  Reads product metafields:
+    lemme.collection_image  – transparent product image (falls back to lemme.card_image, then the featured image)
+    lemme.collection_shape  – coloured shape shown behind the product on hover
+    lemme.card_badge        – badge text; lemme.card_badge_style – "lime" (default) or "blue"
+    lemme.subtitle          – short benefit line before the price
+    reviews.rating / reviews.rating_count – star rating (Okendo or any reviews app)
+{%- endcomment -%}
+{%- liquid
+  assign pm = product.metafields.lemme
+  assign card_image = pm.collection_image.value | default: pm.card_image.value | default: product.featured_media.preview_image
+  assign shape = pm.collection_shape.value
+  assign variant = product.selected_or_first_available_variant
+  assign plan_id = ''
+  if variant.selling_plan_allocations.size > 0
+    assign plan_id = variant.selling_plan_allocations.first.selling_plan.id
+  endif
+
+  assign badge_style = pm.card_badge_style.value | default: 'lime'
+  assign rating = product.metafields.reviews.rating.value
+
+  assign spark_x = index | modulo: 3 | times: 9 | plus: 58
+  assign spark_y = index | modulo: 4 | times: 6 | plus: 28
+  assign spark_w = index | modulo: 3 | times: 12 | plus: 56
+  assign spark_d = index | modulo: 5 | times: 150
+-%}
+{%- capture kind -%}{%- render 'lemme-product-kind', product: product -%}{%- endcapture -%}
+<div class="lco-item{% if shape != blank %} lco-item--shape{% endif %}" data-lco-item data-type="{{ kind }}" data-price="{{ variant.price }}" data-date="{{ product.published_at | date: '%s' }}" style="--lco-rotation: {{ rotation | default: 4 }}deg;{% if shape != blank %} --lco-shape: url('{{ shape | image_url: width: 624 }}');{% endif %}">
+  <span class="lco-item__sparkles" aria-hidden="true">
+    <span class="lco-sparkle" style="--x: {{ spark_x }}%; --y: {{ spark_y }}%; --w: {{ spark_w }}px; --d: {{ spark_d }}ms;"><svg viewBox="0 0 80 80" fill="none"><path d="M80 40C45.7139 43.1559 41.4122 45.7145 27.7955 80C35.1003 45.713 34.2861 43.1559 0 40C34.2861 36.8441 38.5878 34.2855 52.2045 0C44.8997 34.2855 45.7139 36.8441 80 40Z" fill="currentColor"/></svg></span>
+  </span>
+  <a class="lco-item__link" href="{{ product.url }}"><span class="lm-visually-hidden">{{ product.title }}</span></a>
+  {%- if pm.card_badge != blank -%}
+    <span class="lco-badge lco-badge--{{ badge_style }}" aria-hidden="true">
+      {%- if badge_style == 'blue' -%}
+        <svg viewBox="0 0 88 87" fill="none"><path d="M44 0L53.793 10.648L67.7882 6.98484L70.2699 21.237L84.0238 25.7217L78.4062 39.0531L87.5521 50.2619L75.6188 58.4398L77.253 72.8139L62.7927 73.242L56.3962 86.2177L44 78.76L31.6038 86.2177L25.2073 73.242L10.747 72.8139L12.3812 58.4398L0.447857 50.2619L9.59381 39.0531L3.97619 25.7217L17.7301 21.237L20.2118 6.98484L34.207 10.648L44 0Z"/></svg>
+      {%- else -%}
+        <svg viewBox="0 0 78 77" fill="none"><path d="M31.4793 4.12758C35.5351 -0.255558 42.4649 -0.25556 46.5207 4.12758L50.1941 8.09739C51.9563 10.0018 54.3754 11.1668 56.963 11.3571L62.3571 11.754C68.3128 12.1921 72.6334 17.61 71.7353 23.5139L70.9219 28.861C70.5317 31.4261 71.1291 34.0437 72.5937 36.1855L75.6465 40.6502C79.0173 45.5797 77.4753 52.3357 72.2995 55.3145L67.6118 58.0125C65.363 59.3067 63.689 61.4059 62.9276 63.8863L61.3404 69.0568C59.588 74.7657 53.3445 77.7724 47.7885 75.5831L42.7565 73.6002C40.3425 72.649 37.6575 72.649 35.2435 73.6002L30.2115 75.5831C24.6555 77.7723 18.412 74.7657 16.6596 69.0568L15.0724 63.8863C14.311 61.4059 12.637 59.3067 10.3882 58.0125L5.7005 55.3145C0.524736 52.3357 -1.01727 45.5797 2.35346 40.6502L5.40633 36.1855C6.87085 34.0437 7.46832 31.4261 7.07811 28.861L6.26472 23.5139C5.36663 17.61 9.68724 12.1921 15.6429 11.754L21.037 11.3571C23.6246 11.1668 26.0437 10.0018 27.8059 8.09739L31.4793 4.12758Z"/></svg>
+      {%- endif -%}
+      <span>{{ pm.card_badge.value }}</span>
+    </span>
+  {%- endif -%}
+  <div class="lco-item__image">
+    {%- if shape != blank -%}<span class="lco-item__shape"></span>{%- endif -%}
+    <span class="lco-item__product">
+      {%- if card_image != blank -%}
+        {{ card_image | image_url: width: 920 | image_tag: loading: 'lazy', alt: '', widths: '300, 460, 620, 920', sizes: '(min-width: 1200px) 17vw, (min-width: 750px) 23vw, 39vw' }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </span>
+  </div>
+  <div class="lco-item__content">
+    <h2 class="lco-item__title">{{ product.title }}</h2>
+    {%- if rating != blank -%}
+      {%- assign pct = rating.rating | times: 100.0 | divided_by: rating.scale_max -%}
+      <div class="lco-item__rating"><span class="lco-stars" style="--lco-rating: {{ pct }}%;" role="img" aria-label="Rated {{ rating.rating | round: 1 }} out of {{ rating.scale_max | round }} stars"></span></div>
+    {%- endif -%}
+    <p class="lco-item__details">
+      {%- if pm.subtitle != blank -%}<span>{{ pm.subtitle.value }}</span>&nbsp;– {% endif -%}
+      <span class="lco-item__price">
+        {%- if variant.compare_at_price > variant.price -%}
+          <span class="lm-visually-hidden">Was {{ variant.compare_at_price | money_without_trailing_zeros }} now {{ variant.price | money_without_trailing_zeros }}</span>
+          <span class="lco-item__sale" aria-hidden="true">{{ variant.price | money_without_trailing_zeros }} <s>{{ variant.compare_at_price | money_without_trailing_zeros }}</s></span>
+        {%- else -%}
+          {{ variant.price | money_without_trailing_zeros }}
+        {%- endif -%}
+      </span>
+    </p>
+  </div>
+  <div class="lco-item__add">
+    <button class="lm-btn lm-btn--light lm-btn--md lco-item__btn" type="button" data-lm-button data-lco-add="{{ variant.id }}" data-selling-plan="{{ plan_id }}" aria-label="{{ quick_add_label | escape }}: {{ product.title | escape }}"{% unless product.available %} disabled{% endunless %}>
+      <span class="lm-btn__filler" aria-hidden="true"></span>
+      <span class="lm-btn__text"><span class="lm-btn__text-inner">{% if product.available %}{{ quick_add_label }}{% else %}{{ sold_out_label }}{% endif %}</span></span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+{%- comment -%}
+  Prints the filter group for a product (Capsules, Gummies, Chews, Liquid, Bundles or Other),
+  worked out from its product type and title the same way as the live site.
+  Params: product
+{%- endcomment -%}
+{%- liquid
+  assign t = product.type | append: ' ' | append: product.title | downcase
+  if t contains 'bundle'
+    echo 'Bundles'
+  elsif t contains 'chew'
+    echo 'Chews'
+  elsif t contains 'gumm'
+    echo 'Gummies'
+  elsif t contains 'capsule'
+    echo 'Capsules'
+  elsif t contains 'liquid'
+    echo 'Liquid'
+  else
+    echo 'Other'
+  endif
+-%}

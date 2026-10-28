@@ -1,0 +1,257 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+<script src="{{ 'lemme-collection.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign st = section.settings
+  assign benefit_blocks = section.blocks | where: 'type', 'benefit'
+  assign promo = section.blocks | where: 'type', 'promo' | first
+  assign is_all = false
+  if collection.handle == 'all'
+    assign is_all = true
+  endif
+  assign all_url = routes.all_products_collection_url
+-%}
+{%- if st.page_gradient -%}
+  <style>body { background: linear-gradient(180deg, {{ st.gradient_top }} 0%, {{ st.gradient_bottom }} 100%); }</style>
+{%- endif -%}
+
+<section class="lco" aria-label="{{ collection.title | escape }}" data-lco data-section-id="{{ section.id }}">
+  <div class="lm-container">
+    {%- if benefit_blocks.size > 0 -%}
+      <div class="lco-benefits{% unless is_all %} is-open{% endunless %}" data-lco-benefits>
+        <div class="lco-benefits__container">
+          <button class="lco-benefits__heading" type="button" aria-expanded="{% if is_all %}false{% else %}true{% endif %}" aria-controls="LcoBenefits-{{ section.id }}" data-lco-benefits-toggle>
+            <span>{{ st.benefits_heading }}</span> <span class="lco-benefits__icon" aria-hidden="true">{% if is_all %}+{% else %}-{% endif %}</span>
+          </button>
+          <div class="lco-benefits__nav" id="LcoBenefits-{{ section.id }}" data-lco-benefits-nav>
+            <ul class="lco-benefits__list" role="list">
+              {%- unless is_all -%}
+                <li class="lco-benefits__first"><a class="lco-pill" href="{{ all_url }}">{{ st.shop_all_label }}</a></li>
+              {%- endunless -%}
+              {%- for block in benefit_blocks -%}
+                {%- assign bc = block.settings.collection -%}
+                {%- if bc == blank -%}{%- continue -%}{%- endif -%}
+                <li {{ block.shopify_attributes }}>
+                  <a class="lco-pill{% if bc.handle == collection.handle %} is-active{% endif %}" href="{{ bc.url }}"{% if bc.handle == collection.handle %} aria-current="page"{% endif %}>{{ block.settings.label | default: bc.title }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- unless is_all -%}<a class="lco-benefits__shop-all" href="{{ all_url }}">{{ st.shop_all_label }}</a>{%- endunless -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- paginate collection.products by st.per_page -%}
+      {%- liquid
+        assign kinds = ''
+        for product in collection.products
+          capture k
+            render 'lemme-product-kind', product: product
+          endcapture
+          if k != 'Other'
+            assign needle = '|' | append: k | append: '|'
+            unless kinds contains needle
+              assign kinds = kinds | append: needle
+            endunless
+          endif
+        endfor
+        assign promo_index = 0
+        if promo != blank and paginate.current_page == 1
+          assign promo_index = promo.settings.position
+        endif
+      -%}
+      <div class="lco__toolbar">
+        <button class="lco__trigger" type="button" aria-haspopup="dialog" aria-controls="LcoFilters-{{ section.id }}" data-lco-open>
+          <span>{{ st.filter_label }}</span>
+          <svg class="lco__trigger-icon" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true" focusable="false"><line x1="2" y1="4" x2="22" y2="4" stroke="#000" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke="#000" stroke-width="2"/><circle cx="8" cy="4" r="3.4" fill="#000"/><circle cx="16" cy="12" r="3.4" fill="#000"/></svg>
+          <span class="lco__trigger-badge" hidden data-lco-badge>0</span>
+        </button>
+        <div class="lco__status" data-lco-status>
+          <span class="lco__count" role="status" data-lco-count data-one="{{ st.count_one | escape }}" data-many="{{ st.count_many | escape }}">{{ st.count_many | replace: '[count]', collection.products.size }}</span>
+        </div>
+      </div>
+
+      {%- if collection.products.size > 0 -%}
+        <div class="lco__grid" data-lco-grid>
+          {%- for product in collection.products -%}
+            {%- if forloop.index == promo_index -%}{%- render 'lemme-collection-promo', block: promo -%}{%- endif -%}
+            {%- render 'lemme-collection-card', product: product, index: forloop.index, quick_add_label: st.quick_add_label, sold_out_label: st.sold_out_label, rotation: st.rotation -%}
+          {%- endfor -%}
+          {%- if promo_index > collection.products.size -%}{%- render 'lemme-collection-promo', block: promo -%}{%- endif -%}
+        </div>
+      {%- else -%}
+        <p class="lco__empty">{{ st.empty_text }}</p>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="lco-pagination" aria-label="{{ st.pagination_label | escape }}">
+          <ol role="list">
+            <li class="lco-pagination__arrow">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" aria-label="Previous page">{% render 'lemme-pdp-icon', icon: 'arrow-left' %}</a>
+              {%- else -%}
+                <span class="is-disabled" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'arrow-left' %}</span>
+              {%- endif -%}
+            </li>
+            {%- for part in paginate.parts -%}
+              <li class="lco-pagination__page{% if part.is_link == false and part.title == paginate.current_page %} is-current{% endif %}">
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}"><span class="lm-visually-hidden">Page </span>{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}
+                  <span aria-current="page"><span class="lm-visually-hidden">Page </span>{{ part.title }}</span>
+                {%- else -%}
+                  <span>{{ part.title }}</span>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+            <li class="lco-pagination__arrow">
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" aria-label="Next page">{% render 'lemme-pdp-icon', icon: 'arrow-right' %}</a>
+              {%- else -%}
+                <span class="is-disabled" aria-hidden="true">{% render 'lemme-pdp-icon', icon: 'arrow-right' %}</span>
+              {%- endif -%}
+            </li>
+          </ol>
+        </nav>
+      {%- endif -%}
+
+      <dialog class="lco-filters" id="LcoFilters-{{ section.id }}" aria-labelledby="LcoFiltersTitle-{{ section.id }}" data-lco-dialog>
+        <div class="lco-filters__panel">
+          <div class="lco-filters__head">
+            <h2 class="lco-filters__title" id="LcoFiltersTitle-{{ section.id }}">{{ st.filter_label }}</h2>
+            <button class="lco-filters__close" type="button" data-lco-close aria-label="{{ st.close_label | escape }}">&times;</button>
+          </div>
+          <div class="lco-filters__body">
+            <fieldset class="lco-filters__section">
+              <legend class="lco-filters__label">{{ st.sort_label }}</legend>
+              <ul class="lco-filters__sort" role="list">
+                {%- assign sorts = 'featured,newest,price-low,price-high' | split: ',' -%}
+                {%- for s in sorts -%}
+                  {%- capture sort_label -%}{%- case s -%}{%- when 'featured' -%}{{ st.sort_featured }}{%- when 'newest' -%}{{ st.sort_newest }}{%- when 'price-low' -%}{{ st.sort_low }}{%- when 'price-high' -%}{{ st.sort_high }}{%- endcase -%}{%- endcapture -%}
+                  <li>
+                    <label class="lco-radio">
+                      <input type="radio" name="lco-sort-{{ section.id }}" value="{{ s }}"{% if forloop.first %} checked{% endif %} data-lco-sort>
+                      <span class="lco-radio__mark" aria-hidden="true"></span>{{ sort_label }}
+                    </label>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </fieldset>
+            {%- if kinds != blank -%}
+              <fieldset class="lco-filters__section">
+                <legend class="lco-filters__label">{{ st.type_label }}</legend>
+                <div class="lco-filters__pills">
+                  {%- assign all_kinds = 'Capsules,Gummies,Chews,Liquid,Bundles' | split: ',' -%}
+                  {%- for k in all_kinds -%}
+                    {%- assign needle = '|' | append: k | append: '|' -%}
+                    {%- unless kinds contains needle -%}{%- continue -%}{%- endunless -%}
+                    {%- liquid
+                      assign key = k | downcase
+                      assign img_key = 'image_' | append: key
+                      assign label_key = 'label_' | append: key
+                      assign pill_img = st[img_key]
+                      if pill_img == blank
+                        for product in collection.products
+                          capture pk
+                            render 'lemme-product-kind', product: product
+                          endcapture
+                          if pk == k
+                            assign pill_img = product.metafields.lemme.collection_image.value | default: product.featured_media.preview_image
+                            break
+                          endif
+                        endfor
+                      endif
+                    -%}
+                    <button class="lco-type" type="button" aria-pressed="false" data-lco-type="{{ k }}">
+                      <span>{{ st[label_key] | default: k }}</span>
+                      {%- if pill_img != blank -%}{{ pill_img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '', width: 40, height: 40, class: 'lco-type__img' }}{%- endif -%}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endif -%}
+          </div>
+          <div class="lco-filters__foot">
+            <button class="lco-filters__clear" type="button" data-lco-clear>{{ st.clear_label }}</button>
+            <button class="lco-filters__apply" type="button" data-lco-apply>{{ st.apply_label }}</button>
+          </div>
+        </div>
+      </dialog>
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lemme collection grid",
+  "class": "lco-section",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "text", "id": "quick_add_label", "label": "Quick add button", "default": "Quick Add" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out button", "default": "Sold out" },
+    { "type": "range", "id": "rotation", "label": "Product image tilt", "min": -8, "max": 8, "step": 1, "unit": "°", "default": 4 },
+    { "type": "text", "id": "empty_text", "label": "Text when the collection is empty", "default": "No products here yet." },
+    { "type": "header", "content": "Shop by benefit" },
+    { "type": "paragraph", "content": "Add Benefit blocks for the collection pills. On the Shop All page they start closed." },
+    { "type": "text", "id": "benefits_heading", "label": "Heading", "default": "Shop By Benefit" },
+    { "type": "text", "id": "shop_all_label", "label": "Shop all link", "default": "Shop All" },
+    { "type": "header", "content": "Filter & sort" },
+    { "type": "text", "id": "filter_label", "label": "Button and panel title", "default": "Filter & Sort" },
+    { "type": "text", "id": "count_many", "label": "Product count", "info": "[count] is replaced by the number.", "default": "[count] products" },
+    { "type": "text", "id": "count_one", "label": "Product count (one)", "default": "[count] product" },
+    { "type": "text", "id": "sort_label", "label": "Sort heading", "default": "Sort by" },
+    { "type": "text", "id": "sort_featured", "label": "Featured", "default": "Featured" },
+    { "type": "text", "id": "sort_newest", "label": "Newest", "default": "Newest" },
+    { "type": "text", "id": "sort_low", "label": "Price low to high", "default": "Price, low to high" },
+    { "type": "text", "id": "sort_high", "label": "Price high to low", "default": "Price, high to low" },
+    { "type": "text", "id": "type_label", "label": "Product type heading", "default": "Product type" },
+    { "type": "text", "id": "clear_label", "label": "Clear button", "default": "Clear" },
+    { "type": "text", "id": "apply_label", "label": "Apply button", "default": "Apply" },
+    { "type": "text", "id": "close_label", "label": "Close button (screen readers)", "default": "Close" },
+    { "type": "text", "id": "pagination_label", "label": "Pagination label (screen readers)", "default": "Pagination" },
+    { "type": "paragraph", "content": "Product types come from each product's type and title (capsule, gummy, chew, liquid, bundle). Only types on the page are shown." },
+    { "type": "text", "id": "label_capsules", "label": "Capsules label", "default": "Capsules" },
+    { "type": "image_picker", "id": "image_capsules", "label": "Capsules image" },
+    { "type": "text", "id": "label_gummies", "label": "Gummies label", "default": "Gummies" },
+    { "type": "image_picker", "id": "image_gummies", "label": "Gummies image" },
+    { "type": "text", "id": "label_chews", "label": "Chews label", "default": "Chews" },
+    { "type": "image_picker", "id": "image_chews", "label": "Chews image" },
+    { "type": "text", "id": "label_liquid", "label": "Liquid label", "default": "Liquid" },
+    { "type": "image_picker", "id": "image_liquid", "label": "Liquid image" },
+    { "type": "text", "id": "label_bundles", "label": "Bundles label", "default": "Bundles" },
+    { "type": "image_picker", "id": "image_bundles", "label": "Bundles image" },
+    { "type": "header", "content": "Page background" },
+    { "type": "checkbox", "id": "page_gradient", "label": "Lilac gradient behind the page", "default": true },
+    { "type": "color", "id": "gradient_top", "label": "Top", "default": "#dfc8e7" },
+    { "type": "color", "id": "gradient_bottom", "label": "Bottom", "default": "#faeaff" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label", "info": "Defaults to the collection title." }
+      ]
+    },
+    {
+      "type": "promo",
+      "name": "Promo tile",
+      "limit": 1,
+      "settings": [
+        { "type": "range", "id": "position", "label": "Position in the grid", "min": 1, "max": 24, "step": 1, "default": 7 },
+        { "type": "image_picker", "id": "image", "label": "Background image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Build Your Own Custom Bundle" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Mix & match your favorite gummies" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "get started" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "enabled_on": { "templates": ["collection"] },
+  "presets": [ { "name": "Lemme collection grid" } ]
+}
+{% endschema %}

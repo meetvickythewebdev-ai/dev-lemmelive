@@ -1,0 +1,67 @@
+{{ 'lemme-home.css' | asset_url | stylesheet_tag }}
+{{ 'lemme-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign st = section.settings
+  assign is_all = false
+  if collection.handle == 'all' or collection == blank
+    assign is_all = true
+  endif
+  assign desk_image = st.image
+  if is_all == false and collection.image != blank and st.use_collection_image
+    assign desk_image = collection.image
+  endif
+  assign mob_image = st.image_mobile
+  if is_all == false and collection.image != blank and st.use_collection_image
+    assign mob_image = collection.image
+  endif
+  assign text = collection.description
+  if is_all and st.all_text != blank
+    assign text = st.all_text
+  endif
+-%}
+<section class="lco-hero{% if desk_image == blank %} lco-hero--no-image{% endif %}" aria-labelledby="LcoHeroTitle-{{ section.id }}">
+  <div class="lco-hero__content">
+    <div class="lm-container">
+      <div class="lco-hero__inner">
+        <h1 class="lco-hero__title" id="LcoHeroTitle-{{ section.id }}">
+          {%- if is_all and st.all_heading != blank -%}
+            {{ st.all_heading }}
+            {%- if st.all_squiggle != blank %} {% render 'lemme-squiggle', text: st.all_squiggle %}{%- endif -%}
+          {%- else -%}
+            {{ collection.title }}
+          {%- endif -%}
+        </h1>
+        {%- if text != blank -%}<div class="lco-hero__text">{{ text }}</div>{%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- if desk_image != blank -%}
+    <div class="lco-hero__media">
+      <picture>
+        {%- if mob_image != blank -%}<source media="(max-width: 749px)" srcset="{{ mob_image | image_url: width: 750 }} 750w, {{ mob_image | image_url: width: 1100 }} 1100w" sizes="100vw">{%- endif -%}
+        {{ desk_image | image_url: width: 1440 | image_tag: loading: 'eager', fetchpriority: 'high', alt: '', widths: '750, 1100, 1440, 2000, 2880', sizes: '100vw', class: 'lco-hero__img' }}
+      </picture>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Lemme collection hero",
+  "class": "lco-hero-section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Background image on mobile" },
+    { "type": "checkbox", "id": "use_collection_image", "label": "Use the collection's own image when it has one", "default": true },
+    { "type": "header", "content": "Shop all page" },
+    { "type": "paragraph", "content": "Other collections show their title and description." },
+    { "type": "text", "id": "all_heading", "label": "Heading", "default": "so good you’ll forget they’re" },
+    { "type": "text", "id": "all_squiggle", "label": "Underlined word", "default": "vitamins" },
+    { "type": "richtext", "id": "all_text", "label": "Text", "info": "Leave empty to use the collection description." }
+  ],
+  "enabled_on": { "templates": ["collection"] },
+  "presets": [ { "name": "Lemme collection hero" } ]
+}
+{% endschema %}

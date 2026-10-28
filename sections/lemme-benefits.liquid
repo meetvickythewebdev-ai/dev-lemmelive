@@ -1,7 +1,7 @@
 {{ 'lemme-home.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lemme-home.js' | asset_url }}" defer></script>
 
-<section class="lm-section lm-benefits" aria-labelledby="LmBenefitsHeading-{{ section.id }}">
+<section class="lm-section lm-benefits"{% if section.settings.background != blank %} style="background: {{ section.settings.background }};"{% endif %} aria-labelledby="LmBenefitsHeading-{{ section.id }}">
   <div class="lm-container">
     {%- if section.settings.heading != blank -%}
       <h2 class="lm-benefits__heading" id="LmBenefitsHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
@@ -33,6 +33,7 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "lemme get real results" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "The twist? So delicious you won't believe they're supplements." },
+    { "type": "color", "id": "background", "label": "Background" },
     { "type": "paragraph", "content": "On mobile the cards collapse into compact rows without images, like the live site." }
   ],
   "blocks": [

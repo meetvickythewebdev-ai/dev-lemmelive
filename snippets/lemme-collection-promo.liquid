@@ -1,0 +1,17 @@
+{%- comment -%}
+  Promo tile inside the collection grid (the "Build Your Own Custom Bundle" card on lemmelive.com).
+  Params: block (the section's promo block)
+{%- endcomment -%}
+{%- assign bs = block.settings -%}
+<div class="lco-promo{% if bs.image == blank %} lco-promo--plain{% endif %}" data-lco-promo {{ block.shopify_attributes }}>
+  {%- if bs.image != blank -%}
+    {{ bs.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: '', widths: '400, 600, 900', sizes: '(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 100vw', class: 'lco-promo__bg' }}
+  {%- endif -%}
+  <div class="lco-promo__content">
+    {%- if bs.title != blank -%}<h3 class="lco-promo__title">{{ bs.title }}</h3>{%- endif -%}
+    {%- if bs.text != blank -%}<p class="lco-promo__text">{{ bs.text }}</p>{%- endif -%}
+    {%- if bs.button_label != blank and bs.link != blank -%}
+      {%- render 'lemme-button', label: bs.button_label, url: bs.link, style: 'light', class: 'lco-promo__btn' -%}
+    {%- endif -%}
+  </div>
+</div>
