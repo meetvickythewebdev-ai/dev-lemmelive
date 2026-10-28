@@ -8,9 +8,10 @@
 .lco-hero:not(.lco-hero--no-image) .lco-hero__content { position: absolute; z-index: 2; left: 0; top: 50%; transform: translateY(-50%); }
 .lco-hero__inner { display: flow-root; text-align: center; }
 .lco-hero__title {
-  margin: 0 auto 6vw; font-family: var(--lm-font-display); font-weight: 500;
+  font-family: var(--lm-font-display); font-weight: 500;
   font-size: 9.6vw; line-height: 9.6vw; letter-spacing: 0; text-wrap: balance;
 }
+.lco-hero .lco-hero__title { margin: 0 auto 6vw; }
 .lco-hero__text { max-width: 650px; margin: 0 auto 16px; font-size: 16px; line-height: 24px; }
 .lco-hero__text p { margin: 0; }
 .lco-hero__media img { display: block; width: 100%; height: auto; min-height: 272px; object-fit: cover; }
@@ -18,7 +19,8 @@
 @media (min-width: 550px) { .lco-hero__title { font-size: 6.5454vw; line-height: 6.5454vw; } }
 @media (min-width: 750px) {
   .lco-hero:not(.lco-hero--no-image) .lco-hero__content { top: calc(50% - 48px); }
-  .lco-hero__title { max-width: 72vw; margin-bottom: 2vw; font-size: 3.75vw; line-height: 3.75vw; }
+  .lco-hero__title { max-width: 72vw; font-size: 3.75vw; line-height: 3.75vw; }
+  .lco-hero .lco-hero__title { margin-bottom: 2vw; }
   .lco-hero .lm-squiggle__wrapper svg { height: 1.5vw; max-height: none; }
 }
 @media (min-width: 1025px) {
