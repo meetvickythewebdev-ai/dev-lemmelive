@@ -3,7 +3,8 @@
    and the drawer is re-rendered with the Section Rendering API so prices and discounts come from Shopify. */
 (function () {
   'use strict';
-  if (window.LemmeCart) return;
+  if (window.__lemmeCartReady) return;
+  window.__lemmeCartReady = true;
 
   var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
