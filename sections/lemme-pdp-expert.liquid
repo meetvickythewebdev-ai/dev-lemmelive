@@ -23,7 +23,7 @@
         </div>
       {%- endif -%}
       <div class="lp-expert__body">
-        <blockquote class="lp-expert__quote">{{ quote }}</blockquote>
+        <blockquote class="lp-expert__quote">{{ quote | newline_to_br }}</blockquote>
         <div class="lp-expert__meta">
           <p class="lp-expert__name">{{ expert.name.value }}</p>
           {%- if expert.title != blank -%}<p class="lp-expert__label">{{ expert.title.value }}</p>{%- endif -%}

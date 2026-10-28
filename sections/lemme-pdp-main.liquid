@@ -22,14 +22,20 @@
   assign sticky_image = st.sticky_image | default: m.sticky_image.value | default: product.featured_media.preview_image
 
   if st.option_labels != blank
-    assign option_labels = st.option_labels | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+    assign option_labels = st.option_labels | newline_to_br | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br />', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
   else
     assign option_labels = m.option_labels.value
+    if option_labels == blank and m.option_names != blank
+      assign option_labels = m.option_names.value | newline_to_br | split: '<br />'
+    endif
   endif
   if st.option_descriptions != blank
-    assign option_copy = st.option_descriptions | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+    assign option_copy = st.option_descriptions | newline_to_br | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br />', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
   else
     assign option_copy = m.option_descriptions.value
+    if option_copy == blank and m.option_details != blank
+      assign option_copy = m.option_details.value | newline_to_br | split: '<br />'
+    endif
   endif
 
   assign selected_variant = product.selected_or_first_available_variant
@@ -144,7 +150,7 @@
             </a>
           {%- endif -%}
           {%- if description != blank -%}
-            <div class="lp-head__description">{{ description }}</div>
+            <div class="lp-head__description">{{ description | newline_to_br }}</div>
           {%- elsif product.description != blank -%}
             <div class="lp-head__description">{{ product.description }}</div>
           {%- endif -%}
@@ -472,7 +478,7 @@
         { "type": "text", "id": "suggested_use", "label": "Suggested use" },
         { "type": "text", "id": "heading", "label": "Facts heading", "default": "Supplement facts" },
         { "type": "richtext", "id": "serving", "label": "Serving lines", "info": "One per line or bullet." },
-        { "type": "textarea", "id": "rows", "label": "Facts table", "info": "Optional. One row per line: name | % daily value | small second line. Empty = the product's lemme.supplement_facts metafield." },
+        { "type": "richtext", "id": "rows", "label": "Facts table", "info": "One row per line: name | % daily value | small second line." },
         { "type": "text", "id": "col_amount", "label": "Table column 1", "default": "Amount Per Serving" },
         { "type": "text", "id": "col_dv", "label": "Table column 2", "default": "% Daily Value*" },
         { "type": "richtext", "id": "footnote", "label": "Footnote" },

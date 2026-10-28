@@ -21,7 +21,7 @@
     {%- endif -%}
     <div class="lp-diff__copy">
       <h2 class="lp-diff__heading" id="LpDiff-{{ section.id }}">{{ section.settings.heading }}</h2>
-      {%- if diff_text != blank -%}<div class="lp-diff__text">{{ diff_text }}</div>{%- endif -%}
+      {%- if diff_text != blank -%}<div class="lp-diff__text">{{ diff_text | newline_to_br }}</div>{%- endif -%}
       <ul class="lp-diff__items">
         {%- if items.size > 0 -%}
           {%- for item in items -%}

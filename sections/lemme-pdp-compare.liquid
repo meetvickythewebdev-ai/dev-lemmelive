@@ -4,7 +4,7 @@
 {%- liquid
   assign m = product.metafields.lemme
   if section.settings.rows != blank
-    assign rows = section.settings.rows | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+    assign rows = section.settings.rows | newline_to_br | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br />', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
   else
     assign rows = m.compare_rows.value
   endif

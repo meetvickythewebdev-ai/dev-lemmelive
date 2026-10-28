@@ -7,8 +7,8 @@
           "type": "tab_benefits",
           "settings": {
             "title": "Product benefits",
-            "intro": "{{ product.metafields.lemme.benefits_intro.value }}",
-            "bullets": "{{ product.metafields.lemme.benefits.value }}"
+            "intro": "<p>{{ product.metafields.lemme.benefits_intro.value }}</p>",
+            "bullets": "<p>{{ product.metafields.lemme.benefit_bullets.value }}</p>"
           }
         },
         "tab_leave_out": {
@@ -23,10 +23,11 @@
           "settings": {
             "title": "Supplement Facts",
             "suggested_use": "{{ product.metafields.lemme.suggested_use.value }}",
-            "serving": "{{ product.metafields.lemme.serving_info.value }}",
-            "footnote": "{{ product.metafields.lemme.supplement_footnote.value }}",
-            "other": "{{ product.metafields.lemme.other_ingredients.value }}",
-            "warning": "{{ product.metafields.lemme.warning.value }}"
+            "serving": "<p>{{ product.metafields.lemme.serving_lines.value }}</p>",
+            "footnote": "<p>{{ product.metafields.lemme.supplement_footnote.value }}</p>",
+            "other": "<p>{{ product.metafields.lemme.other_ingredients.value }}</p>",
+            "warning": "<p>{{ product.metafields.lemme.warning.value }}</p>",
+            "rows": "<p>{{ product.metafields.lemme.supplement_facts.value }}</p>"
           }
         },
         "tab_faqs": {
@@ -59,15 +60,15 @@
       "settings": {
         "title": "{{ product.metafields.lemme.display_title.value }}",
         "subtitle": "{{ product.metafields.lemme.subtitle.value }}",
-        "description": "{{ product.metafields.lemme.intro.value }}",
+        "description": "<p>{{ product.metafields.lemme.intro.value }}</p>",
         "badge": "{{ product.metafields.lemme.badge.value }}",
         "frontrow_id": "{{ product.metafields.lemme.frontrow_id.value }}",
         "gallery_badge": "{{ product.metafields.lemme.card_badge.value }}",
         "format_products": "{{ product.metafields.lemme.format_products.value }}",
         "format_name": "{{ product.metafields.lemme.format_name.value }}",
         "flavor": "{{ product.metafields.lemme.flavor.value }}",
-        "option_labels": "{{ product.metafields.lemme.option_labels.value }}",
-        "option_descriptions": "{{ product.metafields.lemme.option_descriptions.value }}",
+        "option_labels": "<p>{{ product.metafields.lemme.option_names.value }}</p>",
+        "option_descriptions": "<p>{{ product.metafields.lemme.option_details.value }}</p>",
         "icon_items": "{{ product.metafields.lemme.benefit_icon_items.value }}",
         "routine_products": "{{ product.metafields.lemme.routine_products.value }}",
         "sticky_image": "{{ product.metafields.lemme.sticky_image.value }}"
@@ -90,7 +91,7 @@
       "type": "lemme-pdp-data",
       "settings": {
         "heading": "{{ product.metafields.lemme.data_heading.value }}",
-        "text": "{{ product.metafields.lemme.data_text.value }}"
+        "text": "<p>{{ product.metafields.lemme.data_text.value }}</p>"
       }
     },
     "compare": {
@@ -98,7 +99,7 @@
       "settings": {
         "other_image": "shopify://shop_images/Generic_Bottle.jpg",
         "heading_text": "{{ product.metafields.lemme.compare_heading.value }}",
-        "rows": "{{ product.metafields.lemme.compare_rows.value }}",
+        "rows": "<p>{{ product.metafields.lemme.compare_list.value }}</p>",
         "lemme_image": "{{ product.metafields.lemme.compare_image.value }}"
       }
     },
@@ -164,7 +165,7 @@
       ],
       "settings": {
         "nav_label": "Difference",
-        "body": "{{ product.metafields.lemme.difference_text.value }}",
+        "body": "<p>{{ product.metafields.lemme.difference_text.value }}</p>",
         "product_image": "{{ product.metafields.lemme.difference_image.value }}",
         "items": "{{ product.metafields.lemme.difference_items.value }}"
       }
@@ -173,7 +174,7 @@
       "type": "lemme-pdp-expert",
       "settings": {
         "expert": "{{ product.metafields.lemme.expert.value }}",
-        "quote": "{{ product.metafields.lemme.expert_quote.value }}"
+        "quote": "<p>{{ product.metafields.lemme.expert_quote.value }}</p>"
       }
     },
     "related": {

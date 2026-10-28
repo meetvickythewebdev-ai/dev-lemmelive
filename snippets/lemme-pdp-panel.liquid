@@ -17,13 +17,13 @@
         assign intro = m.benefits_intro.value | newline_to_br
       endif
       if bs.bullets != blank
-        assign bullets = bs.bullets | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+        assign bullets = bs.bullets | newline_to_br | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br />', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
       else
         assign bullets = m.benefits.value
       endif
     -%}
     {%- if intro != blank or bullets.size > 0 -%}
-      {%- if intro != blank -%}<div class="lp-panel__intro">{{ intro }}</div>{%- endif -%}
+      {%- if intro != blank -%}<div class="lp-panel__intro">{{ intro | newline_to_br }}</div>{%- endif -%}
       <ul class="lp-panel__bullets">
         {%- for benefit in bullets -%}
           {%- assign benefit = benefit | strip -%}
@@ -48,10 +48,14 @@
 
   {%- when 'tab_supplement' -%}
     {%- liquid
-      assign rows_src = bs.rows | default: m.supplement_facts.value
+      if bs.rows != blank
+        assign rows_src = bs.rows | replace: '<p>', '' | replace: '</p>', '<br />' | newline_to_br
+      else
+        assign rows_src = m.supplement_facts.value | newline_to_br
+      endif
       assign use = bs.suggested_use | default: m.suggested_use.value
       if bs.serving != blank
-        assign serving = bs.serving | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
+        assign serving = bs.serving | newline_to_br | replace: '</li>', '%%' | replace: '</p>', '%%' | replace: '<br />', '%%' | replace: '<br>', '%%' | replace: '<br/>', '%%' | strip_html | split: '%%'
       else
         assign serving = m.serving_info.value
       endif
@@ -71,7 +75,7 @@
       <table class="lp-facts__table">
         <thead><tr><th scope="col">{{ bs.col_amount }}</th><th scope="col">{{ bs.col_dv }}</th></tr></thead>
         <tbody>
-          {%- assign rows = rows_src | newline_to_br | split: '<br />' -%}
+          {%- assign rows = rows_src | replace: '<br>', '<br />' | split: '<br />' -%}
           {%- for row in rows -%}
             {%- assign row_clean = row | strip -%}
             {%- if row_clean != blank -%}
@@ -84,9 +88,9 @@
           {%- endfor -%}
         </tbody>
       </table>
-      {%- if footnote != blank -%}<div class="lp-facts__text">{{ footnote | replace: '†', '<sup>†</sup>' }}</div>{%- endif -%}
-      {%- if other != blank -%}<div class="lp-facts__text lp-facts__text--labeled"><strong>{{ bs.other_label }}</strong> {{ other }}</div>{%- endif -%}
-      {%- if warning != blank -%}<div class="lp-facts__text lp-facts__text--labeled"><strong>{{ bs.warning_label }}</strong> {{ warning }}</div>{%- endif -%}
+      {%- if footnote != blank -%}<div class="lp-facts__text">{{ footnote | newline_to_br | replace: '†', '<sup>†</sup>' }}</div>{%- endif -%}
+      {%- if other != blank -%}<div class="lp-facts__text lp-facts__text--labeled"><strong>{{ bs.other_label }}</strong> {{ other | newline_to_br }}</div>{%- endif -%}
+      {%- if warning != blank -%}<div class="lp-facts__text lp-facts__text--labeled"><strong>{{ bs.warning_label }}</strong> {{ warning | newline_to_br }}</div>{%- endif -%}
     {%- endif -%}
 
   {%- when 'tab_faqs' -%}
