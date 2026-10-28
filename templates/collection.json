@@ -3,9 +3,9 @@
     "hero": {
       "type": "lemme-collection-hero",
       "settings": {
-        "image": "shopify://shop_images/hero.png",
-        "image_mobile": "shopify://shop_images/collection-mobile-hero.png",
-        "use_collection_image": true,
+        "image": "shopify://shop_images/hero_1f8a4e6b-0e3b-4862-b1fb-e0a3c3ed5c4d.png",
+        "image_mobile": "shopify://shop_images/collection-mobile-hero_d0161a48-d50d-474e-9838-6ba44898a0eb.png",
+        "use_collection_image": false,
         "all_heading": "so good you’ll forget they’re",
         "all_squiggle": "vitamins",
         "all_text": ""
@@ -14,34 +14,6 @@
     "main": {
       "type": "lemme-collection",
       "blocks": {
-        "benefit_1": {
-          "type": "benefit",
-          "settings": {
-            "collection": "womens-health",
-            "label": "Women's Health"
-          }
-        },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "collection": "mood-sleep-energy",
-            "label": "Mood, Sleep, Energy"
-          }
-        },
-        "benefit_3": {
-          "type": "benefit",
-          "settings": {
-            "collection": "metabolism-weight-management",
-            "label": "Weight Management"
-          }
-        },
-        "benefit_4": {
-          "type": "benefit",
-          "settings": {
-            "collection": "beauty-digestion",
-            "label": "Beauty & Digestion"
-          }
-        },
         "promo": {
           "type": "promo",
           "settings": {
@@ -55,10 +27,6 @@
         }
       },
       "block_order": [
-        "benefit_1",
-        "benefit_2",
-        "benefit_3",
-        "benefit_4",
         "promo"
       ],
       "settings": {
@@ -67,7 +35,8 @@
         "image_gummies": "shopify://shop_images/Open-bottle-Purr_73a5dfc1-d9ab-4e7f-b03c-ce1288f8a432.png",
         "image_chews": "shopify://shop_images/Frame7084_3.png",
         "image_liquid": "shopify://shop_images/Collection_No2_4f8f17e1-77f7-479a-96af-26a3eb0ff6c9.png",
-        "image_bundles": "shopify://shop_images/Collection_GLP-1-fiber-bundle_8ba7654c-ee9b-4ef7-8472-846ae76182fc.png"
+        "image_bundles": "shopify://shop_images/Collection_GLP-1-fiber-bundle_8ba7654c-ee9b-4ef7-8472-846ae76182fc.png",
+        "benefits_menu": "shop-by-benefit"
       }
     },
     "ticker": {

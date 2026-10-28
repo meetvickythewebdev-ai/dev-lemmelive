@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "hero": {
+      "type": "lemme-collection-hero",
+      "settings": {
+        "image": "shopify://shop_images/hero_1f8a4e6b-0e3b-4862-b1fb-e0a3c3ed5c4d.png",
+        "image_mobile": "shopify://shop_images/collection-mobile-hero_28871e4a-4b1b-4186-93ec-a3a796d8e36c.png",
+        "use_collection_image": false,
+        "all_heading": "so good you’ll forget they’re",
+        "all_squiggle": "vitamins",
+        "all_text": ""
+      }
+    },
+    "main": {
+      "type": "lemme-collection",
+      "blocks": {
+        "promo": {
+          "type": "promo",
+          "settings": {
+            "position": 7,
+            "image": "shopify://shop_images/lemme_bundle_extended_4.png",
+            "title": "Build Your Own Custom Bundle",
+            "text": "Mix & match your favorite gummies",
+            "button_label": "get started",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "promo"
+      ],
+      "settings": {
+        "per_page": 24,
+        "image_capsules": "shopify://shop_images/Open-bottle_GLP1.png",
+        "image_gummies": "shopify://shop_images/Open-bottle-Purr_73a5dfc1-d9ab-4e7f-b03c-ce1288f8a432.png",
+        "image_chews": "shopify://shop_images/Frame7084_3.png",
+        "image_liquid": "shopify://shop_images/Collection_No2_4f8f17e1-77f7-479a-96af-26a3eb0ff6c9.png",
+        "image_bundles": "shopify://shop_images/Collection_GLP-1-fiber-bundle_8ba7654c-ee9b-4ef7-8472-846ae76182fc.png",
+        "benefits_menu": "shop-by-benefit"
+      }
+    },
+    "ticker": {
+      "type": "lemme-ticker",
+      "settings": {
+        "text": "OHMYGOSHWAGANDHA",
+        "bottom_space": false,
+        "speed": 10
+      }
+    },
+    "benefits": {
+      "type": "lemme-benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Expert formulated",
+            "bundled_image": "lemme-benefit-expert-formulated.webp"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Validated by 3rd party testing",
+            "bundled_image": "lemme-benefit-third-party-tested.webp"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Science-backed innovation",
+            "bundled_image": "lemme-benefit-tastes-like-heaven.webp"
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Thousands of 5-star testimonials ⭐⭐⭐⭐⭐",
+            "bundled_image": "lemme-benefit-bioavailable.webp"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "lemme get real results",
+        "subheading": "The twist? So delicious you won't believe they're good for you.",
+        "background": "#f7f1f9",
+        "layout": "trust"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "main",
+    "ticker",
+    "benefits"
+  ]
+}

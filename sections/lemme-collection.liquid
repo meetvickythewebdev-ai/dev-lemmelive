@@ -6,6 +6,11 @@
 {%- liquid
   assign st = section.settings
   assign benefit_blocks = section.blocks | where: 'type', 'benefit'
+  assign benefit_menu = st.benefits_menu
+  assign show_benefits = false
+  if benefit_menu.links.size > 0 or benefit_blocks.size > 0
+    assign show_benefits = true
+  endif
   assign promo = section.blocks | where: 'type', 'promo' | first
   assign is_all = false
   if collection.handle == 'all'
@@ -22,7 +27,7 @@
 
 <section class="lco" aria-label="{{ collection.title | escape }}" data-lco data-section-id="{{ section.id }}">
   <div class="lm-container">
-    {%- if benefit_blocks.size > 0 -%}
+    {%- if show_benefits -%}
       <div class="lco-benefits{% unless is_all %} is-open{% endunless %}" data-lco-benefits>
         <div class="lco-benefits__container">
           <button class="lco-benefits__heading" type="button" aria-expanded="{% if is_all %}false{% else %}true{% endif %}" aria-controls="LcoBenefits-{{ section.id }}" data-lco-benefits-toggle>
@@ -33,13 +38,29 @@
               {%- unless is_all -%}
                 <li class="lco-benefits__first"><a class="lco-pill" href="{{ all_url }}">{{ st.shop_all_label }}</a></li>
               {%- endunless -%}
-              {%- for block in benefit_blocks -%}
-                {%- assign bc = block.settings.collection -%}
-                {%- if bc == blank -%}{%- continue -%}{%- endif -%}
-                <li {{ block.shopify_attributes }}>
-                  <a class="lco-pill{% if bc.handle == collection.handle %} is-active{% endif %}" href="{{ bc.url }}"{% if bc.handle == collection.handle %} aria-current="page"{% endif %}>{{ block.settings.label | default: bc.title }}</a>
-                </li>
-              {%- endfor -%}
+              {%- if benefit_menu.links.size > 0 -%}
+                {%- for link in benefit_menu.links -%}
+                  {%- liquid
+                    assign active = false
+                    if link.type == 'collection_link' and link.object.handle == collection.handle
+                      assign active = true
+                    elsif link.url == collection.url
+                      assign active = true
+                    endif
+                  -%}
+                  <li>
+                    <a class="lco-pill{% if active %} is-active{% endif %}" href="{{ link.url }}"{% if active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for block in benefit_blocks -%}
+                  {%- assign bc = block.settings.collection -%}
+                  {%- if bc == blank -%}{%- continue -%}{%- endif -%}
+                  <li {{ block.shopify_attributes }}>
+                    <a class="lco-pill{% if bc.handle == collection.handle %} is-active{% endif %}" href="{{ bc.url }}"{% if bc.handle == collection.handle %} aria-current="page"{% endif %}>{{ block.settings.label | default: bc.title }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- endif -%}
             </ul>
             {%- unless is_all -%}<a class="lco-benefits__shop-all" href="{{ all_url }}">{{ st.shop_all_label }}</a>{%- endunless -%}
           </div>
@@ -198,7 +219,8 @@
     { "type": "range", "id": "rotation", "label": "Product image tilt", "min": -8, "max": 8, "step": 1, "unit": "°", "default": 4 },
     { "type": "text", "id": "empty_text", "label": "Text when the collection is empty", "default": "No products here yet." },
     { "type": "header", "content": "Shop by benefit" },
-    { "type": "paragraph", "content": "Add Benefit blocks for the collection pills. On the Shop All page they start closed." },
+    { "type": "link_list", "id": "benefits_menu", "label": "Menu", "info": "Each link becomes a pill. Use the same menu on every collection template so the pills match everywhere. If no menu is chosen, the Benefit blocks below are used." },
+    { "type": "paragraph", "content": "On the Shop All page the pills start closed." },
     { "type": "text", "id": "benefits_heading", "label": "Heading", "default": "Shop By Benefit" },
     { "type": "text", "id": "shop_all_label", "label": "Shop all link", "default": "Shop All" },
     { "type": "header", "content": "Filter & sort" },
