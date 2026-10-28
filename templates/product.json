@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -15,6 +24,8 @@
           "type": "tab_leave_out",
           "settings": {
             "title": "What We Leave Out",
+            "intro": "Clean formulas, nothing you don’t need. Here’s what we leave out of [product].",
+            "prefix": "No",
             "items": "{{ product.metafields.lemme.leave_out.value }}"
           }
         },
@@ -23,17 +34,23 @@
           "settings": {
             "title": "Supplement Facts",
             "suggested_use": "{{ product.metafields.lemme.suggested_use.value }}",
+            "heading": "Supplement facts",
             "serving": "<p>{{ product.metafields.lemme.serving_lines.value }}</p>",
+            "rows": "<p>{{ product.metafields.lemme.supplement_facts.value }}</p>",
+            "col_amount": "Amount Per Serving",
+            "col_dv": "% Daily Value*",
             "footnote": "<p>{{ product.metafields.lemme.supplement_footnote.value }}</p>",
+            "other_label": "Other Ingredients",
             "other": "<p>{{ product.metafields.lemme.other_ingredients.value }}</p>",
-            "warning": "<p>{{ product.metafields.lemme.warning.value }}</p>",
-            "rows": "<p>{{ product.metafields.lemme.supplement_facts.value }}</p>"
+            "warning_label": "WARNING",
+            "warning": "<p>{{ product.metafields.lemme.warning.value }}</p>"
           }
         },
         "tab_faqs": {
           "type": "tab_faqs",
           "settings": {
             "title": "FAQs",
+            "intro": "Learn more about [product], from how it works to when to take it and what makes our formula unique.",
             "faqs": "{{ product.metafields.lemme.faqs.value }}"
           }
         },
@@ -41,12 +58,18 @@
           "type": "tab_awards",
           "settings": {
             "title": "Awards",
+            "intro": "Recognized by the best in beauty and wellness. Explore the awards and accolades celebrating our standout formulas.",
             "awards": "{{ product.metafields.lemme.awards.value }}"
           }
         },
         "gift": {
           "type": "gift",
-          "settings": {}
+          "settings": {
+            "label": "FREE MAËLYS GIFT",
+            "title": "MAËLYS Get-Dreamy",
+            "tag": "$55+ order",
+            "note": "*Travel size MAËLYS Get-Dreamy gift on subscription orders $55+."
+          }
         }
       },
       "block_order": [
@@ -71,25 +94,45 @@
         "option_descriptions": "<p>{{ product.metafields.lemme.option_details.value }}</p>",
         "icon_items": "{{ product.metafields.lemme.benefit_icon_items.value }}",
         "routine_products": "{{ product.metafields.lemme.routine_products.value }}",
-        "sticky_image": "{{ product.metafields.lemme.sticky_image.value }}"
+        "sticky_image": "{{ product.metafields.lemme.sticky_image.value }}",
+        "reviews_label": "Reviews",
+        "format_label": "Format:",
+        "flavor_label": "Flavor:",
+        "options_label": "Frequency:",
+        "options_legend": "Choose an option",
+        "single_label": "One-time purchase",
+        "highlights": "VIP access to exclusive drops\nEarn loyalty points for free products & discounts\nGuaranteed delivery during sell-outs\nPause, update frequency or cancel anytime by logging into your account",
+        "add_label": "Add to Bag",
+        "added_label": "Added to your bag!",
+        "sold_out": "Sold out",
+        "buy_once_label": "Buy once for",
+        "routine_heading": "Lemme Get the Full Routine:",
+        "routine_total_label": "Total Price:",
+        "routine_button": "Add bundle to cart",
+        "routine_addons_label": "One-time Add-ons:"
       }
     },
     "subnav": {
       "type": "lemme-pdp-subnav",
-      "settings": {}
+      "settings": {
+        "label": "On this page"
+      }
     },
     "benefits": {
       "type": "lemme-pdp-benefits",
       "settings": {
+        "nav_label": "Benefits",
         "eyebrow": "{{ product.metafields.lemme.benefits_eyebrow.value }}",
         "heading_text": "{{ product.metafields.lemme.benefits_heading.value }}",
         "items": "{{ product.metafields.lemme.benefit_items.value }}",
-        "video": "{{ product.metafields.lemme.benefits_video.value }}"
+        "video": "{{ product.metafields.lemme.benefits_video.value }}",
+        "heading": "the benefits"
       }
     },
     "data": {
       "type": "lemme-pdp-data",
       "settings": {
+        "nav_label": "How it works",
         "heading": "{{ product.metafields.lemme.data_heading.value }}",
         "text": "<p>{{ product.metafields.lemme.data_text.value }}</p>"
       }
@@ -97,16 +140,28 @@
     "compare": {
       "type": "lemme-pdp-compare",
       "settings": {
-        "other_image": "shopify://shop_images/Generic_Bottle.jpg",
+        "nav_label": "Compare",
         "heading_text": "{{ product.metafields.lemme.compare_heading.value }}",
         "rows": "<p>{{ product.metafields.lemme.compare_list.value }}</p>",
-        "lemme_image": "{{ product.metafields.lemme.compare_image.value }}"
+        "lemme_image": "{{ product.metafields.lemme.compare_image.value }}",
+        "heading": "how Lemme stacks up",
+        "text": "Because not all vitamins are created equal",
+        "other_image": "shopify://shop_images/Generic_Bottle.jpg",
+        "other_label": "Other Brands",
+        "other_value": "Varies",
+        "disclaimer": "Based on publicly available product information."
       }
     },
     "ingredients": {
       "type": "lemme-pdp-ingredients",
       "settings": {
-        "items": "{{ product.metafields.lemme.ingredients.value }}"
+        "nav_label": "Ingredients",
+        "eyebrow": "ingredients",
+        "heading": "what's inside matters",
+        "items": "{{ product.metafields.lemme.ingredients.value }}",
+        "see_more": "See all ingredients",
+        "back_label": "Back",
+        "next_label": "Next"
       }
     },
     "difference": {
@@ -165,14 +220,18 @@
       ],
       "settings": {
         "nav_label": "Difference",
+        "heading": "the lemme difference",
         "body": "<p>{{ product.metafields.lemme.difference_text.value }}</p>",
         "product_image": "{{ product.metafields.lemme.difference_image.value }}",
-        "items": "{{ product.metafields.lemme.difference_items.value }}"
+        "items": "{{ product.metafields.lemme.difference_items.value }}",
+        "text": "Lemme is third-party tested and made in NSF and GMP-certified facilities. Plus, the bottle and cap are made from 100% post-consumer recycled material."
       }
     },
     "expert": {
       "type": "lemme-pdp-expert",
       "settings": {
+        "nav_label": "Experts",
+        "heading": "doctor recommended",
         "expert": "{{ product.metafields.lemme.expert.value }}",
         "quote": "<p>{{ product.metafields.lemme.expert_quote.value }}</p>"
       }
@@ -180,18 +239,45 @@
     "related": {
       "type": "lemme-pdp-related",
       "settings": {
-        "collection": "most-loved-formulas"
+        "nav_label": "Products",
+        "heading": "most-loved formulas",
+        "collection": "most-loved-formulas",
+        "shop_all_label": "",
+        "shop_all_url": "",
+        "limit": 8,
+        "add_label": "Add +",
+        "sold_out_label": "Sold out"
       }
     },
     "reviews": {
       "type": "lemme-pdp-reviews",
-      "settings": {}
+      "blocks": {
+        "okendo_reviews_widget_89QXGQ": {
+          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}",
+            "widget_type": "reviews_widget"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_widget_89QXGQ"
+      ],
+      "settings": {
+        "nav_label": "Reviews",
+        "heading": "believe the hype"
+      }
     },
     "faq": {
       "type": "lemme-pdp-faq",
       "settings": {
+        "nav_label": "FAQ",
+        "heading": "your questions,\nanswered",
+        "button_label": "Read all FAQs",
         "button_url": "/pages/faq",
-        "faqs": "{{ product.metafields.lemme.faqs.value }}"
+        "open_first": true,
+        "faqs": "{{ product.metafields.lemme.faqs.value }}",
+        "padding_top": 0
       }
     }
   },
